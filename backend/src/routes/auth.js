@@ -20,13 +20,13 @@ function setSessionCookie(res, rawToken) {
 
 // 1. Register User (Supabase Auth identity + Single Device Session)
 router.post('/register', async (req, res) => {
-  const { email, password, fullName } = req.body;
+  const { email, password, fullName, targetExamination } = req.body;
   if (!email || !password) {
     return res.status(400).json({ error: 'INVALID_INPUT', message: 'Email and password are required.' });
   }
 
   try {
-    const user = await db.registerUser({ email, password, fullName: fullName || 'NEET Aspirant' });
+    const user = await db.registerUser({ email, password, fullName: fullName || 'NEET Aspirant', targetExamination });
 
     // Generate cryptographically secure opaque token (64 hex characters)
     const rawToken = crypto.randomBytes(config.session.tokenBytes).toString('hex');
@@ -45,7 +45,7 @@ router.post('/register', async (req, res) => {
 
     return res.status(201).json({
       success: true,
-      user: { id: user.id, email: user.email, fullName: user.full_name, role: user.role || 'STUDENT' },
+      user: { id: user.id, email: user.email, fullName: user.full_name, role: user.role || 'STUDENT', targetExamination: user.target_examination || null },
       entitlement: { hasAccess: false }
     });
   } catch (error) {
@@ -169,7 +169,10 @@ router.get('/me', requireAuth, async (req, res) => {
         email: user?.email,
         fullName: user?.full_name || 'NEET Aspirant',
         role: user?.role || 'STUDENT',
-        createdAt: user?.created_at
+        createdAt: user?.created_at,
+        targetExamination: user?.target_examination || null,
+        accountStatus: user?.account_status || 'ACTIVE',
+        profileCompletionStatus: user?.profile_completion_status || 'INCOMPLETE'
       },
       sessionId: req.session.id,
       entitlement: { hasAccess, productCode: config.product.code }
@@ -177,6 +180,44 @@ router.get('/me', requireAuth, async (req, res) => {
   } catch (error) {
     console.error('[Get Me Error]:', error);
     return res.status(500).json({ error: 'SERVER_ERROR', message: 'Failed to fetch user state.' });
+  }
+});
+
+// 3b. Update Profile (name, target examination)
+router.put('/profile', requireAuth, async (req, res) => {
+  try {
+    const { fullName, targetExamination } = req.body;
+    const updates = {};
+    if (fullName && fullName.trim()) updates.full_name = fullName.trim();
+    if (targetExamination !== undefined) updates.target_examination = targetExamination || null;
+
+    if (Object.keys(updates).length === 0) {
+      return res.status(400).json({ error: 'INVALID_INPUT', message: 'No fields to update.' });
+    }
+
+    const setClauses = Object.keys(updates).map((k, i) => `${k} = $${i + 2}`);
+    const vals = [req.user.id, ...Object.values(updates)];
+    await db.query(
+      `UPDATE public.scale_users SET ${setClauses.join(', ')}, updated_at = NOW() WHERE id = $1`,
+      vals
+    );
+
+    const user = await db.getUserById(req.user.id);
+    return res.json({
+      success: true,
+      user: {
+        id: user.id,
+        email: user.email,
+        fullName: user.full_name,
+        role: user.role,
+        targetExamination: user.target_examination,
+        accountStatus: user.account_status || 'ACTIVE',
+        profileCompletionStatus: user.profile_completion_status || 'INCOMPLETE'
+      }
+    });
+  } catch (error) {
+    console.error('[Update Profile Error]:', error);
+    return res.status(500).json({ error: 'SERVER_ERROR', message: 'Failed to update profile.' });
   }
 });
 

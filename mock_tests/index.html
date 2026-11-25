@@ -2997,7 +2997,7 @@ function setAuthTab(tab) {
       try {
         const res = await apiRequest('/api/auth/register', {
           method: 'POST',
-          body: JSON.stringify({ fullName, email, password: pass, targetExam })
+          body: JSON.stringify({ fullName, email, password: pass, targetExamination: targetExam })
         });
 
         if (res.ok && res.data.success) {

@@ -639,16 +639,16 @@ const db = {
     return localStore.activateEntitlementIdempotent(params);
   },
 
-  async registerUser({ email, password, fullName, role = 'STUDENT' }) {
+  async registerUser({ email, password, fullName, role = 'STUDENT', targetExamination }) {
     const passwordHash = crypto.createHash('sha256').update(password).digest('hex');
 
     if (dbPool) {
       try {
         const res = await dbPool.query(
-          `INSERT INTO public.scale_users (email, password_hash, full_name, role)
-           VALUES ($1, $2, $3, $4)
-           RETURNING id, email, full_name, role`,
-          [email.toLowerCase(), passwordHash, fullName || 'NEET Aspirant', role]
+          `INSERT INTO public.scale_users (email, password_hash, full_name, role, target_examination)
+           VALUES ($1, $2, $3, $4, $5)
+           RETURNING id, email, full_name, role, target_examination, account_status, profile_completion_status`,
+          [email.toLowerCase(), passwordHash, fullName || 'NEET Aspirant', role, targetExamination || null]
         );
         return res.rows[0];
       } catch (err) {
@@ -676,7 +676,8 @@ const db = {
         err.code = 'INVALID_CREDENTIALS';
         throw err;
       }
-      return res.rows[0];
+      const { password_hash, ...userWithoutHash } = res.rows[0];
+      return userWithoutHash;
     }
     return localStore.authenticateUser({ email, password });
   },
@@ -684,7 +685,7 @@ const db = {
   async getUserById(userId) {
     if (dbPool) {
       const res = await dbPool.query(
-        'SELECT id, email, full_name, role, is_suspended, suspension_reason, created_at FROM public.scale_users WHERE id = $1 AND deleted_at IS NULL',
+        'SELECT id, email, full_name, role, is_suspended, suspension_reason, created_at, target_examination, account_status, profile_completion_status FROM public.scale_users WHERE id = $1 AND deleted_at IS NULL',
         [userId]
       );
       return res.rows[0] || null;
@@ -696,7 +697,7 @@ const db = {
     if (!email) return null;
     if (dbPool) {
       const res = await dbPool.query(
-        'SELECT id, email, full_name, role, is_suspended, suspension_reason, created_at FROM public.scale_users WHERE lower(email) = lower($1) AND deleted_at IS NULL',
+        'SELECT id, email, full_name, role, is_suspended, suspension_reason, created_at, target_examination, account_status, profile_completion_status FROM public.scale_users WHERE lower(email) = lower($1) AND deleted_at IS NULL',
         [email.trim()]
       );
       return res.rows[0] || null;
@@ -1067,6 +1068,14 @@ const db = {
       return res.rows;
     }
     return localStore.adminNotifications.slice(0, limit);
+  },
+
+  // Generic query pass-through for ad-hoc SQL (profile updates, etc.)
+  async query(text, params) {
+    if (dbPool) {
+      return dbPool.query(text, params);
+    }
+    throw new Error('Database not connected');
   }
 };
 
