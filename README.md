@@ -16,3 +16,4 @@ Click the button below to deploy the backend automatically to Render with zero m
 * **Backend API Server:** Node.js Express in `backend/` with single-device session replacement and Razorpay webhooks
 * **Database:** Supabase PostgreSQL (Postgres 17 pooler)
 * **Payment Gateway:** Razorpay Live Checkout (₹999 All-Access Pass)
+

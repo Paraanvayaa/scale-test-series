@@ -26,3 +26,4 @@ services:
         value: CJ6fBoTBl0oK2GB51kYU04zn
       - key: RAZORPAY_WEBHOOK_SECRET
         value: CJ6fBoTBl0oK2GB51kYU04zn
+

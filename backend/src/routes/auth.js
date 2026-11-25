@@ -45,7 +45,9 @@ router.post('/register', async (req, res) => {
 
     return res.status(201).json({
       success: true,
-      user: { id: user.id, email: user.email, fullName: user.full_name },
+      token: rawToken,
+      sessionToken: rawToken,
+      user: { id: user.id, email: user.email, fullName: user.full_name, role: user.role || 'STUDENT' },
       entitlement: { hasAccess: false }
     });
   } catch (error) {
@@ -93,7 +95,9 @@ router.post('/login', async (req, res) => {
     return res.json({
       success: true,
       sessionId: newSessionId,
-      user: { id: user.id, email: user.email, fullName: user.full_name },
+      token: rawToken,
+      sessionToken: rawToken,
+      user: { id: user.id, email: user.email, fullName: user.full_name, role: user.role || 'STUDENT' },
       entitlement: { hasAccess }
     });
   } catch (error) {
@@ -148,7 +152,9 @@ router.post('/google-sso', async (req, res) => {
     return res.json({
       success: true,
       sessionId: newSessionId,
-      user: { id: user.id, email: user.email, fullName: user.full_name },
+      token: rawToken,
+      sessionToken: rawToken,
+      user: { id: user.id, email: user.email, fullName: user.full_name, role: user.role || 'STUDENT' },
       entitlement: { hasAccess }
     });
   } catch (err) {
@@ -157,13 +163,20 @@ router.post('/google-sso', async (req, res) => {
   }
 });
 
-// 3. Current User & Entitlement Status Check (Restores auth across refreshes and tabs via HttpOnly cookie)
+// 3. Current User & Entitlement Status Check (Restores auth across refreshes and tabs via HttpOnly cookie or Bearer token)
 router.get('/me', requireAuth, async (req, res) => {
   try {
+    const user = await db.getUserById(req.user.id);
     const hasAccess = await db.hasActiveEntitlement(req.user.id, config.product.code);
     return res.json({
       authenticated: true,
-      user: { id: req.user.id },
+      user: {
+        id: req.user.id,
+        email: user?.email,
+        fullName: user?.full_name || 'NEET Aspirant',
+        role: user?.role || 'STUDENT',
+        createdAt: user?.created_at
+      },
       sessionId: req.session.id,
       entitlement: { hasAccess, productCode: config.product.code }
     });

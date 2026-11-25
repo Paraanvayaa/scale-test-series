@@ -460,10 +460,16 @@ class LocalDatabaseStore {
     return { payments: list.slice(offset, offset + limit), total, page, limit, totalPages: Math.ceil(total / limit) || 1 };
   }
 
-  async getSessions({ page = 1, limit = 25 }) {
+  async getSessions({ page = 1, limit = 25, activeOnly = true }) {
     let list = [];
     for (const s of this.userSessions.values()) {
+      if (activeOnly && !s.is_active) continue;
       const u = this.users.get(s.user_id);
+      // count active devices for this user
+      let userActiveDevices = 0;
+      for (const sess of this.userSessions.values()) {
+        if (sess.user_id === s.user_id && sess.is_active) userActiveDevices++;
+      }
       list.push({
         id: s.id,
         user_id: s.user_id,
@@ -474,7 +480,8 @@ class LocalDatabaseStore {
         is_active: s.is_active,
         created_at: s.created_at,
         last_seen_at: s.last_seen_at,
-        revocation_reason: s.revocation_reason
+        revocation_reason: s.revocation_reason,
+        user_active_devices_count: userActiveDevices
       });
     }
     const total = list.length;
@@ -1020,7 +1027,8 @@ const db = {
           s.revoked_at,
           s.revocation_reason,
           u.email as student_email,
-          u.full_name as student_name
+          u.full_name as student_name,
+          (SELECT count(*) FROM public.scale_user_sessions active_s WHERE active_s.user_id = s.user_id AND active_s.is_active = true) as user_active_devices_count
         FROM public.scale_user_sessions s
         JOIN public.scale_users u ON s.user_id = u.id
         ${whereClause}

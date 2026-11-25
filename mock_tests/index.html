@@ -2297,36 +2297,81 @@
     </div>
   </div>
 
-  <div class="modal-overlay" id="authModal">
-    <div class="modal-dialog">
+    <div class="modal-overlay" id="authModal">
+    <div class="modal-dialog" style="max-width: 440px;">
       <div class="modal-header">
-        <h3 class="modal-title" id="authModalTitle">Student Sign In</h3>
+        <h3 class="modal-title" id="authModalTitle">Student Authentication</h3>
         <button class="modal-close-btn" onclick="closeAuthModal()">&times;</button>
       </div>
       <div class="modal-body">
-        <p style="font-size: 0.88rem; color: #64748b; margin-bottom: 1.25rem;">
-          Sign in to save your mock test progress, unlock full access, and review detailed diagnostic reports.
+        <!-- Auth Tabs: Sign In vs Create Profile -->
+        <div style="display: flex; background: #f1f5f9; padding: 4px; border-radius: 8px; margin-bottom: 1.25rem;">
+          <button type="button" id="tabSignInBtn" onclick="setAuthTab('login')" style="flex: 1; padding: 0.55rem; border: none; border-radius: 6px; font-weight: 600; font-size: 0.88rem; cursor: pointer; background: #ffffff; color: #059669; box-shadow: 0 1px 3px rgba(0,0,0,0.1); transition: all 0.2s;">
+            Sign In
+          </button>
+          <button type="button" id="tabSignUpBtn" onclick="setAuthTab('register')" style="flex: 1; padding: 0.55rem; border: none; border-radius: 6px; font-weight: 600; font-size: 0.88rem; cursor: pointer; background: transparent; color: #64748b; transition: all 0.2s;">
+            Create Profile
+          </button>
+        </div>
+
+        <p id="authSubtitle" style="font-size: 0.85rem; color: #64748b; margin-bottom: 1.15rem; line-height: 1.4;">
+          Sign in to access your mock tests and saved diagnostic progress.
         </p>
 
-        <button class="btn-secondary" style="width: 100%; justify-content: center; padding: 0.7rem; margin-bottom: 0.75rem;" onclick="handleGoogleSignIn()">
+        <!-- Google SSO Button -->
+        <button class="btn-secondary" id="googleSsoBtn" style="width: 100%; justify-content: center; padding: 0.72rem; margin-bottom: 0.85rem;" onclick="handleGoogleSignIn()">
           <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
-          Continue with Google
+          <span id="googleBtnText">Continue with Google</span>
         </button>
 
-        <div class="auth-divider"><span>OR WITH EMAIL</span></div>
+        <div class="auth-divider" style="margin: 1rem 0;"><span>OR WITH EMAIL</span></div>
 
-        <form onsubmit="handleEmailAuth(event)">
-          <div class="form-group">
-            <label class="form-label">Email Address</label>
-            <input type="email" id="authEmail" class="form-input" placeholder="student@example.com" required>
+        <!-- 1. SIGN IN FORM -->
+        <form id="signInForm" onsubmit="handleStudentLogin(event)" style="display: block;">
+          <div style="margin-bottom: 0.9rem; text-align: left;">
+            <label style="display: block; font-size: 0.82rem; font-weight: 600; color: #334155; margin-bottom: 0.3rem;">Email Address</label>
+            <input type="email" id="authEmail" class="form-input" placeholder="student@example.com" required style="width: 100%; box-sizing: border-box; padding: 0.72rem 0.85rem; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 0.95rem;">
           </div>
-          <div class="form-group">
-            <label class="form-label">Password</label>
-            <input type="password" id="authPassword" class="form-input" placeholder="••••••••" required>
+          <div style="margin-bottom: 1.25rem; text-align: left;">
+            <label style="display: block; font-size: 0.82rem; font-weight: 600; color: #334155; margin-bottom: 0.3rem;">Password</label>
+            <input type="password" id="authPassword" class="form-input" placeholder="••••••••" required style="width: 100%; box-sizing: border-box; padding: 0.72rem 0.85rem; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 0.95rem;">
           </div>
-          <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 0.75rem;">
-            Sign In / Register
+          <button type="submit" id="authSubmitBtn" class="btn-primary" style="width: 100%; justify-content: center; padding: 0.75rem; font-size: 0.95rem; border-radius: 8px;">
+            Sign In to Account &rarr;
           </button>
+          <div style="text-align: center; margin-top: 1rem; font-size: 0.82rem; color: #64748b;">
+            New student? <a onclick="setAuthTab('register')" style="color: #059669; font-weight: 600; cursor: pointer; text-decoration: underline;">Create your profile</a>
+          </div>
+        </form>
+
+        <!-- 2. CREATE PROFILE / SIGN UP FORM -->
+        <form id="signUpForm" onsubmit="handleStudentRegister(event)" style="display: none;">
+          <div style="margin-bottom: 0.85rem; text-align: left;">
+            <label style="display: block; font-size: 0.82rem; font-weight: 600; color: #334155; margin-bottom: 0.3rem;">Full Name</label>
+            <input type="text" id="regFullName" class="form-input" placeholder="e.g. Sanket Sharma" required style="width: 100%; box-sizing: border-box; padding: 0.72rem 0.85rem; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 0.95rem;">
+          </div>
+          <div style="margin-bottom: 0.85rem; text-align: left;">
+            <label style="display: block; font-size: 0.82rem; font-weight: 600; color: #334155; margin-bottom: 0.3rem;">Email Address</label>
+            <input type="email" id="regEmail" class="form-input" placeholder="student@example.com" required style="width: 100%; box-sizing: border-box; padding: 0.72rem 0.85rem; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 0.95rem;">
+          </div>
+          <div style="margin-bottom: 0.85rem; text-align: left;">
+            <label style="display: block; font-size: 0.82rem; font-weight: 600; color: #334155; margin-bottom: 0.3rem;">Password (Min 6 Characters)</label>
+            <input type="password" id="regPassword" class="form-input" placeholder="••••••••" minlength="6" required style="width: 100%; box-sizing: border-box; padding: 0.72rem 0.85rem; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 0.95rem;">
+          </div>
+          <div style="margin-bottom: 1.25rem; text-align: left;">
+            <label style="display: block; font-size: 0.82rem; font-weight: 600; color: #334155; margin-bottom: 0.3rem;">Target Examination</label>
+            <select id="regTargetExam" class="form-input" style="width: 100%; box-sizing: border-box; padding: 0.72rem 0.85rem; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 0.95rem; background: #ffffff;">
+              <option value="NEET 2026">NEET UG 2026 Aspirant</option>
+              <option value="NEET 2027">NEET UG 2027 Aspirant</option>
+              <option value="JEE Main 2026">JEE Main 2026 Aspirant</option>
+            </select>
+          </div>
+          <button type="submit" id="regSubmitBtn" class="btn-primary" style="width: 100%; justify-content: center; padding: 0.75rem; font-size: 0.95rem; border-radius: 8px;">
+            Create Profile & Sign In &rarr;
+          </button>
+          <div style="text-align: center; margin-top: 1rem; font-size: 0.82rem; color: #64748b;">
+            Already registered? <a onclick="setAuthTab('login')" style="color: #059669; font-weight: 600; cursor: pointer; text-decoration: underline;">Sign In</a>
+          </div>
         </form>
       </div>
     </div>
@@ -2560,22 +2605,99 @@
       }, 4000);
     }
 
+    function toggleStudentMenu() {
+      const menu = document.getElementById('studentMenuDropdown');
+      if (menu) {
+        menu.style.display = menu.style.display === 'none' || menu.style.display === '' ? 'block' : 'none';
+      }
+    }
+
+    // Close student menu when clicking outside
+    document.addEventListener('click', (e) => {
+      const container = document.getElementById('studentProfileContainer');
+      const menu = document.getElementById('studentMenuDropdown');
+      if (menu && container && !container.contains(e.target)) {
+        menu.style.display = 'none';
+      }
+    });
+
+    async function handleStudentLogout() {
+      try {
+        await apiRequest('/api/auth/logout', { method: 'POST' });
+      } catch {}
+      localStorage.removeItem('scale_student_session_token');
+      localStorage.removeItem('scale_test_user');
+      localStorage.removeItem('scale_test_user_name');
+      localStorage.removeItem('scale_student_profile');
+      currentUser = null;
+      updateAuthUI(null);
+      showToast('Logged out safely. Device session closed.', 'info');
+    }
+
     function updateAuthUI(user) {
       const authBtn = document.getElementById('authBtn');
+      const profileContainer = document.getElementById('studentProfileContainer');
       const userStatusTag = document.getElementById('userStatusTag');
+
       if (user) {
-        const name = user.displayName || user.email.split('@')[0];
-        if (authBtn) authBtn.innerText = `Account: ${name}`;
+        currentUser = user;
+        const email = user.email || localStorage.getItem('scale_test_user') || 'Student';
+        const fullName = user.fullName || user.displayName || localStorage.getItem('scale_test_user_name') || email.split('@')[0];
+        const initials = fullName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) || 'ST';
+
+        const profilePillHtml = `
+          <div id="studentProfileContainer" style="position: relative; display: inline-block;">
+            <button id="authBtn" type="button" onclick="toggleStudentMenu()" style="display: flex; align-items: center; gap: 8px; background: #ffffff; border: 1.5px solid #a7f3d0; padding: 0.35rem 0.75rem; border-radius: 999px; cursor: pointer; transition: all 0.2s;">
+              <div style="width: 24px; height: 24px; border-radius: 50%; background: #059669; color: #ffffff; font-weight: 700; font-size: 0.72rem; display: flex; align-items: center; justify-content: center;">
+                ${initials}
+              </div>
+              <div style="display: flex; flex-direction: column; text-align: left; line-height: 1.1;">
+                <span style="font-size: 0.80rem; font-weight: 700; color: #0f172a; max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${escapeHtml(fullName)}</span>
+                <span style="font-size: 0.65rem; color: #059669; font-weight: 600;">● 1 Active Device</span>
+              </div>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2.5"><path d="M6 9l6 6 6-6"></path></svg>
+            </button>
+            
+            <div id="studentMenuDropdown" style="display: none; position: absolute; right: 0; top: 115%; width: 220px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.12); padding: 0.85rem; z-index: 9999;">
+              <div style="padding-bottom: 0.6rem; border-bottom: 1px solid #f1f5f9; margin-bottom: 0.6rem;">
+                <div style="font-size: 0.88rem; font-weight: 700; color: #0f172a;">${escapeHtml(fullName)}</div>
+                <div style="font-size: 0.72rem; color: #64748b; word-break: break-all;">${escapeHtml(email)}</div>
+              </div>
+              <div style="font-size: 0.75rem; color: #334155; margin-bottom: 0.5rem; display: flex; justify-content: space-between;">
+                <span>Plan:</span>
+                <strong style="color: ${isUserPaid ? '#059669' : '#d97706'};">${isUserPaid ? 'Verified Master Pass' : 'Free Demo'}</strong>
+              </div>
+              <div style="font-size: 0.72rem; color: #059669; margin-bottom: 0.75rem; background: #ecfdf5; padding: 0.4rem 0.5rem; border-radius: 6px;">
+                ✓ Active on this device
+              </div>
+              <button type="button" onclick="handleStudentLogout()" style="width: 100%; padding: 0.45rem; background: #fee2e2; color: #dc2626; border: none; border-radius: 6px; font-weight: 600; font-size: 0.78rem; cursor: pointer;">
+                Sign Out
+              </button>
+            </div>
+          </div>
+        `;
+
+        if (profileContainer) {
+          profileContainer.outerHTML = profilePillHtml;
+        } else if (authBtn) {
+          authBtn.outerHTML = profilePillHtml;
+        }
+
         if (userStatusTag) {
-          userStatusTag.innerText = isUserPaid ? 'Verified Premium Access' : `Signed In: ${name} (Demo Mode)`;
+          userStatusTag.innerText = isUserPaid ? 'Verified Premium Access' : `Signed In: ${fullName} (Demo Mode)`;
           userStatusTag.style.color = isUserPaid ? '#047857' : '#d97706';
         }
       } else {
-        if (authBtn) authBtn.innerText = 'Sign In';
+        if (profileContainer) {
+          profileContainer.outerHTML = '<button class="btn-secondary" id="authBtn" onclick="openAuthModal()">Sign In</button>';
+        } else if (authBtn) {
+          authBtn.innerText = 'Sign In';
+        }
         if (userStatusTag) {
           userStatusTag.innerText = isUserPaid ? 'All Mocks Unlocked' : 'Free Demo Mode';
         }
       }
+
       if (isUserPaid) {
         const unlockBtn = document.getElementById('navUnlockBtn');
         const examUnlockBtn = document.getElementById('examUnlockBtn');
@@ -2672,8 +2794,53 @@
       document.getElementById('paymentModal').classList.remove('active');
     }
 
-async function handleGoogleSignIn() {
-      const btn = event?.currentTarget;
+function setAuthTab(tab) {
+      const isLogin = tab === 'login';
+      const tabSignInBtn = document.getElementById('tabSignInBtn');
+      const tabSignUpBtn = document.getElementById('tabSignUpBtn');
+      const signInForm = document.getElementById('signInForm');
+      const signUpForm = document.getElementById('signUpForm');
+      const modalTitle = document.getElementById('authModalTitle');
+      const subTitle = document.getElementById('authSubtitle');
+      const googleBtnText = document.getElementById('googleBtnText');
+
+      if (isLogin) {
+        if (tabSignInBtn) {
+          tabSignInBtn.style.background = '#ffffff';
+          tabSignInBtn.style.color = '#059669';
+          tabSignInBtn.style.boxShadow = '0 1px 3px rgba(0,0,0,0.1)';
+        }
+        if (tabSignUpBtn) {
+          tabSignUpBtn.style.background = 'transparent';
+          tabSignUpBtn.style.color = '#64748b';
+          tabSignUpBtn.style.boxShadow = 'none';
+        }
+        if (signInForm) signInForm.style.display = 'block';
+        if (signUpForm) signUpForm.style.display = 'none';
+        if (modalTitle) modalTitle.innerText = 'Student Sign In';
+        if (subTitle) subTitle.innerText = 'Sign in to access your mock tests and saved diagnostic progress.';
+        if (googleBtnText) googleBtnText.innerText = 'Continue with Google';
+      } else {
+        if (tabSignUpBtn) {
+          tabSignUpBtn.style.background = '#ffffff';
+          tabSignUpBtn.style.color = '#059669';
+          tabSignUpBtn.style.boxShadow = '0 1px 3px rgba(0,0,0,0.1)';
+        }
+        if (tabSignInBtn) {
+          tabSignInBtn.style.background = 'transparent';
+          tabSignInBtn.style.color = '#64748b';
+          tabSignInBtn.style.boxShadow = 'none';
+        }
+        if (signInForm) signInForm.style.display = 'none';
+        if (signUpForm) signUpForm.style.display = 'block';
+        if (modalTitle) modalTitle.innerText = 'Create Student Profile';
+        if (subTitle) subTitle.innerText = 'Create your account to track scores, unlock 60 full mocks, and get AI analytics.';
+        if (googleBtnText) googleBtnText.innerText = 'Sign Up with Google';
+      }
+    }
+
+    async function handleGoogleSignIn() {
+      const btn = document.getElementById('googleSsoBtn');
       if (btn) {
         btn.disabled = true;
         btn.innerHTML = `<span style="display:inline-flex;align-items:center;gap:8px;">Connecting to Google...</span>`;
@@ -2687,105 +2854,144 @@ async function handleGoogleSignIn() {
           const res = await fbAuth.signInWithPopup(provider);
           const user = res.user;
 
-          // Sync with Supabase PostgreSQL via Backend API
-          try {
-            await apiRequest('/api/auth/google-sso', {
-              method: 'POST',
-              body: JSON.stringify({
-                email: user.email,
-                fullName: user.displayName || user.email.split('@')[0]
-              })
-            });
-          } catch (apiErr) {
-            console.warn('[SSO Backend Sync Notice]:', apiErr);
+          // Sync with Supabase PostgreSQL via Backend API & acquire single-device token
+          const ssoRes = await apiRequest('/api/auth/google-sso', {
+            method: 'POST',
+            body: JSON.stringify({
+              email: user.email,
+              fullName: user.displayName || user.email.split('@')[0]
+            })
+          });
+
+          if (ssoRes.ok && ssoRes.data?.sessionToken) {
+            localStorage.setItem('scale_student_session_token', ssoRes.data.sessionToken);
+            if (ssoRes.data.user) {
+              localStorage.setItem('scale_student_profile', JSON.stringify(ssoRes.data.user));
+              localStorage.setItem('scale_test_user_name', ssoRes.data.user.fullName);
+            }
+            if (ssoRes.data.entitlement?.hasAccess) {
+              isUserPaid = true;
+              localStorage.setItem('scale_test_series_paid', 'true');
+            }
           }
 
           localStorage.setItem('scale_test_user', user.email);
           showToast(`Welcome back, ${user.displayName || user.email}! 👋`, 'success');
           closeAuthModal();
-          updateAuthUI(user);
+          updateAuthUI({ email: user.email, fullName: user.displayName || user.email.split('@')[0] });
           await checkServerSession();
         } else {
           localStorage.setItem('scale_test_user', 'student@scaleseries.com');
+          localStorage.setItem('scale_test_user_name', 'Student Aspirant');
           showToast('Signed in successfully!');
           closeAuthModal();
-          updateAuthUI({ email: 'student@scaleseries.com', displayName: 'Student' });
+          updateAuthUI({ email: 'student@scaleseries.com', fullName: 'Student Aspirant' });
         }
       } catch (err) {
         console.error('Google SSO Error:', err);
         if (err.code === 'auth/popup-closed-by-user') {
           showToast('Sign-in cancelled.', 'info');
         } else if (err.code === 'auth/unauthorized-domain') {
-          showToast('Domain not yet authorized in Firebase Console. Please sign in with Email below.', 'error');
+          showToast('Domain not authorized in Firebase. Please sign in with Email.', 'error');
         } else {
-          showToast(err.message || 'Google sign-in error. Please use email sign in.', 'error');
+          showToast(err.message || 'Google sign-in error.', 'error');
         }
       } finally {
         if (btn) {
           btn.disabled = false;
-          btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg> Continue with Google`;
+          btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg> <span id="googleBtnText">Continue with Google</span>`;
         }
       }
     }
 
-    async function handleEmailAuth(e) {
+    async function handleStudentLogin(e) {
       e.preventDefault();
       const email = document.getElementById('authEmail').value.trim();
       const pass = document.getElementById('authPassword').value;
+      const btn = document.getElementById('authSubmitBtn');
+      if (btn) { btn.disabled = true; btn.innerText = 'Signing In...'; }
 
-      // Try Backend login first for Supabase & Single-Device session
-      const backendRes = await apiRequest('/api/auth/login', {
-        method: 'POST',
-        body: JSON.stringify({ email, password: pass })
-      });
-
-      if (backendRes.ok && backendRes.data.success) {
-        localStorage.setItem('scale_test_user', email);
-        showToast('Signed in successfully!');
-        closeAuthModal();
-        updateAuthUI({ email });
-        await checkServerSession();
-        return;
-      }
-
-      // If user doesn't exist, auto-register in Supabase backend
-      if (backendRes.status === 401 && backendRes.data?.error === 'INVALID_CREDENTIALS') {
-        const regRes = await apiRequest('/api/auth/register', {
+      try {
+        const res = await apiRequest('/api/auth/login', {
           method: 'POST',
           body: JSON.stringify({ email, password: pass })
         });
-        if (regRes.ok && regRes.data.success) {
-          localStorage.setItem('scale_test_user', email);
-          showToast('Account created and signed in successfully!');
+
+        if (res.ok && res.data.success) {
+          const user = res.data.user;
+          if (res.data.sessionToken) {
+            localStorage.setItem('scale_student_session_token', res.data.sessionToken);
+          }
+          localStorage.setItem('scale_test_user', user.email);
+          localStorage.setItem('scale_test_user_name', user.fullName || email.split('@')[0]);
+          localStorage.setItem('scale_student_profile', JSON.stringify(user));
+          if (res.data.entitlement?.hasAccess) {
+            isUserPaid = true;
+            localStorage.setItem('scale_test_series_paid', 'true');
+          }
+          showToast(`Welcome back, ${user.fullName || email}! Active on 1 device.`, 'success');
           closeAuthModal();
-          updateAuthUI({ email });
+          updateAuthUI(user);
           await checkServerSession();
           return;
         }
-      }
 
-      // Fallback to Firebase Auth
-      if (fbAuth) {
-        fbAuth.signInWithEmailAndPassword(email, pass)
-          .then(() => {
+        // Fallback to Firebase Auth if backend reports invalid credentials
+        if (fbAuth) {
+          try {
+            await fbAuth.signInWithEmailAndPassword(email, pass);
+            localStorage.setItem('scale_test_user', email);
             showToast('Signed in successfully!');
             closeAuthModal();
             updateAuthUI({ email });
-          })
-          .catch(() => {
-            fbAuth.createUserWithEmailAndPassword(email, pass)
-              .then(() => {
-                showToast('Account created and signed in!');
-                closeAuthModal();
-                updateAuthUI({ email });
-              })
-              .catch((err) => showToast(err.message, 'error'));
-          });
-      } else {
-        localStorage.setItem('scale_test_user', email);
-        showToast(`Signed in as ${email}`);
-        closeAuthModal();
-        updateAuthUI({ email });
+            await checkServerSession();
+            return;
+          } catch {}
+        }
+
+        showToast(res.data?.message || 'Invalid email or password. Please check your credentials.', 'error');
+      } catch (err) {
+        showToast(err.message || 'Login failed. Please try again.', 'error');
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerText = 'Sign In to Account →'; }
+      }
+    }
+
+    async function handleStudentRegister(e) {
+      e.preventDefault();
+      const fullName = document.getElementById('regFullName').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+      const pass = document.getElementById('regPassword').value;
+      const targetExam = document.getElementById('regTargetExam').value;
+      const btn = document.getElementById('regSubmitBtn');
+      if (btn) { btn.disabled = true; btn.innerText = 'Creating Profile...'; }
+
+      try {
+        const res = await apiRequest('/api/auth/register', {
+          method: 'POST',
+          body: JSON.stringify({ fullName, email, password: pass, targetExam })
+        });
+
+        if (res.ok && res.data.success) {
+          const user = res.data.user;
+          if (res.data.sessionToken) {
+            localStorage.setItem('scale_student_session_token', res.data.sessionToken);
+          }
+          localStorage.setItem('scale_test_user', user.email);
+          localStorage.setItem('scale_test_user_name', user.fullName || fullName);
+          localStorage.setItem('scale_student_profile', JSON.stringify(user));
+          showToast(`Profile created! Welcome, ${user.fullName || fullName}! 👋`, 'success');
+          closeAuthModal();
+          updateAuthUI(user);
+          await checkServerSession();
+          return;
+        }
+
+        showToast(res.data?.message || 'Registration failed. Email may already be registered.', 'error');
+      } catch (err) {
+        showToast(err.message || 'Error creating profile. Please try again.', 'error');
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerText = 'Create Profile & Sign In →'; }
       }
     }
 
