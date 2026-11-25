@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: scale-test-series-backend
+    env: node
+    plan: free
+    region: oregon
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: FRONTEND_ORIGIN
+        value: https://scaletestseries.web.app
+      - key: DATABASE_URL
+        value: postgresql://postgres.xkemqdthtkkfxaltigii:Csesanketiiitp%231@aws-0-ap-northeast-1.pooler.supabase.com:6543/postgres
+      - key: SUPABASE_URL
+        value: https://xkemqdthtkkfxaltigii.supabase.co
+      - key: RAZORPAY_KEY_ID
+        value: rzp_live_Tln6miI6q4JfC1
+      - key: RAZORPAY_KEY_SECRET
+        value: CJ6fBoTBl0oK2GB51kYU04zn
+      - key: RAZORPAY_WEBHOOK_SECRET
+        value: CJ6fBoTBl0oK2GB51kYU04zn
