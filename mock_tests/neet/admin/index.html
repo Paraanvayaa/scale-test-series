@@ -530,7 +530,10 @@
       if (window.location.port === '4000') {
         return '/api/v1/admin';
       }
-      return 'http://localhost:4000/api/v1/admin';
+      if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        return 'http://localhost:4000/api/v1/admin';
+      }
+      return 'https://scale-test-series-backend.onrender.com/api/v1/admin';
     }
 
     let API_BASE = getInitialApiBase();
