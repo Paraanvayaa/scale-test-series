@@ -2477,17 +2477,6 @@
     }
 
     // ====================================================================
-    // UTILITY FUNCTIONS
-    // ====================================================================
-    let currentUser = null;
-
-    function escapeHtml(str) {
-      if (!str) return '';
-      const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
-      return String(str).replace(/[&<>"']/g, c => map[c]);
-    }
-
-    // ====================================================================
     // BACKEND API CLIENT & SINGLE-DEVICE SESSION INTEGRATION
     // ====================================================================
     const BACKEND_URL = window.BACKEND_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:4000' : 'https://scale-test-series-backend.onrender.com');
