@@ -342,7 +342,7 @@
                 <th>Student Email</th>
                 <th>Full Name</th>
                 <th>Registered</th>
-                <th>Last Active</th>
+                <th>Active Devices</th>
                 <th>Entitlement</th>
                 <th>Account Status</th>
                 <th>Actions</th>
@@ -400,10 +400,19 @@
         <div class="panel">
           <div class="panel-header">
             <div>
-              <h2 class="panel-title">Active Device Sessions</h2>
-              <p style="font-size: 0.78rem; color: #64748b; margin-top: 2px;">Single-Device policy active. Old devices revoked automatically on new login.</p>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <h2 class="panel-title">Active Device Sessions</h2>
+                <span id="activeSessionsBadge" class="badge badge-success" style="font-size: 0.72rem;">0 Active Devices</span>
+              </div>
+              <p style="font-size: 0.78rem; color: #64748b; margin-top: 2px;">Single-Device policy active. Showing live connected devices.</p>
             </div>
-            <button class="btn-sm btn-secondary" onclick="loadSessions()">🔄 Refresh Sessions</button>
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <select id="sessionStatusFilter" class="input-sm" onchange="loadSessions()" style="font-size: 0.78rem; padding: 0.35rem 0.6rem;">
+                <option value="true" selected>Active Devices Only</option>
+                <option value="false">All (Include Revoked)</option>
+              </select>
+              <button class="btn-sm btn-secondary" onclick="loadSessions()">🔄 Refresh</button>
+            </div>
           </div>
           <table class="data-table">
             <thead>
@@ -788,7 +797,9 @@
                 <td><strong>${escapeHtml(st.email)}</strong></td>
                 <td>${escapeHtml(st.full_name || 'NEET Aspirant')}</td>
                 <td>${formatDate(st.created_at)}</td>
-                <td>${formatDate(st.last_login)}</td>
+                <td>
+                  ${(st.active_devices_count > 0 || st.has_active_session) ? `<span class="badge badge-success">${st.active_devices_count || 1} Active Device</span>` : '<span class="badge badge-info" style="color: #64748b; background: #f1f5f9;">Offline</span>'}
+                </td>
                 <td>${st.is_paid ? `<span class="badge badge-success">${st.entitlement_source || 'PAID'}</span>` : '<span class="badge badge-info">FREE</span>'}</td>
                 <td>${st.is_suspended ? '<span class="badge badge-danger">SUSPENDED</span>' : '<span class="badge badge-success">ACTIVE</span>'}</td>
                 <td>
@@ -1010,12 +1021,26 @@
     // 7. Sessions View
     async function loadSessions() {
       try {
-        const res = await adminFetch('/sessions?limit=25');
+        const filterEl = document.getElementById('sessionStatusFilter');
+        const activeOnly = filterEl ? filterEl.value : 'true';
+        const res = await adminFetch(`/sessions?limit=50&activeOnly=${activeOnly}`);
         if (res.ok && res.data.sessions) {
+          const badge = document.getElementById('activeSessionsBadge');
+          const activeCount = res.data.sessions.filter(s => s.is_active).length;
+          if (badge) badge.innerText = `${activeCount} Active Device${activeCount === 1 ? '' : 's'}`;
+
           const tbody = document.getElementById('sessionsTableBody');
+          if (res.data.sessions.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; padding: 2.5rem; color: #64748b;">No ${activeOnly === 'true' ? 'active' : ''} device sessions found.</td></tr>`;
+            return;
+          }
+
           tbody.innerHTML = res.data.sessions.map(s => `
             <tr>
-              <td><strong>${escapeHtml(s.student_email)}</strong></td>
+              <td>
+                <strong>${escapeHtml(s.student_email)}</strong>
+                ${s.is_active ? '<span class="badge badge-success" style="margin-left: 8px; font-size: 0.68rem; padding: 0.15rem 0.45rem;">1 Active Device</span>' : ''}
+              </td>
               <td style="max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${escapeHtml(s.device_info || 'Unknown')}</td>
               <td>${escapeHtml(s.ip_address || '127.0.0.1')}</td>
               <td>${s.is_active ? '<span class="badge badge-success">ACTIVE</span>' : `<span class="badge badge-danger">REVOKED (${escapeHtml(s.revocation_reason || '')})</span>`}</td>

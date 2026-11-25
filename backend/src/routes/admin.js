@@ -316,10 +316,12 @@ router.get('/payments', requireAdmin, async (req, res) => {
 
 router.get('/sessions', requireAdmin, async (req, res) => {
   try {
-    const { page = 1, limit = 25 } = req.query;
+    const { page = 1, limit = 25, activeOnly } = req.query;
+    const isActOnly = activeOnly === undefined ? true : activeOnly === 'true';
     const result = await db.getSessions({
       page: parseInt(page, 10) || 1,
-      limit: parseInt(limit, 10) || 25
+      limit: parseInt(limit, 10) || 25,
+      activeOnly: isActOnly
     });
     return res.json({ success: true, ...result });
   } catch (error) {

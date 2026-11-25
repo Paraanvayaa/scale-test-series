@@ -816,6 +816,7 @@ const db = {
           u.created_at,
           coalesce(max(s.last_seen_at), u.created_at) as last_login,
           bool_or(s.is_active) as has_active_session,
+          count(s.id) FILTER (WHERE s.is_active = true) as active_devices_count,
           (e.id IS NOT NULL AND e.status = 'active') as is_paid,
           e.source_type as entitlement_source
         FROM public.scale_users u
@@ -1000,10 +1001,11 @@ const db = {
     return localStore.getPayments({ search, status, page, limit });
   },
 
-  async getSessions({ page = 1, limit = 25 }) {
+  async getSessions({ page = 1, limit = 25, activeOnly = true }) {
     if (dbPool) {
       const offset = (page - 1) * limit;
-      const countRes = await dbPool.query('SELECT count(*) as total FROM public.scale_user_sessions');
+      const whereClause = activeOnly ? 'WHERE s.is_active = true' : '';
+      const countRes = await dbPool.query(`SELECT count(*) as total FROM public.scale_user_sessions s ${whereClause}`);
       const total = parseInt(countRes.rows[0]?.total || 0, 10);
 
       const dataRes = await dbPool.query(`
@@ -1021,6 +1023,7 @@ const db = {
           u.full_name as student_name
         FROM public.scale_user_sessions s
         JOIN public.scale_users u ON s.user_id = u.id
+        ${whereClause}
         ORDER BY s.is_active DESC, s.created_at DESC
         LIMIT $1 OFFSET $2;
       `, [limit, offset]);
