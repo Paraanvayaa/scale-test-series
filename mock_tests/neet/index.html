@@ -2466,6 +2466,28 @@
   <!-- ==================== APPLICATION SCRIPTS ==================== -->
   <script>
     // ====================================================================
+    // UTILITY FUNCTIONS
+    // ====================================================================
+    let currentUser = null;
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+      return String(str).replace(/[&<>"']/g, c => map[c]);
+    }
+
+    // ====================================================================
+    // UTILITY FUNCTIONS
+    // ====================================================================
+    let currentUser = null;
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+      return String(str).replace(/[&<>"']/g, c => map[c]);
+    }
+
+    // ====================================================================
     // BACKEND API CLIENT & SINGLE-DEVICE SESSION INTEGRATION
     // ====================================================================
     const BACKEND_URL = window.BACKEND_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:4000' : 'https://scale-test-series-backend.onrender.com');
@@ -2554,11 +2576,11 @@
           setTimeout(() => handleUnlock(), 500);
         }
       } else {
-        // Not authenticated — clear any stale UI state
-        if (!currentUser) {
-          localStorage.removeItem('scale_test_series_paid');
-          isUserPaid = localStorage.getItem('scale_test_series_paid') === 'true';
-        }
+        // Not authenticated — show sign-in UI
+        currentUser = null;
+        isUserPaid = false;
+        localStorage.removeItem('scale_test_series_paid');
+        updateAuthUI(null);
       }
     }
 
@@ -2587,8 +2609,13 @@
       if (window.firebase) {
         firebase.initializeApp(firebaseConfig);
         fbAuth = firebase.auth();
-        fbAuth.onAuthStateChanged((user) => {
-          updateAuthUI(user);
+        fbAuth.onAuthStateChanged((firebaseUser) => {
+          // Only update UI from Firebase if we don't have a backend session
+          // Backend session (via checkServerSession) takes priority
+          if (firebaseUser && !currentUser) {
+            updateAuthUI({ email: firebaseUser.email, fullName: firebaseUser.displayName || firebaseUser.email.split('@')[0] });
+          }
+          // Don't call updateAuthUI(null) here — let checkServerSession() handle session state
         });
       }
     } catch (e) {
@@ -2635,10 +2662,13 @@
       try {
         await apiRequest('/api/auth/logout', { method: 'POST' });
       } catch {}
+      try { if (fbAuth) await fbAuth.signOut(); } catch {}
       // Session cookie cleared by backend
       localStorage.removeItem('scale_test_user');
       localStorage.removeItem('scale_test_user_name');
       localStorage.removeItem('scale_student_profile');
+      localStorage.removeItem('scale_test_series_paid');
+      isUserPaid = false;
       currentUser = null;
       updateAuthUI(null);
       showToast('Logged out safely. Device session closed.', 'info');
@@ -2957,6 +2987,11 @@ function setAuthTab(tab) {
       const pass = document.getElementById('regPassword').value;
       const targetExam = document.getElementById('regTargetExam').value;
       const btn = document.getElementById('regSubmitBtn');
+
+      // Validate fields
+      if (!fullName) { showToast('Please enter your full name.', 'error'); return; }
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showToast('Please enter a valid email address.', 'error'); return; }
+      if (!pass || pass.length < 6) { showToast('Password must be at least 6 characters.', 'error'); return; }
       if (btn) { btn.disabled = true; btn.innerText = 'Creating Profile...'; }
 
       try {
@@ -3510,7 +3545,7 @@ function setAuthTab(tab) {
       }
       renderSidebar();
       updateHeaderBadge();
-      updateAuthUI(null);
+      // updateAuthUI is handled by checkServerSession() above
       if (window.innerWidth <= 768) {
         setViewMode('test-only');
       } else {
