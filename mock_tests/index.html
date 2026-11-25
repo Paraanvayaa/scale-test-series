@@ -1840,7 +1840,7 @@
 
       <div class="nav-actions">
         <button class="btn-secondary" onclick="launchDemoTest(1)">Free Demo</button>
-        <a href="https://rzp.io/rzp/txETH4p" class="btn-primary" id="navUnlockBtn" onclick="window.location.href='https://rzp.io/rzp/txETH4p'; return false;" style="text-decoration: none; display: inline-flex; align-items: center;">Unlock 60 Mocks &bull; ₹999</a>
+        <button class="btn-primary" id="navUnlockBtn" onclick="handleUnlock()" style="display: inline-flex; align-items: center;">Unlock 60 Mocks &bull; ₹999</button>
         <button class="btn-secondary" id="authBtn" onclick="openAuthModal()">Sign In</button>
       </div>
     </div>
@@ -1860,9 +1860,9 @@
       </p>
 
       <div class="hero-ctas">
-        <a href="https://rzp.io/rzp/txETH4p" class="btn-primary btn-cta-lg" onclick="window.location.href=\'https://rzp.io/rzp/txETH4p\'; return false;" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+        <button class="btn-primary btn-cta-lg" onclick="handleUnlock()" style="display: inline-flex; align-items: center; gap: 8px;">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-          Unlock All 60 Mocks @ &#8377;999 (Lifetime)</a>
+          Unlock All 60 Mocks @ &#8377;999 (Lifetime)</button>
         <button class="btn-secondary btn-cta-lg" onclick="launchDemoTest(1)">
           Try Free Demo Mocks (01, 21, 41) &rarr;
         </button>
@@ -2084,7 +2084,7 @@
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Split-Screen Dual Workspace & KaTeX Math</li>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Instant digital access & valid till NEET 2026/27</li>
           </ul>
-          <a href="https://rzp.io/rzp/txETH4p" class="btn-primary" onclick="window.location.href='https://rzp.io/rzp/txETH4p'; return false;" style="width: 100%; justify-content: center; padding: 0.85rem; text-decoration: none; display: inline-flex; align-items: center;">Unlock All 60 Mocks @ ₹999</a>
+          <button class="btn-primary" onclick="handleUnlock()" style="width: 100%; justify-content: center; padding: 0.85rem; display: inline-flex; align-items: center;">Unlock All 60 Mocks @ ₹999</button>
         </div>
 
         <!-- Institutional Batch -->
@@ -2418,7 +2418,7 @@
           </label>
         </div>
 
-        <a href="https://rzp.io/rzp/txETH4p" class="btn-primary" onclick="window.location.href='https://rzp.io/rzp/txETH4p'; return false;" style="width: 100%; justify-content: center; padding: 0.85rem; font-size: 1rem; text-decoration: none; display: inline-flex; align-items: center;">Pay ₹999 &amp; Unlock All 60 Mocks &rarr;</a>
+        <button class="btn-primary" onclick="handleUnlock()" style="width: 100%; justify-content: center; padding: 0.85rem; font-size: 1rem; display: inline-flex; align-items: center;">Pay ₹999 &amp; Unlock All 60 Mocks &rarr;</button>
 
         <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 0.85rem; padding: 0.45rem 0.75rem; background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 6px; font-size: 0.73rem; color: #475569;">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
@@ -2429,13 +2429,11 @@
         <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid #e2e8f0; font-size: 0.78rem;">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
             <span style="font-weight: 700; color: #475569;">⚙️ Razorpay Link / Key Configuration:</span>
-            <button onclick="handlePaymentSuccess('DEMO_TEST_' + Date.now())" style="background: none; border: 1px solid #10b981; color: #047857; border-radius: 4px; padding: 0.15rem 0.45rem; font-size: 0.7rem; cursor: pointer; font-weight: 600;">
-              ⚡ Instant Test Unlock
-            </button>
+            <!-- Dev bypass removed for security -->
           </div>
           <div style="display: flex; gap: 6px;">
             <input type="text" id="rzpConfigInput" placeholder="Paste Razorpay Payment Link (https://rzp.io/l/...) or Key" style="flex: 1; padding: 0.4rem 0.6rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.75rem;" />
-            <button onclick="window.location.href='https://rzp.io/rzp/txETH4p'" style="background: #0f172a; color: #ffffff; border: none; border-radius: 6px; padding: 0.4rem 0.75rem; font-size: 0.75rem; font-weight: 600; cursor: pointer;">Save</button>
+            <button onclick="saveCustomRazorpay()" style="background: #0f172a; color: #ffffff; border: none; border-radius: 6px; padding: 0.4rem 0.75rem; font-size: 0.75rem; font-weight: 600; cursor: pointer;">Save</button>
           </div>
           <p style="font-size: 0.70rem; color: #94a3b8; margin-top: 0.35rem; line-height: 1.3;">
             Create a ₹999 Payment Link in your Razorpay dashboard (<a href="https://dashboard.razorpay.com/app/payment-links" target="_blank" style="color: #059669; text-decoration: underline;">dashboard.razorpay.com</a>) and paste it here, or send it in chat to make it permanent!
@@ -2549,6 +2547,18 @@
         }
         updateAuthUI(currentUser);
         initRealtimeSessionEvents();
+
+        // If user just authenticated and had a pending unlock intent, trigger it
+        if (pendingCheckoutAfterAuth) {
+          pendingCheckoutAfterAuth = false;
+          setTimeout(() => handleUnlock(), 500);
+        }
+      } else {
+        // Not authenticated — clear any stale UI state
+        if (!currentUser) {
+          localStorage.removeItem('scale_test_series_paid');
+          isUserPaid = localStorage.getItem('scale_test_series_paid') === 'true';
+        }
       }
     }
 
@@ -2556,7 +2566,7 @@
     // RAZORPAY CONFIGURATION
     // ------------------------------------------
     // Option 1: Razorpay Payment Link / Page (e.g. "https://rzp.io/l/..." or "https://pages.razorpay.com/...")
-    window.RAZORPAY_PAYMENT_URL = "https://rzp.io/rzp/txETH4p";
+    // Razorpay Checkout.js is used instead of payment links
     // Option 2: Razorpay API Key ID (e.g. "rzp_live_..." or "rzp_test_...")
     window.RAZORPAY_KEY_ID = localStorage.getItem('scale_razorpay_key') || "rzp_live_Tln6miI6q4JfC1";
     // ==========================================
@@ -2625,7 +2635,7 @@
       try {
         await apiRequest('/api/auth/logout', { method: 'POST' });
       } catch {}
-      localStorage.removeItem('scale_student_session_token');
+      // Session cookie cleared by backend
       localStorage.removeItem('scale_test_user');
       localStorage.removeItem('scale_test_user_name');
       localStorage.removeItem('scale_student_profile');
@@ -2863,8 +2873,8 @@ function setAuthTab(tab) {
             })
           });
 
-          if (ssoRes.ok && ssoRes.data?.sessionToken) {
-            localStorage.setItem('scale_student_session_token', ssoRes.data.sessionToken);
+          if (ssoRes.ok && ssoRes.data?.success) {
+            // Session cookie set by backend via HttpOnly cookie
             if (ssoRes.data.user) {
               localStorage.setItem('scale_student_profile', JSON.stringify(ssoRes.data.user));
               localStorage.setItem('scale_test_user_name', ssoRes.data.user.fullName);
@@ -2881,11 +2891,7 @@ function setAuthTab(tab) {
           updateAuthUI({ email: user.email, fullName: user.displayName || user.email.split('@')[0] });
           await checkServerSession();
         } else {
-          localStorage.setItem('scale_test_user', 'student@scaleseries.com');
-          localStorage.setItem('scale_test_user_name', 'Student Aspirant');
-          showToast('Signed in successfully!');
-          closeAuthModal();
-          updateAuthUI({ email: 'student@scaleseries.com', fullName: 'Student Aspirant' });
+          showToast('Google Sign-In is not available. Please sign in with email.', 'error');
         }
       } catch (err) {
         console.error('Google SSO Error:', err);
@@ -2919,9 +2925,7 @@ function setAuthTab(tab) {
 
         if (res.ok && res.data.success) {
           const user = res.data.user;
-          if (res.data.sessionToken) {
-            localStorage.setItem('scale_student_session_token', res.data.sessionToken);
-          }
+          // Session token is stored in HttpOnly cookie only (no localStorage)
           localStorage.setItem('scale_test_user', user.email);
           localStorage.setItem('scale_test_user_name', user.fullName || email.split('@')[0]);
           localStorage.setItem('scale_student_profile', JSON.stringify(user));
@@ -2936,18 +2940,7 @@ function setAuthTab(tab) {
           return;
         }
 
-        // Fallback to Firebase Auth if backend reports invalid credentials
-        if (fbAuth) {
-          try {
-            await fbAuth.signInWithEmailAndPassword(email, pass);
-            localStorage.setItem('scale_test_user', email);
-            showToast('Signed in successfully!');
-            closeAuthModal();
-            updateAuthUI({ email });
-            await checkServerSession();
-            return;
-          } catch {}
-        }
+        // Backend is the sole source of truth for authentication
 
         showToast(res.data?.message || 'Invalid email or password. Please check your credentials.', 'error');
       } catch (err) {
@@ -2974,9 +2967,7 @@ function setAuthTab(tab) {
 
         if (res.ok && res.data.success) {
           const user = res.data.user;
-          if (res.data.sessionToken) {
-            localStorage.setItem('scale_student_session_token', res.data.sessionToken);
-          }
+          // Session token is stored in HttpOnly cookie only (no localStorage)
           localStorage.setItem('scale_test_user', user.email);
           localStorage.setItem('scale_test_user_name', user.fullName || fullName);
           localStorage.setItem('scale_student_profile', JSON.stringify(user));
@@ -2999,20 +2990,118 @@ function setAuthTab(tab) {
 
         let pendingCheckoutAfterAuth = false;
 
-        function openPaymentModal() {
-      window.location.href = "https://rzp.io/rzp/txETH4p";
+    // Auth-Gated Unlock Flow: Check auth → Create order → Open Razorpay Checkout.js → Verify → Unlock
+    async function handleUnlock() {
+      // Step 1: Check authentication via backend
+      const authRes = await apiRequest('/api/auth/me');
+      if (!authRes.ok || !authRes.data?.authenticated) {
+        // Not authenticated → show auth modal, preserve unlock intent
+        pendingCheckoutAfterAuth = true;
+        openAuthModal();
+        showToast('Please sign in first to unlock all mock tests.', 'info');
+        return;
+      }
+
+      // Step 2: Check if already purchased
+      if (authRes.data.entitlement?.hasAccess) {
+        isUserPaid = true;
+        localStorage.setItem('scale_test_series_paid', 'true');
+        handlePaymentSuccess('ALREADY_ENTITLED');
+        return;
+      }
+
+      // Step 3: Create Razorpay order via backend
+      const orderBtn = document.querySelector('#examUnlockBtn') || document.querySelector('#navUnlockBtn');
+      if (orderBtn) { orderBtn.disabled = true; orderBtn.innerText = 'Creating order...'; }
+
+      const orderRes = await apiRequest('/api/payments/create-order', { method: 'POST' });
+      if (!orderRes.ok) {
+        showToast(orderRes.data?.message || 'Failed to create payment order. Please try again.', 'error');
+        if (orderBtn) { orderBtn.disabled = false; orderBtn.innerText = 'Unlock All 60 Mocks • ₹999'; }
+        return;
+      }
+
+      if (orderRes.data.alreadyPurchased) {
+        isUserPaid = true;
+        localStorage.setItem('scale_test_series_paid', 'true');
+        handlePaymentSuccess('ALREADY_ENTITLED');
+        return;
+      }
+
+      // Step 4: Open Razorpay Checkout.js
+      const { orderId, amount, currency, keyId, product } = orderRes.data;
+      const user = authRes.data.user;
+
+      const rzpOptions = {
+        key: keyId,
+        amount: amount,
+        currency: currency,
+        name: 'Scale Test Series',
+        description: product?.name || 'All-Access Master Pass — 60 Full-Length NEET Mocks',
+        order_id: orderId,
+        prefill: {
+          email: user.email || '',
+          contact: ''
+        },
+        theme: { color: '#059669' },
+        modal: {
+          ondismiss: function() {
+            showToast('Payment cancelled. You can try again anytime.', 'info');
+            if (orderBtn) { orderBtn.disabled = false; orderBtn.innerText = 'Unlock All 60 Mocks • ₹999'; }
+          }
+        },
+        handler: async function(response) {
+          // Step 5: Verify payment on backend
+          if (orderBtn) { orderBtn.innerText = 'Verifying payment...'; }
+          const verifyRes = await apiRequest('/api/payments/verify', {
+            method: 'POST',
+            body: JSON.stringify({
+              orderId: response.razorpay_order_id,
+              paymentId: response.razorpay_payment_id,
+              signature: response.razorpay_signature
+            })
+          });
+
+          if (verifyRes.ok && verifyRes.data?.success) {
+            // Step 6: Backend verified! Activate entitlement
+            handlePaymentSuccess(response.razorpay_payment_id);
+          } else {
+            showToast('Payment verification failed. If money was deducted, it will be refunded within 5-7 days. Please contact support.', 'error');
+            if (orderBtn) { orderBtn.disabled = false; orderBtn.innerText = 'Unlock All 60 Mocks • ₹999'; }
+          }
+        }
+      };
+
+      try {
+        const rzp = new Razorpay(rzpOptions);
+        rzp.on('payment.failed', function(response) {
+          showToast('Payment failed: ' + (response.error?.description || 'Unknown error') + '. Please try again.', 'error');
+          if (orderBtn) { orderBtn.disabled = false; orderBtn.innerText = 'Unlock All 60 Mocks • ₹999'; }
+        });
+        rzp.open();
+      } catch (err) {
+        console.error('Razorpay Checkout error:', err);
+        showToast('Payment gateway error. Please try again.', 'error');
+        if (orderBtn) { orderBtn.disabled = false; orderBtn.innerText = 'Unlock All 60 Mocks • ₹999'; }
+      }
     }
 
-    function processPayment() {
-      window.location.href = "https://rzp.io/rzp/txETH4p";
-    }
+    // Legacy function aliases for backward compatibility
+    function openPaymentModal() { handleUnlock(); }
+    function processPayment() { handleUnlock(); }
 
     function handlePaymentSuccess(txId) {
       isUserPaid = true;
       localStorage.setItem('scale_test_series_paid', 'true');
-      localStorage.setItem('scale_payment_id', txId);
-      closePaymentModal();
-      showToast('Payment Successful! All 60 Mock Papers Unlocked 🎉', 'success');
+      if (txId && txId !== 'ALREADY_ENTITLED') {
+        localStorage.setItem('scale_payment_id', txId);
+      }
+      try { closePaymentModal(); } catch(e) {}
+      if (txId === 'ALREADY_ENTITLED') {
+        showToast('You already have full access to all 60 Mock Tests! ✓', 'success');
+      } else {
+        showToast('Payment Verified! All 60 Mock Papers Unlocked 🎉', 'success');
+      }
       
       const unlockBtn = document.getElementById('examUnlockBtn');
       if (unlockBtn) {
@@ -3391,14 +3480,30 @@ function setAuthTab(tab) {
     }
 
     // Init on DOM ready
-    window.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener('DOMContentLoaded', async () => {
+      // Restore session from HttpOnly cookie on page load
+      try { await checkServerSession(); } catch(e) { console.warn('[Session] Cookie restore failed:', e); }
+
       // Check for Razorpay payment redirect / callback
       try {
         const urlParams = new URLSearchParams(window.location.search);
         const rzpPayId = urlParams.get('razorpay_payment_id') || urlParams.get('payment_id');
         const rzpStatus = urlParams.get('razorpay_payment_link_status') || urlParams.get('payment_status') || urlParams.get('payment_success');
         if (rzpPayId || rzpStatus === 'paid' || rzpStatus === 'true') {
-          handlePaymentSuccess(rzpPayId || ('RZP_' + Date.now()));
+          // Payment redirect detected — verify entitlement from backend
+          const verifyRes = await apiRequest('/api/auth/me');
+          if (verifyRes.ok && verifyRes.data?.entitlement?.hasAccess) {
+            handlePaymentSuccess(rzpPayId || 'RZP_REDIRECT');
+          } else {
+            showToast('Payment received! Verifying access — please wait...', 'info');
+            // Retry after 3 seconds (webhook may take a moment)
+            setTimeout(async () => {
+              const retryRes = await apiRequest('/api/auth/me');
+              if (retryRes.ok && retryRes.data?.entitlement?.hasAccess) {
+                handlePaymentSuccess(rzpPayId || 'RZP_REDIRECT');
+              }
+            }, 3000);
+          }
         }
       } catch (e) {
         console.error('Payment redirect check error', e);

@@ -45,8 +45,6 @@ router.post('/register', async (req, res) => {
 
     return res.status(201).json({
       success: true,
-      token: rawToken,
-      sessionToken: rawToken,
       user: { id: user.id, email: user.email, fullName: user.full_name, role: user.role || 'STUDENT' },
       entitlement: { hasAccess: false }
     });
@@ -95,8 +93,6 @@ router.post('/login', async (req, res) => {
     return res.json({
       success: true,
       sessionId: newSessionId,
-      token: rawToken,
-      sessionToken: rawToken,
       user: { id: user.id, email: user.email, fullName: user.full_name, role: user.role || 'STUDENT' },
       entitlement: { hasAccess }
     });
@@ -152,8 +148,6 @@ router.post('/google-sso', async (req, res) => {
     return res.json({
       success: true,
       sessionId: newSessionId,
-      token: rawToken,
-      sessionToken: rawToken,
       user: { id: user.id, email: user.email, fullName: user.full_name, role: user.role || 'STUDENT' },
       entitlement: { hasAccess }
     });
