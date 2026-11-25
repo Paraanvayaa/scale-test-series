@@ -1,0 +1,9 @@
+[build]
+  publish = "mock_tests"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Cache-Control = "public, max-age=3600"
+

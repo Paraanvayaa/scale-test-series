@@ -1,0 +1,66 @@
+function setViewMode(mode) {
+      currentViewMode = mode;
+      document.querySelectorAll(".view-tab-btn").forEach(btn => btn.classList.remove("active"));
+
+      const colTest = document.getElementById("col-test");
+      const colSol = document.getElementById("col-sol");
+      const colKey = document.getElementById("col-key");
+
+      if (mode === "split") {
+        document.getElementById("mode-split").classList.add("active");
+        colTest.classList.remove("hidden");
+        colSol.classList.remove("hidden");
+        colKey.classList.add("hidden");
+      } else if (mode === "test-only") {
+        document.getElementById("mode-test").classList.add("active");
+        colTest.classList.remove("hidden");
+        colSol.classList.add("hidden");
+        colKey.classList.add("hidden");
+      } else if (mode === "sol-only") {
+        document.getElementById("mode-sol").classList.add("active");
+        colTest.classList.add("hidden");
+        colSol.classList.remove("hidden");
+        colKey.classList.add("hidden");
+      } else if (mode === "key") {
+        document.getElementById("mode-key").classList.add("active");
+        colTest.classList.add("hidden");
+        colSol.classList.add("hidden");
+        colKey.classList.remove("hidden");
+      }
+      loadActiveDocument();
+    }
+
+    // Resolve file path based on directory layout
+    function getDocumentPath(filename) {
+      const pad = currentMockIndex < 10 ? "0" + currentMockIndex : "" + currentMockIndex;
+      // Support both structured mock_tests/IIT_Bombay/Mock_01 and flat mock_tests/Mock_01_IIT_Bombay
+      return `${currentIIT}/Mock_${pad}/${filename}`;
+    }
+
+    // Fallback path helper for existing flat mock_tests directories
+    function getFallbackPath(filename) {
+      const mockFlatMap = {
+        IIT_Bombay: ["Mock_01_IIT_Bombay", "Mock_02_IIT_Bombay", "Mock_03_IIT_Bombay"],
+        IIT_Delhi: ["Mock_04_IIT_Delhi", "Mock_05_IIT_Delhi", "Mock_06_IIT_Delhi"],
+        IIT_Guwahati: ["Mock_07_IIT_Guwahati", "Mock_08_IIT_Guwahati", "Mock_09_IIT_Guwahati"],
+        IIT_Kanpur: ["Mock_10_IIT_Kanpur", "Mock_11_IIT_Kanpur", "Mock_12_IIT_Kanpur"],
+        IIT_Kharagpur: ["Mock_13_IIT_Kharagpur", "Mock_14_IIT_Kharagpur"],
+        IIT_Madras: ["Mock_15_IIT_Madras", "Mock_16_IIT_Madras", "Mock_17_IIT_Madras"],
+        IIT_Roorkee: ["Mock_18_IIT_Roorkee", "Mock_19_IIT_Roorkee", "Mock_20_IIT_Roorkee"]
+      };
+      const flatList = mockFlatMap[currentIIT] || [];
+      const flatDir = flatList[(currentMockIndex - 1) % flatList.length];
+      return `${flatDir}/${filename}`;
+    }
+
+    async function fetchAndRender(targetElementId, filename) {
+      const el = document.getElementById(targetElementId);
+      el.innerHTML = '<div class="loading-container"><div class="spinner-ring"></div><span>Loading Content...</span></div>';
+      
+      let res;
+      let primaryPath = getDocumentPath(filename);
+      let fallbackPath = getFallbackPath(filename);
+
+      try {
+        res = await fetch(primaryPath);
+ 

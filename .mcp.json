@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "jetro": {
+      "type": "stdio",
+      "command": "C:\\Users\\Lenovo\\.jetro\\runtime\\node-win32-x64.exe",
+      "args": [
+        "C:\\Users\\Lenovo\\.jetro\\mcp-server\\index.js"
+      ],
+      "env": {
+        "JET_WORKSPACE": "c:\\Users\\Lenovo\\Desktop\\Products\\JEE",
+        "JET_API_URL": "https://api.jetro.ai",
+        "PATH": "C:\\Users\\Lenovo\\.jetro\\runtime;C:\\Python313\\Scripts\\;C:\\Python313\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;D:\\software\\python 310\\Scripts\\;D:\\software\\python 310\\;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin;C:\\Users\\Lenovo\\Downloads\\apache-maven-3.9.6\\apache-maven-3.9.6\\bin;C:\\ProgramData\\chocolatey\\bin;C:\\Users\\Lenovo\\AppData\\Local\\nvm;C:\\nvm4w\\nodejs;C:\\Program Files\\Docker\\Docker\\resources\\bin;C:\\Program Files\\nodejs\\;C:\\Program Files\\Git\\cmd;C:\\Users\\Lenovo\\AppData\\Local\\agy\\bin;C:\\Users\\Lenovo\\AppData\\Local\\hermes\\hermes-agent\\venv\\Scripts;C:\\Users\\Lenovo\\.local\\bin;C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Python\\Python314\\Scripts\\;C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Python\\Python314\\;C:\\Users\\Lenovo\\AppData\\Local\\Microsoft\\WindowsApps;C:\\MinGW\\bin;C:\\Program Files (x86)\\Dev-Cpp\\MinGW64\\bin;C:\\GnuWin32\\bin;C:\\Program Files\\JetBrains\\IntelliJ IDEA 2024.1\\bin;C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Users\\Lenovo\\AppData\\Local\\nvm;C:\\nvm4w\\nodejs;C:\\Users\\Lenovo\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Antigravity\\bin;C:\\Users\\Lenovo\\.local\\bin;C:\\Users\\Lenovo\\.local\\bin;C:\\Users\\Lenovo\\.local\\bin;C:\\Users\\Lenovo\\Downloads\\ngrok-v3-stable-windows-amd64;C:\\Users\\Lenovo\\AppData\\Local\\hermes\\git\\cmd;C:\\Users\\Lenovo\\AppData\\Local\\hermes\\git\\bin;C:\\Users\\Lenovo\\AppData\\Local\\hermes\\git\\usr\\bin;C:\\Users\\Lenovo\\AppData\\Local\\Microsoft\\WinGet\\Packages\\BurntSushi.ripgrep.MSVC_Microsoft.Winget.Source_8wekyb3d8bbwe\\ripgrep-15.1.0-x86_64-pc-windows-msvc;C:\\Users\\Lenovo\\AppData\\Roaming\\npm;C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Antigravity IDE\\bin;C:\\Users\\Lenovo\\AppData\\Local\\Google\\Cloud SDK\\google-cloud-sdk\\bin"
+      }
+    }
+  }
+}

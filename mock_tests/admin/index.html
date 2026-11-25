@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Super Admin Dashboard | Scale Test Series</title>
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #f8fafc;
+      --bg-card: #ffffff;
+      --border-color: #e2e8f0;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --primary: #059669;
+      --primary-hover: #047857;
+      --sidebar-bg: #0f172a;
+      --sidebar-text: #94a3b8;
+      --sidebar-active: #1e293b;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --info: #3b82f6;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg-main);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+    }
+    /* Layout */
+    .admin-sidebar {
+      width: 260px;
+      background: var(--sidebar-bg);
+      color: #ffffff;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      border-right: 1px solid #1e293b;
+      z-index: 100;
+    }
+    .sidebar-brand {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid #1e293b;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .sidebar-brand img { width: 34px; height: 34px; border-radius: 8px; }
+    .sidebar-brand h1 { font-family: 'Outfit', sans-serif; font-size: 1.05rem; font-weight: 800; color: #f8fafc; }
+    .sidebar-brand span { font-size: 0.70rem; color: #10b981; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: block; }
+    
+    .sidebar-menu { list-style: none; padding: 1rem 0.75rem; flex: 1; overflow-y: auto; }
+    .nav-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; color: #64748b; padding: 0.5rem 0.75rem; letter-spacing: 0.05em; }
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0.65rem 0.75rem;
+      color: var(--sidebar-text);
+      text-decoration: none;
+      font-size: 0.86rem;
+      font-weight: 500;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-bottom: 2px;
+      transition: all 0.15s ease;
+    }
+    .sidebar-link:hover { color: #ffffff; background: #1e293b; }
+    .sidebar-link.active { color: #ffffff; background: #059669; font-weight: 600; }
+    .sidebar-link svg { width: 18px; height: 18px; flex-shrink: 0; }
+    
+    .admin-main { flex: 1; display: flex; flex-direction: column; min-width: 0; overflow-x: hidden; }
+    .admin-topbar {
+      height: 64px;
+      background: #ffffff;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.75rem;
+      position: sticky;
+      top: 0;
+      z-index: 90;
+    }
+    .topbar-title { font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 700; color: var(--text-main); }
+    .topbar-actions { display: flex; align-items: center; gap: 14px; }
+    .admin-pill { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; padding: 0.25rem 0.6rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
+    
+    .content-area { padding: 1.75rem; flex: 1; max-width: 1400px; margin: 0 auto; width: 100%; }
+    
+    /* KPI Cards */
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1.1rem; margin-bottom: 1.75rem; }
+    .kpi-card { background: #ffffff; border: 1px solid var(--border-color); border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; }
+    .kpi-label { font-size: 0.78rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 0.4rem; }
+    .kpi-value { font-family: 'Outfit', sans-serif; font-size: 1.75rem; font-weight: 800; color: var(--text-main); }
+    .kpi-sub { font-size: 0.75rem; color: #059669; font-weight: 600; margin-top: 0.4rem; }
+    
+    /* Table & Card Panels */
+    .panel { background: #ffffff; border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 1.75rem; overflow: hidden; }
+    .panel-header { padding: 1rem 1.25rem; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+    .panel-title { font-family: 'Outfit', sans-serif; font-size: 1.05rem; font-weight: 700; }
+    .panel-actions { display: flex; align-items: center; gap: 8px; }
+    
+    /* Forms & Inputs */
+    .input-sm { padding: 0.45rem 0.75rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.82rem; outline: none; }
+    .input-sm:focus { border-color: var(--primary); }
+    .btn-sm { padding: 0.45rem 0.8rem; border-radius: 6px; font-size: 0.80rem; font-weight: 600; cursor: pointer; border: none; display: inline-flex; align-items: center; gap: 5px; text-decoration: none; }
+    .btn-primary { background: var(--primary); color: #ffffff; }
+    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-secondary { background: #f1f5f9; color: #334155; border: 1px solid var(--border-color); }
+    .btn-secondary:hover { background: #e2e8f0; }
+    .btn-danger { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
+    .btn-danger:hover { background: #fca5a5; }
+    
+    /* Status Badges */
+    .badge { display: inline-flex; align-items: center; padding: 0.2rem 0.55rem; border-radius: 4px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+    .badge-success { background: #ecfdf5; color: #047857; }
+    .badge-danger { background: #fee2e2; color: #b91c1c; }
+    .badge-warning { background: #fffbeb; color: #b45309; }
+    .badge-info { background: #eff6ff; color: #1d4ed8; }
+    
+    /* Table */
+    .data-table { width: 100%; border-collapse: collapse; font-size: 0.83rem; text-align: left; }
+    .data-table th { background: #f8fafc; padding: 0.75rem 1rem; font-weight: 600; color: #475569; border-bottom: 1px solid var(--border-color); }
+    .data-table td { padding: 0.85rem 1rem; border-bottom: 1px solid var(--border-color); vertical-align: middle; }
+    .data-table tr:hover td { background: #f8fafc; }
+    
+    /* Pagination */
+    .pagination-bar { padding: 0.75rem 1.25rem; background: #ffffff; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border-color); font-size: 0.80rem; color: #64748b; }
+    
+    /* Modal */
+    .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 1rem; }
+    .modal-overlay.active { display: flex; }
+    .modal-box { background: #ffffff; border-radius: 12px; width: 100%; max-width: 580px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2); }
+    .modal-header { padding: 1.25rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+    .modal-body { padding: 1.25rem; font-size: 0.88rem; }
+    .modal-footer { padding: 1rem 1.25rem; border-top: 1px solid var(--border-color); display: flex; justify-content: flex-end; gap: 8px; }
+
+    /* Login View Container */
+    #loginContainer {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: #0f172a; z-index: 2000;
+      display: flex; align-items: center; justify-content: center;
+      padding: 1.5rem;
+    }
+    .login-box {
+      background: #ffffff; border-radius: 16px;
+      width: 100%; max-width: 420px;
+      padding: 2.25rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================== -->
+  <!-- 1. DEDICATED SUPER ADMIN LOGIN VIEW        -->
+  <!-- ========================================== -->
+  <div id="loginContainer" style="display: none;">
+    <div class="login-box">
+      <div style="text-align: center; margin-bottom: 1.75rem;">
+        <img src="../logo.png" alt="Scale Logo" style="width: 52px; height: 52px; margin-bottom: 0.75rem; border-radius: 10px;">
+        <h2 style="font-family: 'Outfit', sans-serif; font-size: 1.4rem; font-weight: 800; color: #0f172a;">Super Admin Login</h2>
+        <p style="font-size: 0.82rem; color: #64748b; margin-top: 0.35rem;">Scale Test Series &bull; Platform Management</p>
+      </div>
+
+      <form id="adminLoginForm" onsubmit="handleAdminLogin(event)">
+        <div style="margin-bottom: 1.1rem;">
+          <label style="display: block; font-size: 0.80rem; font-weight: 600; color: #334155; margin-bottom: 0.35rem;">Administrator Email</label>
+          <input type="email" id="loginEmail" class="input-sm" style="width: 100%; padding: 0.65rem;" placeholder="admin@scaletestseries.com" required>
+        </div>
+        <div style="margin-bottom: 1.4rem;">
+          <label style="display: block; font-size: 0.80rem; font-weight: 600; color: #334155; margin-bottom: 0.35rem;">Password</label>
+          <input type="password" id="loginPassword" class="input-sm" style="width: 100%; padding: 0.65rem;" placeholder="••••••••••••" required>
+        </div>
+        <button type="submit" id="loginSubmitBtn" class="btn-sm btn-primary" style="width: 100%; justify-content: center; padding: 0.75rem; font-size: 0.95rem;">
+          Sign In as Administrator &rarr;
+        </button>
+      </form>
+      <div id="loginErrorMsg" style="color: #ef4444; font-size: 0.78rem; text-align: center; margin-top: 0.85rem; display: none;"></div>
+
+      <!-- Backend Connection Settings -->
+      <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px dashed #e2e8f0;">
+        <div style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;" onclick="toggleBackendConfig()">
+          <span style="font-size: 0.75rem; color: #64748b; font-weight: 600;">⚙️ Backend API Endpoint</span>
+          <span id="backendStatusPill" style="font-size: 0.68rem; padding: 0.15rem 0.5rem; border-radius: 999px; background: #ecfdf5; color: #059669; font-weight: 600;">Online</span>
+        </div>
+        <div id="backendConfigPanel" style="display: none; margin-top: 0.75rem;">
+          <div style="display: flex; gap: 6px; margin-bottom: 0.5rem;">
+            <input type="text" id="apiEndpointInput" class="input-sm" style="flex: 1; font-size: 0.75rem; padding: 0.4rem 0.6rem;" placeholder="http://localhost:4000/api/v1/admin">
+            <button type="button" class="btn-sm btn-secondary" onclick="saveBackendEndpoint()" style="font-size: 0.75rem; padding: 0.35rem 0.65rem;">Save</button>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button type="button" class="btn-sm btn-secondary" onclick="setPresetBackend('localhost')" style="flex: 1; font-size: 0.70rem; padding: 0.25rem;">Use Localhost:4000</button>
+            <button type="button" class="btn-sm btn-primary" onclick="testBackendHealth()" style="flex: 1; font-size: 0.70rem; padding: 0.25rem;">Test Health</button>
+          </div>
+          <p id="backendHealthText" style="font-size: 0.70rem; color: #64748b; margin-top: 0.4rem; line-height: 1.3;"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 2. ADMIN SIDEBAR NAVIGATION                -->
+  <!-- ========================================== -->
+  <aside class="admin-sidebar" id="adminSidebar">
+    <div class="sidebar-brand">
+      <img src="../logo.png" alt="Logo">
+      <div>
+        <h1>Scale Admin</h1>
+        <span>Platform Super Control</span>
+      </div>
+    </div>
+
+    <ul class="sidebar-menu">
+      <li class="nav-label">Core Business</li>
+      <li><a class="sidebar-link active" onclick="switchTab('overview')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg> Overview</a></li>
+      <li><a class="sidebar-link" onclick="switchTab('students')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg> Students Directory</a></li>
+      <li><a class="sidebar-link" onclick="switchTab('payments')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg> Payments & Revenue</a></li>
+
+      <li class="nav-label" style="margin-top: 1rem;">Operations & Security</li>
+      <li><a class="sidebar-link" onclick="switchTab('sessions')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg> Device Sessions</a></li>
+      <li><a class="sidebar-link" onclick="switchTab('audit')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg> Audit Logs</a></li>
+
+      <li class="nav-label" style="margin-top: 1rem;">Navigation</li>
+      <li><a href="../" target="_blank" class="sidebar-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg> Student Site &rarr;</a></li>
+    </ul>
+
+    <div style="padding: 1rem; border-top: 1px solid #1e293b;">
+      <div style="font-size: 0.75rem; color: #94a3b8; margin-bottom: 0.5rem;" id="adminUserDisplay">admin@scaletestseries.com</div>
+      <button class="btn-sm btn-danger" style="width: 100%; justify-content: center;" onclick="handleAdminLogout()">Logout</button>
+    </div>
+  </aside>
+
+  <!-- ========================================== -->
+  <!-- 3. MAIN DASHBOARD CONTENT AREA             -->
+  <!-- ========================================== -->
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <div class="topbar-title" id="pageTitle">Overview</div>
+      <div class="topbar-actions">
+        <span class="admin-pill" id="adminRoleBadge">SUPER_ADMIN</span>
+        <button class="btn-sm btn-secondary" onclick="loadDashboardOverview()">🔄 Refresh</button>
+      </div>
+    </header>
+
+    <div class="content-area">
+
+      <!-- TAB 1: OVERVIEW -->
+      <section id="viewOverview">
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <span class="kpi-label">Total Registered Students</span>
+            <span class="kpi-value" id="kpiTotalStudents">0</span>
+            <span class="kpi-sub" id="kpiTodayStudents">+0 Today</span>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-label">Total Verified Revenue</span>
+            <span class="kpi-value" id="kpiTotalRevenue">₹0</span>
+            <span class="kpi-sub" id="kpiTodayRevenue">+₹0 Today</span>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-label">Paid Students (All Mocks)</span>
+            <span class="kpi-value" id="kpiPaidStudents">0</span>
+            <span class="kpi-sub">Active Entitlements</span>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-label">Active Device Sessions</span>
+            <span class="kpi-value" id="kpiActiveSessions">0</span>
+            <span class="kpi-sub" style="color: #64748b;">Live Single-Device Enforced</span>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-label">Active Student Accounts</span>
+            <span class="kpi-value" id="kpiActiveAccounts" style="color: #059669;">0</span>
+            <span class="kpi-sub" style="color: #64748b;">In Good Standing</span>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-label">Suspended Accounts</span>
+            <span class="kpi-value" id="kpiSuspendedAccounts" style="color: #ef4444;">0</span>
+            <span class="kpi-sub" style="color: #ef4444;">Access Blocked</span>
+          </div>
+        </div>
+
+        <!-- Quick Activity Section -->
+        <div class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">Recent Student Registrations</h2>
+            <button class="btn-sm btn-secondary" onclick="switchTab('students')">View All Students &rarr;</button>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Student Email</th>
+                <th>Full Name</th>
+                <th>Registration Date</th>
+                <th>Paid Access</th>
+                <th>Account Status</th>
+              </tr>
+            </thead>
+            <tbody id="overviewRecentStudents">
+              <tr><td colspan="5" style="text-align: center; color: #94a3b8; padding: 2rem;">Loading registered students...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- TAB 2: STUDENTS DIRECTORY -->
+      <section id="viewStudents" style="display: none;">
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">Students Directory</h2>
+              <p style="font-size: 0.78rem; color: #64748b; margin-top: 2px;">Manage accounts, suspensions, complimentary access, and active sessions.</p>
+            </div>
+            <div class="panel-actions">
+              <input type="text" id="studentSearchInput" class="input-sm" placeholder="Search by email, name..." oninput="debounceStudentSearch()">
+              <select id="studentStatusFilter" class="input-sm" onchange="loadStudents()">
+                <option value="">All Account Statuses</option>
+                <option value="ACTIVE">Active Accounts</option>
+                <option value="SUSPENDED">Suspended Accounts</option>
+              </select>
+              <select id="studentPaidFilter" class="input-sm" onchange="loadStudents()">
+                <option value="">All Tiers</option>
+                <option value="PAID">Paid Passholders</option>
+                <option value="FREE">Free Demo Users</option>
+              </select>
+              <button class="btn-sm btn-secondary" onclick="exportData('students')">📥 Export CSV</button>
+            </div>
+          </div>
+
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Student Email</th>
+                <th>Full Name</th>
+                <th>Registered</th>
+                <th>Last Active</th>
+                <th>Entitlement</th>
+                <th>Account Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="studentsTableBody">
+              <tr><td colspan="7" style="text-align: center; padding: 2rem;">Loading student database...</td></tr>
+            </tbody>
+          </table>
+
+          <div class="pagination-bar">
+            <span id="studentsCountDisplay">Showing 0 of 0 students</span>
+            <div style="display: flex; gap: 6px;">
+              <button class="btn-sm btn-secondary" id="btnPrevPage" onclick="changeStudentPage(-1)">Previous</button>
+              <button class="btn-sm btn-secondary" id="btnNextPage" onclick="changeStudentPage(1)">Next</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: PAYMENTS -->
+      <section id="viewPayments" style="display: none;">
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">Razorpay Transactions &amp; Entitlements</h2>
+              <p style="font-size: 0.78rem; color: #64748b; margin-top: 2px;">Real captured payments and automated entitlement records.</p>
+            </div>
+            <div class="panel-actions">
+              <button class="btn-sm btn-secondary" onclick="exportData('payments')">📥 Export CSV</button>
+              <button class="btn-sm btn-primary" onclick="loadPayments()">🔄 Sync Payments</button>
+            </div>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Payment ID</th>
+                <th>Order ID</th>
+                <th>Student Email</th>
+                <th>Amount (INR)</th>
+                <th>Method</th>
+                <th>Status</th>
+                <th>Timestamp</th>
+              </tr>
+            </thead>
+            <tbody id="paymentsTableBody">
+              <tr><td colspan="7" style="text-align: center; padding: 2rem;">Loading payment ledger...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- TAB 4: SESSIONS -->
+      <section id="viewSessions" style="display: none;">
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">Active Device Sessions</h2>
+              <p style="font-size: 0.78rem; color: #64748b; margin-top: 2px;">Single-Device policy active. Old devices revoked automatically on new login.</p>
+            </div>
+            <button class="btn-sm btn-secondary" onclick="loadSessions()">🔄 Refresh Sessions</button>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Student Email</th>
+                <th>Device / Browser / Client</th>
+                <th>IP Address</th>
+                <th>Status</th>
+                <th>Login Time</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="sessionsTableBody">
+              <tr><td colspan="6" style="text-align: center; padding: 2rem;">Loading sessions...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- TAB 5: AUDIT LOGS -->
+      <section id="viewAudit" style="display: none;">
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">Administrative Audit Logs</h2>
+              <p style="font-size: 0.78rem; color: #64748b; margin-top: 2px;">Append-only record of all administrative operations, suspensions, and access grants.</p>
+            </div>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>Admin Email</th>
+                <th>Role</th>
+                <th>Action</th>
+                <th>Target User</th>
+                <th>Reason / Notes</th>
+              </tr>
+            </thead>
+            <tbody id="auditTableBody">
+              <tr><td colspan="6" style="text-align: center; padding: 2rem;">Loading audit trail...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ========================================== -->
+  <!-- 4. STUDENT DETAIL & CONTROL MODAL          -->
+  <!-- ========================================== -->
+  <div class="modal-overlay" id="studentModal">
+    <div class="modal-box" style="max-width: 680px;">
+      <div class="modal-header">
+        <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.15rem;" id="modalStudentName">Student Profile</h3>
+        <button class="btn-sm btn-secondary" onclick="closeStudentModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1.25rem; background: #f8fafc; padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color);">
+          <div><strong>Email:</strong> <span id="mEmail">-</span></div>
+          <div><strong>Status:</strong> <span id="mStatus">-</span></div>
+          <div><strong>Registered:</strong> <span id="mRegistered">-</span></div>
+          <div><strong>Entitlement:</strong> <span id="mEntitlement">-</span></div>
+        </div>
+
+        <h4 style="font-size: 0.88rem; font-weight: 700; color: #334155; margin-bottom: 0.65rem;">Administrative Controls:</h4>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.5rem;">
+          <button class="btn-sm btn-danger" id="mBtnSuspend" onclick="promptSuspendStudent()">⛔ Suspend Account</button>
+          <button class="btn-sm btn-primary" id="mBtnReactivate" onclick="promptReactivateStudent()" style="display: none;">♻️ Reactivate Account</button>
+          <button class="btn-sm btn-secondary" onclick="promptGrantAccess()">🎁 Grant Free Access</button>
+          <button class="btn-sm btn-danger" onclick="promptRevokeAccess()">🚫 Revoke Examination Access</button>
+          <button class="btn-sm btn-secondary" onclick="forceRevokeStudentSession()">⚡ Revoke Device Session</button>
+        </div>
+
+        <h4 style="font-size: 0.88rem; font-weight: 700; color: #334155; margin-bottom: 0.65rem;">Internal Admin Notes:</h4>
+        <div id="mNotesList" style="max-height: 140px; overflow-y: auto; margin-bottom: 0.75rem; font-size: 0.82rem;"></div>
+        <div style="display: flex; gap: 6px;">
+          <input type="text" id="mNoteInput" class="input-sm" style="flex: 1;" placeholder="Add private note about this student...">
+          <button class="btn-sm btn-primary" onclick="submitAdminNote()">Add Note</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACTION MODAL: SUSPEND -->
+  <div class="modal-overlay" id="suspendActionModal">
+    <div class="modal-box" style="max-width: 440px;">
+      <div class="modal-header">
+        <h3 style="color: #b91c1c;">Suspend Student Account</h3>
+        <button class="btn-sm btn-secondary" onclick="closeSuspendActionModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 1rem;">
+          Suspending this student will immediately revoke all active device sessions and block future logins. Financial and examination history are preserved.
+        </p>
+        <div style="margin-bottom: 1rem;">
+          <label style="display: block; font-size: 0.78rem; font-weight: 600; margin-bottom: 0.35rem;">Suspension Reason (Required):</label>
+          <textarea id="suspendReasonInput" class="input-sm" style="width: 100%; height: 70px;" placeholder="e.g. Terms violation, account sharing, dispute..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-sm btn-secondary" onclick="closeSuspendActionModal()">Cancel</button>
+        <button class="btn-sm btn-danger" onclick="confirmSuspendStudent()">Confirm Suspension</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ====================================================================
+    // SUPER ADMIN DASHBOARD LOGIC
+    // ====================================================================
+    function getInitialApiBase() {
+      const urlParam = new URLSearchParams(window.location.search).get('backend');
+      if (urlParam) {
+        let clean = urlParam.replace(/\/+$/, '');
+        if (!clean.includes('/api/v1/admin') && !clean.includes('/api/admin')) clean += '/api/v1/admin';
+        localStorage.setItem('scale_admin_api_base', clean);
+        return clean;
+      }
+      const saved = localStorage.getItem('scale_admin_api_base');
+      if (saved) return saved;
+
+      if (window.location.port === '4000') {
+        return '/api/v1/admin';
+      }
+      return 'http://localhost:4000/api/v1/admin';
+    }
+
+    let API_BASE = getInitialApiBase();
+
+    function toggleBackendConfig() {
+      const panel = document.getElementById('backendConfigPanel');
+      panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+      const input = document.getElementById('apiEndpointInput');
+      if (input) input.value = API_BASE;
+    }
+
+    function saveBackendEndpoint() {
+      const input = document.getElementById('apiEndpointInput');
+      if (!input) return;
+      let val = input.value.trim();
+      if (!val) return;
+      if (!val.includes('/api/v1/admin') && !val.includes('/api/admin')) {
+        val = val.replace(/\/+$/, '') + '/api/v1/admin';
+      }
+      API_BASE = val;
+      localStorage.setItem('scale_admin_api_base', val);
+      testBackendHealth();
+    }
+
+    function setPresetBackend(type) {
+      const input = document.getElementById('apiEndpointInput');
+      if (input && type === 'localhost') {
+        input.value = 'http://localhost:4000/api/v1/admin';
+      }
+      saveBackendEndpoint();
+    }
+
+    async function testBackendHealth() {
+      const pill = document.getElementById('backendStatusPill');
+      const text = document.getElementById('backendHealthText');
+      if (!pill || !text) return;
+      pill.style.background = '#fef3c7';
+      pill.style.color = '#d97706';
+      pill.innerText = 'Testing...';
+      text.innerText = 'Pinging ' + API_BASE + '...';
+
+      try {
+        const rootUrl = API_BASE.replace(/\/api\/v1\/admin\/?$/, '').replace(/\/api\/admin\/?$/, '');
+        const res = await fetch(`${rootUrl}/health`);
+        const data = await res.json();
+        if (data && data.status === 'healthy') {
+          pill.style.background = '#ecfdf5';
+          pill.style.color = '#059669';
+          pill.innerText = 'Connected';
+          text.style.color = '#059669';
+          text.innerText = `✓ Connected to ${data.service} (${data.database})`;
+        } else {
+          throw new Error('Unexpected response');
+        }
+      } catch (err) {
+        pill.style.background = '#fef2f2';
+        pill.style.color = '#dc2626';
+        pill.innerText = 'Offline';
+        text.style.color = '#ef4444';
+        text.innerText = `✕ Could not connect to backend at ${API_BASE}.`;
+      }
+    }
+
+    let currentAdmin = null;
+    let selectedStudentId = null;
+    let studentPage = 1;
+    let searchDebounce = null;
+
+    // Helper: authenticated API calls
+    async function adminFetch(endpoint, options = {}) {
+      const url = `${API_BASE}${endpoint}`;
+      const defaultHeaders = { 'Content-Type': 'application/json' };
+      const opts = {
+        ...options,
+        headers: { ...defaultHeaders, ...(options.headers || {}) },
+        credentials: 'include'
+      };
+
+      try {
+        const res = await fetch(url, opts);
+        const data = await res.json().catch(() => ({}));
+
+        if (res.status === 401 || res.status === 403) {
+          showLoginView();
+          throw new Error(data.message || 'Authentication required');
+        }
+        return { ok: res.ok, status: res.status, data };
+      } catch (err) {
+        console.warn('[Admin API Error]:', err);
+        throw err;
+      }
+    }
+
+    // 1. Session Check & Login Initialization
+    async function initAdminAuth() {
+      const input = document.getElementById('apiEndpointInput');
+      if (input) input.value = API_BASE;
+      testBackendHealth();
+
+      try {
+        const res = await adminFetch('/auth/me');
+        if (res.ok && res.data.authenticated) {
+          currentAdmin = res.data.admin;
+          document.getElementById('loginContainer').style.display = 'none';
+          document.getElementById('adminUserDisplay').innerText = currentAdmin.email;
+          document.getElementById('adminRoleBadge').innerText = currentAdmin.role;
+          loadDashboardOverview();
+        } else {
+          showLoginView();
+        }
+      } catch {
+        showLoginView();
+      }
+    }
+
+    function showLoginView() {
+      document.getElementById('loginContainer').style.display = 'flex';
+    }
+
+    async function handleAdminLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      const btn = document.getElementById('loginSubmitBtn');
+      const errBox = document.getElementById('loginErrorMsg');
+
+      btn.disabled = true;
+      btn.innerText = 'Verifying Credentials...';
+      errBox.style.display = 'none';
+
+      try {
+        const res = await fetch(`${API_BASE}/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          currentAdmin = data.admin;
+          document.getElementById('loginContainer').style.display = 'none';
+          document.getElementById('adminUserDisplay').innerText = currentAdmin.email;
+          document.getElementById('adminRoleBadge').innerText = currentAdmin.role;
+          loadDashboardOverview();
+        } else {
+          errBox.innerText = data.message || 'Login failed. Invalid administrator credentials.';
+          errBox.style.display = 'block';
+        }
+      } catch (err) {
+        errBox.innerHTML = `Server connection error to <code>${API_BASE}</code>.<br><small style="color: #64748b;">If testing locally, use <a href="http://localhost:4000/admin/" style="color: #059669; font-weight: 600; text-decoration: underline;">http://localhost:4000/admin</a> or enter your backend URL below.</small>`;
+        errBox.style.display = 'block';
+        const panel = document.getElementById('backendConfigPanel');
+        if (panel) panel.style.display = 'block';
+        testBackendHealth();
+      } finally {
+        btn.disabled = false;
+        btn.innerText = 'Sign In as Administrator →';
+      }
+    }
+
+    async function handleAdminLogout() {
+      try {
+        await fetch(`${API_BASE}/auth/logout`, { method: 'POST', credentials: 'include' });
+      } catch {}
+      window.location.reload();
+    }
+
+    // 2. Tab Navigation
+    function switchTab(tabId) {
+      const tabs = ['overview', 'students', 'payments', 'sessions', 'audit'];
+      tabs.forEach(t => {
+        const view = document.getElementById('view' + t.charAt(0).toUpperCase() + t.slice(1));
+        if (view) view.style.display = (t === tabId) ? 'block' : 'none';
+      });
+
+      document.querySelectorAll('.sidebar-link').forEach(link => link.classList.remove('active'));
+      const activeLink = Array.from(document.querySelectorAll('.sidebar-link')).find(l => l.innerText.toLowerCase().includes(tabId));
+      if (activeLink) activeLink.classList.add('active');
+
+      document.getElementById('pageTitle').innerText = tabId.charAt(0).toUpperCase() + tabId.slice(1);
+
+      if (tabId === 'overview') loadDashboardOverview();
+      else if (tabId === 'students') loadStudents();
+      else if (tabId === 'payments') loadPayments();
+      else if (tabId === 'sessions') loadSessions();
+      else if (tabId === 'audit') loadAuditLogs();
+    }
+
+    // 3. Load Overview Metrics
+    async function loadDashboardOverview() {
+      try {
+        const res = await adminFetch('/dashboard/overview');
+        if (res.ok && res.data.stats) {
+          const s = res.data.stats;
+          document.getElementById('kpiTotalStudents').innerText = s.totalStudents.toLocaleString();
+          document.getElementById('kpiTodayStudents').innerText = `+${s.newRegistrationsToday} Today`;
+          document.getElementById('kpiTotalRevenue').innerText = `₹${s.totalRevenueINR.toLocaleString()}`;
+          document.getElementById('kpiTodayRevenue').innerText = `+₹${s.todayRevenueINR.toLocaleString()} Today`;
+          document.getElementById('kpiPaidStudents').innerText = s.paidStudents.toLocaleString();
+          document.getElementById('kpiActiveSessions').innerText = s.activeSessions.toLocaleString();
+          document.getElementById('kpiActiveAccounts').innerText = s.activeAccounts.toLocaleString();
+          document.getElementById('kpiSuspendedAccounts').innerText = s.suspendedAccounts.toLocaleString();
+        }
+
+        // Load 5 recent students
+        const stRes = await adminFetch('/students?page=1&limit=5');
+        if (stRes.ok && stRes.data.students) {
+          const tbody = document.getElementById('overviewRecentStudents');
+          if (stRes.data.students.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #94a3b8; padding: 2rem;">No students registered yet.</td></tr>';
+          } else {
+            tbody.innerHTML = stRes.data.students.map(st => `
+              <tr>
+                <td><strong>${escapeHtml(st.email)}</strong></td>
+                <td>${escapeHtml(st.full_name || 'NEET Aspirant')}</td>
+                <td>${formatDate(st.created_at)}</td>
+                <td>${st.is_paid ? '<span class="badge badge-success">PAID</span>' : '<span class="badge badge-info">FREE DEMO</span>'}</td>
+                <td>${st.is_suspended ? '<span class="badge badge-danger">SUSPENDED</span>' : '<span class="badge badge-success">ACTIVE</span>'}</td>
+              </tr>
+            `).join('');
+          }
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    // 4. Students Directory
+    function debounceStudentSearch() {
+      clearTimeout(searchDebounce);
+      searchDebounce = setTimeout(() => {
+        studentPage = 1;
+        loadStudents();
+      }, 350);
+    }
+
+    async function loadStudents() {
+      const q = document.getElementById('studentSearchInput').value.trim();
+      const status = document.getElementById('studentStatusFilter').value;
+      const paid = document.getElementById('studentPaidFilter').value;
+
+      try {
+        const res = await adminFetch(`/students?search=${encodeURIComponent(q)}&filterStatus=${status}&filterPaid=${paid}&page=${studentPage}&limit=15`);
+        if (res.ok && res.data.students) {
+          const tbody = document.getElementById('studentsTableBody');
+          if (res.data.students.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 2.5rem; color: #94a3b8;">No matching student records found.</td></tr>';
+          } else {
+            tbody.innerHTML = res.data.students.map(st => `
+              <tr>
+                <td><strong>${escapeHtml(st.email)}</strong></td>
+                <td>${escapeHtml(st.full_name || 'NEET Aspirant')}</td>
+                <td>${formatDate(st.created_at)}</td>
+                <td>${formatDate(st.last_login)}</td>
+                <td>${st.is_paid ? `<span class="badge badge-success">${st.entitlement_source || 'PAID'}</span>` : '<span class="badge badge-info">FREE</span>'}</td>
+                <td>${st.is_suspended ? '<span class="badge badge-danger">SUSPENDED</span>' : '<span class="badge badge-success">ACTIVE</span>'}</td>
+                <td>
+                  <button class="btn-sm btn-secondary" onclick="openStudentModal('${st.id}')">Manage &rarr;</button>
+                </td>
+              </tr>
+            `).join('');
+          }
+          document.getElementById('studentsCountDisplay').innerText = `Page ${res.data.page} of ${res.data.totalPages} (${res.data.total} total students)`;
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    function changeStudentPage(delta) {
+      studentPage = Math.max(1, studentPage + delta);
+      loadStudents();
+    }
+
+    // 5. Student Detail Modal & Quick Actions
+    async function openStudentModal(id) {
+      selectedStudentId = id;
+      try {
+        const res = await adminFetch(`/students/${id}`);
+        if (res.ok && res.data.profile) {
+          const p = res.data.profile;
+          const u = p.user;
+
+          document.getElementById('modalStudentName').innerText = u.full_name || u.email;
+          document.getElementById('mEmail').innerText = u.email;
+          document.getElementById('mRegistered').innerText = formatDate(u.created_at);
+          document.getElementById('mStatus').innerHTML = u.is_suspended 
+            ? `<span class="badge badge-danger">SUSPENDED (${escapeHtml(u.suspension_reason || 'N/A')})</span>` 
+            : '<span class="badge badge-success">ACTIVE</span>';
+
+          const hasAccess = p.entitlements.some(e => e.status === 'active');
+          document.getElementById('mEntitlement').innerHTML = hasAccess
+            ? '<span class="badge badge-success">ACTIVE LIFETIME ACCESS</span>'
+            : '<span class="badge badge-info">FREE DEMO ONLY</span>';
+
+          // Toggle suspend/reactivate buttons
+          document.getElementById('mBtnSuspend').style.display = u.is_suspended ? 'none' : 'inline-flex';
+          document.getElementById('mBtnReactivate').style.display = u.is_suspended ? 'inline-flex' : 'none';
+
+          // Render Notes
+          const notesBox = document.getElementById('mNotesList');
+          if (p.notes.length === 0) {
+            notesBox.innerHTML = '<div style="color: #94a3b8; font-style: italic;">No administrative notes yet.</div>';
+          } else {
+            notesBox.innerHTML = p.notes.map(n => `
+              <div style="background: #ffffff; padding: 0.5rem; border: 1px solid #e2e8f0; border-radius: 6px; margin-bottom: 4px;">
+                <div style="display: flex; justify-content: space-between; color: #64748b; font-size: 0.72rem; margin-bottom: 2px;">
+                  <span>${escapeHtml(n.admin_email)}</span>
+                  <span>${formatDate(n.created_at)}</span>
+                </div>
+                <div>${escapeHtml(n.note)}</div>
+              </div>
+            `).join('');
+          }
+
+          document.getElementById('studentModal').classList.add('active');
+        }
+      } catch (e) {
+        alert('Failed to load student details.');
+      }
+    }
+
+    function closeStudentModal() {
+      document.getElementById('studentModal').classList.remove('active');
+    }
+
+    // Suspend Modal
+    function promptSuspendStudent() {
+      document.getElementById('suspendReasonInput').value = '';
+      document.getElementById('suspendActionModal').classList.add('active');
+    }
+    function closeSuspendActionModal() {
+      document.getElementById('suspendActionModal').classList.remove('active');
+    }
+    async function confirmSuspendStudent() {
+      const reason = document.getElementById('suspendReasonInput').value.trim();
+      if (!reason) return alert('Please enter a suspension reason.');
+
+      try {
+        const res = await adminFetch(`/students/${selectedStudentId}/suspend`, {
+          method: 'POST',
+          body: JSON.stringify({ reason })
+        });
+        if (res.ok) {
+          alert('Account suspended successfully. Active sessions revoked.');
+          closeSuspendActionModal();
+          openStudentModal(selectedStudentId);
+          loadStudents();
+        }
+      } catch (err) {
+        alert('Failed to suspend account.');
+      }
+    }
+
+    // Reactivate Student
+    async function promptReactivateStudent() {
+      if (!confirm('Reactivate this student account?')) return;
+      try {
+        const res = await adminFetch(`/students/${selectedStudentId}/reactivate`, {
+          method: 'POST',
+          body: JSON.stringify({ reason: 'Reactivated by Super Admin' })
+        });
+        if (res.ok) {
+          alert('Account reactivated.');
+          openStudentModal(selectedStudentId);
+          loadStudents();
+        }
+      } catch {
+        alert('Failed to reactivate account.');
+      }
+    }
+
+    // Grant Complimentary Access
+    async function promptGrantAccess() {
+      const reason = prompt('Enter reason for granting complimentary access (e.g. Scholarship / Promotion):');
+      if (!reason) return;
+
+      try {
+        const res = await adminFetch(`/students/${selectedStudentId}/grant-access`, {
+          method: 'POST',
+          body: JSON.stringify({ reason })
+        });
+        if (res.ok) {
+          alert('Complimentary access granted successfully.');
+          openStudentModal(selectedStudentId);
+          loadStudents();
+        }
+      } catch {
+        alert('Failed to grant access.');
+      }
+    }
+
+    // Revoke Examination Access
+    async function promptRevokeAccess() {
+      const reason = prompt('Enter reason for revoking examination access:');
+      if (!reason) return;
+
+      try {
+        const res = await adminFetch(`/students/${selectedStudentId}/revoke-access`, {
+          method: 'POST',
+          body: JSON.stringify({ reason })
+        });
+        if (res.ok) {
+          alert('Examination access revoked.');
+          openStudentModal(selectedStudentId);
+          loadStudents();
+        }
+      } catch {
+        alert('Failed to revoke access.');
+      }
+    }
+
+    // Revoke Session
+    async function forceRevokeStudentSession() {
+      if (!confirm('Revoke all active sessions for this student immediately?')) return;
+      try {
+        const res = await adminFetch(`/students/${selectedStudentId}/revoke-session`, { method: 'POST' });
+        if (res.ok) {
+          alert(res.data.message || 'Session revoked.');
+        }
+      } catch {
+        alert('Failed to revoke session.');
+      }
+    }
+
+    // Add Note
+    async function submitAdminNote() {
+      const input = document.getElementById('mNoteInput');
+      const note = input.value.trim();
+      if (!note) return;
+
+      try {
+        const res = await adminFetch(`/students/${selectedStudentId}/notes`, {
+          method: 'POST',
+          body: JSON.stringify({ note })
+        });
+        if (res.ok) {
+          input.value = '';
+          openStudentModal(selectedStudentId);
+        }
+      } catch {
+        alert('Failed to save note.');
+      }
+    }
+
+    // 6. Payments View
+    async function loadPayments() {
+      try {
+        const res = await adminFetch('/payments?limit=25');
+        if (res.ok && res.data.payments) {
+          const tbody = document.getElementById('paymentsTableBody');
+          if (res.data.payments.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 2rem; color: #94a3b8;">No payment transactions recorded yet.</td></tr>';
+          } else {
+            tbody.innerHTML = res.data.payments.map(p => `
+              <tr>
+                <td><code style="font-size: 0.75rem;">${escapeHtml(p.payment_id)}</code></td>
+                <td><code style="font-size: 0.75rem;">${escapeHtml(p.order_id)}</code></td>
+                <td><strong>${escapeHtml(p.student_email || 'N/A')}</strong></td>
+                <td><strong>₹${p.amount_inr}</strong></td>
+                <td><span class="badge badge-info">${escapeHtml(p.method || 'UPI')}</span></td>
+                <td><span class="badge badge-success">${escapeHtml(p.status)}</span></td>
+                <td>${formatDate(p.created_at)}</td>
+              </tr>
+            `).join('');
+          }
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    // 7. Sessions View
+    async function loadSessions() {
+      try {
+        const res = await adminFetch('/sessions?limit=25');
+        if (res.ok && res.data.sessions) {
+          const tbody = document.getElementById('sessionsTableBody');
+          tbody.innerHTML = res.data.sessions.map(s => `
+            <tr>
+              <td><strong>${escapeHtml(s.student_email)}</strong></td>
+              <td style="max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${escapeHtml(s.device_info || 'Unknown')}</td>
+              <td>${escapeHtml(s.ip_address || '127.0.0.1')}</td>
+              <td>${s.is_active ? '<span class="badge badge-success">ACTIVE</span>' : `<span class="badge badge-danger">REVOKED (${escapeHtml(s.revocation_reason || '')})</span>`}</td>
+              <td>${formatDate(s.created_at)}</td>
+              <td>
+                ${s.is_active ? `<button class="btn-sm btn-danger" onclick="revokeSingleSession('${s.id}')">Revoke</button>` : '-'}
+              </td>
+            </tr>
+          `).join('');
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    async function revokeSingleSession(id) {
+      if (!confirm('Force logout this device session?')) return;
+      try {
+        await adminFetch(`/sessions/${id}/revoke`, { method: 'POST' });
+        loadSessions();
+      } catch {}
+    }
+
+    // 8. Audit Logs View
+    async function loadAuditLogs() {
+      try {
+        const res = await adminFetch('/audit-logs?limit=50');
+        if (res.ok && res.data.logs) {
+          const tbody = document.getElementById('auditTableBody');
+          tbody.innerHTML = res.data.logs.map(l => `
+            <tr>
+              <td>${formatDate(l.created_at)}</td>
+              <td><strong>${escapeHtml(l.admin_email)}</strong></td>
+              <td><span class="badge badge-info">${escapeHtml(l.admin_role)}</span></td>
+              <td><code style="font-weight: 700;">${escapeHtml(l.action)}</code></td>
+              <td>${escapeHtml(l.target_user_id || '-')}</td>
+              <td>${escapeHtml(l.reason || '-')}</td>
+            </tr>
+          `).join('');
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    // 9. Export Reports
+    function exportData(type) {
+      window.open(`${API_BASE}/reports/export?type=${type}`, '_blank');
+    }
+
+    // Utilities
+    function formatDate(iso) {
+      if (!iso) return '-';
+      const d = new Date(iso);
+      return d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
+    }
+
+    // Bootstrap
+    window.addEventListener('DOMContentLoaded', initAdminAuth);
+  </script>
+</body>
+</html>
+

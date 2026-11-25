@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>JEE Advanced Master Series — Professional EdTech Examination Platform</title>
+  <!-- KaTeX for high-precision mathematical typography -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+  <!-- Marked for markdown parsing -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-page: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-subtle: #f1f5f9;
+      --bg-hover: #e2e8f0;
+      
+      --primary: #1e40af;       /* Deep Academic Royal Blue */
+      --primary-light: #eff6ff;
+      --primary-hover: #1d4ed8;
+      
+      --accent-green: #059669;  /* Emerald for solutions */
+      --green-light: #ecfdf5;
+      --accent-amber: #d97706;  /* Amber for key/stats */
+      --amber-light: #fffbeb;
+      --accent-purple: #7c3aed; /* Purple for Math */
+      --purple-light: #f5f3ff;
+      
+      --text-main: #0f172a;     /* Slate 900 */
+      --text-secondary: #475569;/* Slate 600 */
+      --text-muted: #64748b;    /* Slate 500 */
+      
+      --border: #e2e8f0;
+      --border-focus: #3b82f6;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg-page);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Navigation Bar */
+    #navbar {
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      z-index: 50;
+      box-shadow: var(--shadow-sm);
+    }
+    .navbar-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.55rem 1.25rem;
+      gap: 0.75rem;
+      min-width: 0;
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+    .mobile-menu-btn {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      background: #f1f5f9;
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 0.38rem 0.65rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: all 0.15s;
+    }
+    .mobile-menu-btn:hover {
+      background: #e2e8f0;
+    }
+    .brand-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #1e40af, #3b82f6);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-weight: 700;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.05rem;
+      box-shadow: 0 2px 4px rgba(30, 64, 175, 0.25);
+      flex-shrink: 0;
+    }
+    .brand-info {
+      min-width: 0;
+      overflow: hidden;
+    }
+    .brand-info h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .brand-info p {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+    .action-btn:hover {
+      background: var(--bg-subtle);
+      border-color: #cbd5e1;
+      color: var(--text-main);
+    }
+    .action-btn.neet-btn {
+      background: #059669;
+      color: white;
+      border-color: #047857;
+    }
+    .action-btn.neet-btn:hover {
+      background: #047857;
+      color: white;
+    }
+
+    /* IIT Ribbon Row */
+    .iit-ribbon-row {
+      display: flex;
+      align-items: center;
+      padding: 0.35rem 1.25rem 0.45rem 1.25rem;
+      border-top: 1px solid #f1f5f9;
+      background: #fafafa;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .iit-ribbon-row::-webkit-scrollbar {
+      display: none;
+    }
+    .iit-tabs-header {
+      display: flex;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+    .iit-pill {
+      background: transparent;
+      border: 1px solid transparent;
+      padding: 5px 11px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .iit-pill:hover {
+      background: var(--bg-hover);
+      color: var(--text-main);
+    }
+    .iit-pill.active {
+      background: var(--primary-light);
+      color: var(--primary);
+      box-shadow: var(--shadow-sm);
+      border-color: #bfdbfe;
+      font-weight: 700;
+    }
+
+    /* Main App Layout */
+    #app-body {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Mobile Backdrop */
+    .sidebar-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.5);
+      backdrop-filter: blur(2px);
+      z-index: 100;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .sidebar-backdrop.active {
+      display: block;
+      opacity: 1;
+    }
+
+    /* Left Sidebar */
+    #sidebar {
+      width: 300px;
+      flex-shrink: 0;
+      background: var(--bg-surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      z-index: 110;
+      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .sidebar-header {
+      padding: 0.85rem 1.15rem;
+      border-bottom: 1px solid var(--border);
+      background: #fafafa;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .sidebar-header h2 {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+    .sidebar-close-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.25rem;
+      line-height: 1;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+    }
+    .sidebar-close-btn:hover {
+      background: #e2e8f0;
+      color: var(--text-main);
+    }
+    .series-counter {
+      background: var(--primary-light);
+      color: var(--primary);
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 12px;
+      border: 1px solid #bfdbfe;
+    }
+    #mock-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0.65rem;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .mock-item {
+      padding: 0.65rem 0.85rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+    .mock-item:hover {
+      background: var(--bg-subtle);
+      border-color: #cbd5e1;
+      transform: translateX(2px);
+    }
+    .mock-item.active {
+      background: var(--primary-light);
+      border-color: #93c5fd;
+      box-shadow: 0 1px 3px rgba(59, 130, 246, 0.15);
+    }
+    .mock-item-title {
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+    .mock-item.active .mock-item-title {
+      color: var(--primary);
+      font-weight: 700;
+    }
+    .mock-item-desc {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-top: 1px;
+    }
+    .badge-status {
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: var(--green-light);
+      color: var(--accent-green);
+      border: 1px solid #a7f3d0;
+      flex-shrink: 0;
+    }
+
+    /* Content Area */
+    #content-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: var(--bg-page);
+      min-width: 0;
+    }
+
+    /* Control Ribbon */
+    #sub-ribbon {
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.45rem 1.15rem;
+      gap: 0.65rem;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      flex-shrink: 0;
+    }
+    #sub-ribbon::-webkit-scrollbar {
+      display: none;
+    }
+    .paper-switcher {
+      display: flex;
+      background: var(--bg-subtle);
+      padding: 3px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .paper-tab-btn {
+      border: none;
+      background: transparent;
+      padding: 5px 12px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+    .paper-tab-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .view-mode-tabs {
+      display: flex;
+      gap: 5px;
+      flex-shrink: 0;
+    }
+    .view-tab-btn {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      padding: 5px 10px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      min-height: 34px;
+    }
+    .view-tab-btn:hover {
+      background: var(--bg-subtle);
+      color: var(--text-main);
+    }
+    .view-tab-btn.active {
+      background: var(--primary-light);
+      border-color: #93c5fd;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    /* Dual-Pane Split Workspace */
+    #dual-workspace {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+      padding: 0.65rem;
+      gap: 0.65rem;
+      min-height: 0;
+    }
+    .doc-column {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg-surface);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      min-width: 0;
+      min-height: 0;
+    }
+    .doc-column.hidden { display: none !important; }
+
+    .doc-header {
+      padding: 0.55rem 0.95rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #fafafa;
+      flex-shrink: 0;
+      gap: 0.5rem;
+    }
+    .doc-header-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .doc-header-title.test-title { color: var(--primary); }
+    .doc-header-title.sol-title { color: var(--accent-green); }
+    .doc-header-title.key-title { color: var(--accent-amber); }
+
+    .doc-badge {
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 4px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .doc-badge.blue { background: var(--primary-light); color: var(--primary); border: 1px solid #bfdbfe; }
+    .doc-badge.green { background: var(--green-light); color: var(--accent-green); border: 1px solid #a7f3d0; }
+    .doc-badge.amber { background: var(--amber-light); color: var(--accent-amber); border: 1px solid #fde68a; }
+
+    .doc-content {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 1.5rem 1.75rem;
+      line-height: 1.75;
+      color: #1e293b;
+      font-size: 0.93rem;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* EdTech Document Typography */
+    .doc-content h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.35rem;
+      color: var(--primary);
+      margin-bottom: 0.85rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--primary-light);
+      line-height: 1.3;
+    }
+    .doc-content h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      color: #0f172a;
+      margin-top: 1.5rem;
+      margin-bottom: 0.65rem;
+      padding-bottom: 0.3rem;
+      border-bottom: 1px solid var(--border);
+      line-height: 1.3;
+    }
+    .doc-content h3 {
+      font-size: 1rem;
+      color: #1e40af;
+      margin-top: 1.25rem;
+      margin-bottom: 0.45rem;
+    }
+    .doc-content h4 {
+      font-size: 0.92rem;
+      color: #334155;
+      margin-top: 1.15rem;
+      margin-bottom: 0.4rem;
+    }
+    .doc-content p {
+      margin-bottom: 0.85rem;
+    }
+    .doc-content ul, .doc-content ol {
+      margin-left: 1.35rem;
+      margin-bottom: 1rem;
+    }
+    .doc-content li {
+      margin-bottom: 0.35rem;
+    }
+    .doc-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.25rem 0;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      display: block;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .doc-content th {
+      background: #f8fafc;
+      color: #1e293b;
+      font-weight: 600;
+      padding: 0.55rem 0.8rem;
+      border-bottom: 2px solid var(--border);
+      font-size: 0.82rem;
+      text-align: left;
+    }
+    .doc-content td {
+      padding: 0.5rem 0.8rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.82rem;
+    }
+    .doc-content tr:nth-child(even) td {
+      background: #fafafa;
+    }
+    .doc-content blockquote {
+      border-left: 4px solid var(--primary);
+      padding: 0.65rem 1rem;
+      margin: 1rem 0;
+      background: var(--primary-light);
+      color: #1e3a8a;
+      border-radius: 0 6px 6px 0;
+      font-size: 0.88rem;
+    }
+    .doc-content hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 1.5rem 0;
+    }
+
+    /* Option Card Styling */
+    .options-container {
+      margin: 0.85rem 0 1.25rem 0;
+      padding: 0;
+      width: 100%;
+    }
+    .options-container ul {
+      list-style-type: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      width: 100%;
+    }
+    .options-container li {
+      list-style-type: none !important;
+      margin: 0 !important;
+      padding: 0.65rem 0.95rem !important;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      line-height: 1.55;
+      display: flex;
+      align-items: baseline;
+      gap: 0.65rem;
+      transition: all 0.15s ease-in-out;
+      cursor: pointer;
+      min-height: 42px;
+      word-break: break-word;
+    }
+    .options-container li:hover {
+      background: #eff6ff;
+      border-color: #60a5fa;
+      box-shadow: 0 2px 4px rgba(30, 64, 175, 0.08);
+      transform: translateX(2px);
+    }
+    .options-container li strong {
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 0.95rem;
+      min-width: 26px;
+      flex-shrink: 0;
+      display: inline-block;
+    }
+
+    /* KaTeX math font tweaks */
+    .katex {
+      font-size: 1.02em !important;
+    }
+    .katex-display {
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      max-width: 100% !important;
+      padding: 0.35rem 0 !important;
+      -webkit-overflow-scrolling: touch !important;
+    }
+
+    /* Loading state */
+    .loading-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 70%;
+      min-height: 180px;
+      color: var(--text-muted);
+      gap: 10px;
+      font-size: 0.88rem;
+    }
+    .spinner-ring {
+      width: 34px;
+      height: 34px;
+      border: 3px solid #e2e8f0;
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ========================================================
+       RESPONSIVE BREAKPOINTS
+       ======================================================== */
+    @media (max-width: 991px) {
+      .mobile-menu-btn {
+        display: inline-flex;
+      }
+      .sidebar-close-btn {
+        display: block;
+      }
+      #sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 310px;
+        max-width: 86vw;
+        height: 100%;
+        transform: translateX(-100%);
+        box-shadow: 4px 0 24px rgba(15, 23, 42, 0.2);
+      }
+      #sidebar.mobile-open {
+        transform: translateX(0);
+      }
+
+      /* In split view on tablet/mobile, stack panes vertically */
+      #dual-workspace.split-mode {
+        flex-direction: column;
+        overflow-y: auto;
+      }
+      #dual-workspace.split-mode .doc-column {
+        flex: 0 0 auto;
+        min-height: 380px;
+        height: auto;
+      }
+
+      .doc-content {
+        padding: 1.25rem 1.25rem;
+      }
+    }
+
+    @media (max-width: 639px) {
+      .navbar-top-row {
+        padding: 0.45rem 0.65rem;
+        gap: 0.45rem;
+      }
+      .brand-icon {
+        width: 30px;
+        height: 30px;
+        font-size: 0.95rem;
+      }
+      .brand-info h1 {
+        font-size: 0.92rem;
+      }
+      .brand-info p {
+        display: none;
+      }
+      .action-btn span.btn-label-long {
+        display: none;
+      }
+      .action-btn {
+        padding: 5px 8px;
+        font-size: 0.72rem;
+      }
+
+      .iit-ribbon-row {
+        padding: 0.25rem 0.5rem 0.35rem 0.5rem;
+      }
+      .iit-pill {
+        padding: 4px 8px;
+        font-size: 0.72rem;
+      }
+
+      #sub-ribbon {
+        padding: 0.35rem 0.5rem;
+        gap: 0.35rem;
+      }
+      .paper-tab-btn {
+        padding: 4px 8px;
+        font-size: 0.72rem;
+      }
+      .view-tab-btn {
+        padding: 4px 7px;
+        font-size: 0.72rem;
+        min-height: 32px;
+      }
+      .doc-badge {
+        display: none;
+      }
+
+      #dual-workspace {
+        padding: 0.4rem;
+        gap: 0.4rem;
+      }
+      .doc-header {
+        padding: 0.45rem 0.65rem;
+      }
+      .doc-header-title {
+        font-size: 0.74rem;
+      }
+      .doc-content {
+        padding: 0.85rem 0.75rem;
+        font-size: 0.88rem;
+        line-height: 1.65;
+      }
+      .doc-content h1 {
+        font-size: 1.15rem;
+      }
+      .doc-content h2 {
+        font-size: 1.02rem;
+      }
+    }
+
+    /* Print styles */
+    @media print {
+      #navbar, #sidebar, #sub-ribbon { display: none !important; }
+      body { background: #fff !important; }
+      #dual-workspace { padding: 0 !important; }
+      .doc-column { border: none !important; box-shadow: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Main Navigation Bar -->
+  <header id="navbar">
+    <div class="navbar-top-row">
+      <div class="nav-brand">
+        <!-- Mobile Drawer Trigger Button -->
+        <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileSidebar()" aria-label="Toggle Mock Tests Menu">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          <span>Mocks</span>
+        </button>
+
+        <div class="brand-icon">JEE</div>
+        <div class="brand-info">
+          <h1>Advanced 140-Mock Master Series</h1>
+          <p>Institute-Specific Historical Intelligence Engine &bull; 20 Mocks per IIT</p>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="header-actions">
+        <a href="/neet/index.html" class="action-btn neet-btn">
+          <span>🩺</span>
+          <span class="btn-label-long">NEET (UG) Series</span>
+          <span class="btn-label-short">&rarr; NEET</span>
+        </a>
+        <button class="action-btn" onclick="window.print()">
+          <span>🖨️</span>
+          <span class="btn-label-long">Print / PDF</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- IIT Cluster Selector Tabs (Touch-Scrollable Ribbon) -->
+    <div class="iit-ribbon-row">
+      <div class="iit-tabs-header">
+        <button class="iit-pill active" onclick="selectIIT('IIT_Bombay')">🏛️ IIT Bombay</button>
+        <button class="iit-pill" onclick="selectIIT('IIT_Delhi')">🏛️ IIT Delhi</button>
+        <button class="iit-pill" onclick="selectIIT('IIT_Guwahati')">🏛️ IIT Guwahati</button>
+        <button class="iit-pill" onclick="selectIIT('IIT_Kanpur')">🏛️ IIT Kanpur</button>
+        <button class="iit-pill" onclick="selectIIT('IIT_Kharagpur')">🏛️ IIT Kharagpur</button>
+        <button class="iit-pill" onclick="selectIIT('IIT_Madras')">🏛️ IIT Madras</button>
+        <button class="iit-pill" onclick="selectIIT('IIT_Roorkee')">🏛️ IIT Roorkee</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- App Body -->
+  <div id="app-body">
+    <!-- Backdrop for mobile drawer -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleMobileSidebar()"></div>
+
+    <!-- Left Sidebar: 20 Mocks in Selected IIT -->
+    <aside id="sidebar">
+      <div class="sidebar-header">
+        <h2 id="sidebar-iit-title">IIT BOMBAY SERIES</h2>
+        <span class="series-counter">20 Mocks</span>
+        <button class="sidebar-close-btn" onclick="toggleMobileSidebar()" aria-label="Close sidebar">&times;</button>
+      </div>
+      <div id="mock-list">
+        <!-- Rendered via JavaScript -->
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main id="content-area">
+      <!-- Sub-Ribbon: Paper Switcher & View Modes -->
+      <div id="sub-ribbon">
+        <!-- Paper 1 vs Paper 2 Selector -->
+        <div class="paper-switcher">
+          <button id="tab-p1" class="paper-tab-btn active" onclick="selectPaper('Paper_1')">Paper 1</button>
+          <button id="tab-p2" class="paper-tab-btn" onclick="selectPaper('Paper_2')">Paper 2</button>
+        </div>
+
+        <!-- View Mode Selector -->
+        <div class="view-mode-tabs">
+          <button id="mode-split" class="view-tab-btn active" onclick="setViewMode('split')">
+            <span>⚖️</span> <span>Split View</span>
+          </button>
+          <button id="mode-test" class="view-tab-btn" onclick="setViewMode('test-only')">
+            <span>📝</span> <span>Test Paper</span>
+          </button>
+          <button id="mode-sol" class="view-tab-btn" onclick="setViewMode('sol-only')">
+            <span>💡</span> <span>Solutions</span>
+          </button>
+          <button id="mode-key" class="view-tab-btn" onclick="setViewMode('key')">
+            <span>📊</span> <span>Answer Key</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Dual-Pane Workspace -->
+      <div id="dual-workspace" class="split-mode">
+        <!-- Column 1: Test Paper -->
+        <section id="col-test" class="doc-column">
+          <div class="doc-header">
+            <span class="doc-header-title test-title">
+              <span>📝</span> <span id="label-test-title">QUESTION PAPER — Paper 1</span>
+            </span>
+            <span class="doc-badge blue">54 Questions &bull; 180 Marks</span>
+          </div>
+          <div id="body-test" class="doc-content">
+            <div class="loading-container">
+              <div class="spinner-ring"></div>
+              <span>Loading Examination Paper...</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Column 2: Detailed Solutions -->
+        <section id="col-sol" class="doc-column">
+          <div class="doc-header">
+            <span class="doc-header-title sol-title">
+              <span>💡</span> <span id="label-sol-title">PEDAGOGICAL SOLUTIONS — Paper 1</span>
+            </span>
+            <span class="doc-badge green">9-Point Analysis Framework</span>
+          </div>
+          <div id="body-sol" class="doc-content">
+            <div class="loading-container">
+              <div class="spinner-ring"></div>
+              <span>Loading Step-by-Step Solutions...</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Column 3: Answer Key & Validation -->
+        <section id="col-key" class="doc-column hidden">
+          <div class="doc-header">
+            <span class="doc-header-title key-title">
+              <span>📊</span> <span>CONSOLIDATED ANSWER KEY & VALIDATION</span>
+            </span>
+            <span class="doc-badge amber">Statistical Style Check</span>
+          </div>
+          <div id="body-key" class="doc-content">
+            <div class="loading-container">
+              <div class="spinner-ring"></div>
+              <span>Loading Answer Key...</span>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // 7 Organising IITs
+    const iitConfigs = {
+      IIT_Bombay: { name: "IIT Bombay", folderPrefix: "Mock_01_IIT_Bombay", label: "IIT BOMBAY SERIES" },
+      IIT_Delhi: { name: "IIT Delhi", folderPrefix: "Mock_04_IIT_Delhi", label: "IIT DELHI SERIES" },
+      IIT_Guwahati: { name: "IIT Guwahati", folderPrefix: "Mock_07_IIT_Guwahati", label: "IIT GUWAHATI SERIES" },
+      IIT_Kanpur: { name: "IIT Kanpur", folderPrefix: "Mock_10_IIT_Kanpur", label: "IIT KANPUR SERIES" },
+      IIT_Kharagpur: { name: "IIT Kharagpur", folderPrefix: "Mock_13_IIT_Kharagpur", label: "IIT KHARAGPUR SERIES" },
+      IIT_Madras: { name: "IIT Madras", folderPrefix: "Mock_15_IIT_Madras", label: "IIT MADRAS SERIES" },
+      IIT_Roorkee: { name: "IIT Roorkee", folderPrefix: "Mock_18_IIT_Roorkee", label: "IIT ROORKEE SERIES" }
+    };
+
+    let currentIIT = "IIT_Bombay";
+    let currentMockIndex = 1; // 1 to 20
+    let currentPaper = "Paper_1"; // "Paper_1" or "Paper_2"
+    let currentViewMode = "split"; // "split", "test-only", "sol-only", "key"
+
+    function toggleMobileSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const backdrop = document.getElementById('sidebarBackdrop');
+      sidebar.classList.toggle('mobile-open');
+      backdrop.classList.toggle('active');
+    }
+
+    function closeMobileSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const backdrop = document.getElementById('sidebarBackdrop');
+      sidebar.classList.remove('mobile-open');
+      backdrop.classList.remove('active');
+    }
+
+    function selectIIT(iitKey) {
+      currentIIT = iitKey;
+      document.querySelectorAll(".iit-pill").forEach(pill => {
+        pill.classList.toggle("active", pill.getAttribute("onclick").includes(iitKey));
+      });
+      document.getElementById("sidebar-iit-title").innerText = iitConfigs[iitKey].label;
+      currentMockIndex = 1;
+      renderSidebarMocks();
+      loadActiveDocument();
+    }
+
+    function renderSidebarMocks() {
+      const list = document.getElementById("mock-list");
+      list.innerHTML = "";
+      for (let i = 1; i <= 20; i++) {
+        const pad = i < 10 ? "0" + i : "" + i;
+        const item = document.createElement("div");
+        item.className = "mock-item" + (i === currentMockIndex ? " active" : "");
+        item.id = "mock-item-" + i;
+        item.onclick = () => selectMock(i);
+        item.innerHTML = `
+          <div>
+            <div class="mock-item-title">Mock Examination ${pad}</div>
+            <div class="mock-item-desc">${iitConfigs[currentIIT].name} Pattern &bull; 108 Qs</div>
+          </div>
+          <span class="badge-status">Active</span>
+        `;
+        list.appendChild(item);
+      }
+    }
+
+    function selectMock(index) {
+      currentMockIndex = index;
+      document.querySelectorAll(".mock-item").forEach(item => item.classList.remove("active"));
+      const activeItem = document.getElementById("mock-item-" + index);
+      if (activeItem) activeItem.classList.add("active");
+      closeMobileSidebar();
+      loadActiveDocument();
+    }
+
+    function selectPaper(paperKey) {
+      currentPaper = paperKey;
+      document.getElementById("tab-p1").classList.toggle("active", paperKey === "Paper_1");
+      document.getElementById("tab-p2").classList.toggle("active", paperKey === "Paper_2");
+      const name = paperKey === "Paper_1" ? "Paper 1" : "Paper 2";
+      document.getElementById("label-test-title").innerText = `QUESTION PAPER — ${name}`;
+      document.getElementById("label-sol-title").innerText = `PEDAGOGICAL SOLUTIONS — ${name}`;
+      loadActiveDocument();
+    }
+
+    function setViewMode(mode) {
+      currentViewMode = mode;
+      document.querySelectorAll(".view-tab-btn").forEach(btn => btn.classList.remove("active"));
+
+      const workspace = document.getElementById("dual-workspace");
+      const colTest = document.getElementById("col-test");
+      const colSol = document.getElementById("col-sol");
+      const colKey = document.getElementById("col-key");
+
+      if (mode === "split") {
+        document.getElementById("mode-split").classList.add("active");
+        workspace.classList.add("split-mode");
+        colTest.classList.remove("hidden");
+        colSol.classList.remove("hidden");
+        colKey.classList.add("hidden");
+      } else if (mode === "test-only") {
+        document.getElementById("mode-test").classList.add("active");
+        workspace.classList.remove("split-mode");
+        colTest.classList.remove("hidden");
+        colSol.classList.add("hidden");
+        colKey.classList.add("hidden");
+      } else if (mode === "sol-only") {
+        document.getElementById("mode-sol").classList.add("active");
+        workspace.classList.remove("split-mode");
+        colTest.classList.add("hidden");
+        colSol.classList.remove("hidden");
+        colKey.classList.add("hidden");
+      } else if (mode === "key") {
+        document.getElementById("mode-key").classList.add("active");
+        workspace.classList.remove("split-mode");
+        colTest.classList.add("hidden");
+        colSol.classList.add("hidden");
+        colKey.classList.remove("hidden");
+      }
+      loadActiveDocument();
+    }
+
+    // Resolve file path based on directory layout
+    function getDocumentPath(filename) {
+      const pad = currentMockIndex < 10 ? "0" + currentMockIndex : "" + currentMockIndex;
+      return `${currentIIT}/Mock_${pad}/${filename}`;
+    }
+
+    // Fallback path helper for existing flat mock_tests directories
+    function getFallbackPath(filename) {
+      const mockFlatMap = {
+        IIT_Bombay: ["Mock_01_IIT_Bombay", "Mock_02_IIT_Bombay", "Mock_03_IIT_Bombay"],
+        IIT_Delhi: ["Mock_04_IIT_Delhi", "Mock_05_IIT_Delhi", "Mock_06_IIT_Delhi"],
+        IIT_Guwahati: ["Mock_07_IIT_Guwahati", "Mock_08_IIT_Guwahati", "Mock_09_IIT_Guwahati"],
+        IIT_Kanpur: ["Mock_10_IIT_Kanpur", "Mock_11_IIT_Kanpur", "Mock_12_IIT_Kanpur"],
+        IIT_Kharagpur: ["Mock_13_IIT_Kharagpur", "Mock_14_IIT_Kharagpur"],
+        IIT_Madras: ["Mock_15_IIT_Madras", "Mock_16_IIT_Madras", "Mock_17_IIT_Madras"],
+        IIT_Roorkee: ["Mock_18_IIT_Roorkee", "Mock_19_IIT_Roorkee", "Mock_20_IIT_Roorkee"]
+      };
+      const flatList = mockFlatMap[currentIIT] || [];
+      const flatDir = flatList[(currentMockIndex - 1) % flatList.length];
+      return `${flatDir}/${filename}`;
+    }
+
+    async function fetchAndRender(targetElementId, filename) {
+      const el = document.getElementById(targetElementId);
+      el.innerHTML = '<div class="loading-container"><div class="spinner-ring"></div><span>Loading Content...</span></div>';
+      
+      let res;
+      let primaryPath = getDocumentPath(filename);
+      let fallbackPath = getFallbackPath(filename);
+
+      try {
+        res = await fetch(primaryPath);
+        if (!res.ok) {
+          res = await fetch(fallbackPath);
+        }
+        if (!res.ok) throw new Error(`HTTP Error ${res.status}`);
+        
+        const markdown = await res.text();
+        renderProtectedMarkdown(markdown, el);
+      } catch (err) {
+        el.innerHTML = `
+          <div style="background:#fef2f2; border:1px solid #fecaca; border-radius:8px; padding:1.5rem; color:#991b1b;">
+            <h3 style="margin-bottom:0.5rem; color:#b91c1c;">📋 Examination Material Generation in Progress</h3>
+            <p style="font-size:0.88rem; color:#7f1d1d; line-height:1.5;">
+              This mock paper is actively being generated by the engine according to the ${iitConfigs[currentIIT].name} empirical profile.
+            </p>
+            <p style="font-size:0.75rem; color:#991b1b; margin-top:0.6rem;">Target path: <code>${primaryPath}</code></p>
+          </div>
+        `;
+      }
+    }
+
+    /**
+     * Math-Protected Markdown Renderer
+     * Shields KaTeX math expressions from Marked.js markdown parsing,
+     * preventing subscript underscores (_) from being corrupted into HTML italics (<em>).
+     */
+    function renderProtectedMarkdown(rawMd, containerEl) {
+      const mathTokens = [];
+
+      // Step 1: Shield Display Math $$...$$
+      let safeText = rawMd.replace(/\$\$([\s\S]*?)\$\$/g, (match) => {
+        mathTokens.push(match);
+        return `@@@MATH_BLOCK_${mathTokens.length - 1}@@@`;
+      });
+
+      // Step 2: Shield Inline Math $...$
+      safeText = safeText.replace(/\$([^\$\n]+?)\$/g, (match) => {
+        mathTokens.push(match);
+        return `@@@MATH_INLINE_${mathTokens.length - 1}@@@`;
+      });
+
+      // Step 3: Parse clean markdown with Marked
+      let html = marked.parse(safeText);
+
+      // Step 4: Restore pristine LaTeX math blocks
+      html = html.replace(/@@@MATH_BLOCK_(\d+)@@@/g, (match, idx) => {
+        return mathTokens[parseInt(idx, 10)];
+      });
+      html = html.replace(/@@@MATH_INLINE_(\d+)@@@/g, (match, idx) => {
+        return mathTokens[parseInt(idx, 10)];
+      });
+
+      // Step 5: Inject into container
+      containerEl.innerHTML = html;
+
+      // Step 6: Render KaTeX on clean text nodes
+      if (window.renderMathInElement) {
+        renderMathInElement(containerEl, {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '$', right: '$', display: false },
+            { left: '\\(', right: '\\)', display: false },
+            { left: '\\[', right: '\\]', display: true }
+          ],
+          throwOnError: false
+        });
+      }
+
+      containerEl.scrollTop = 0;
+    }
+
+    function loadActiveDocument() {
+      if (currentViewMode === "split") {
+        fetchAndRender("body-test", `${currentPaper}.md`);
+        fetchAndRender("body-sol", `Solutions_${currentPaper}.md`);
+      } else if (currentViewMode === "test-only") {
+        fetchAndRender("body-test", `${currentPaper}.md`);
+      } else if (currentViewMode === "sol-only") {
+        fetchAndRender("body-sol", `Solutions_${currentPaper}.md`);
+      } else if (currentViewMode === "key") {
+        fetchAndRender("body-key", `Answer_Key_and_Validation.md`);
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      renderSidebarMocks();
+      loadActiveDocument();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,3217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  
+  <!-- Primary SEO Meta Tags -->
+  <title>Scale Test Series — NEET (UG) 2026-2027 Master Mock Test Platform</title>
+  <meta name="title" content="Scale Test Series — NEET (UG) 2026-2027 Master Mock Test Platform">
+  <meta name="description" content="Prepare for NEET (UG) with 60 authentic full-length mock tests (12,000 Questions) across 3 scientific difficulty tiers: Ignite, Conquer, and Dominate. Designed and developed by scaleshunyaa.">
+  <meta name="keywords" content="NEET mock test, NEET UG 2026, Scale Test Series, scaleshunyaa, NEET test series, NTA NEET pattern, Ignite Conquer Dominate, 720 marks simulator">
+  <meta name="author" content="scaleshunyaa">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://scaletestseries.web.app/">
+  <meta property="og:title" content="Scale Test Series — NEET (UG) Master Mock Test Platform">
+  <meta property="og:description" content="60 Full-Length NEET Mock Tests (12,000 Questions) across Ignite, Conquer, and Dominate tiers. Real 720-marks exam simulator with step-by-step solutions.">
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://scaletestseries.web.app/">
+  <meta property="twitter:title" content="Scale Test Series — NEET (UG) Master Mock Test Platform">
+  <meta property="twitter:description" content="Master NEET (UG) with 60 authentic full-length mock tests. Try free demo tests today!">
+
+  <!-- Schema.org JSON-LD Structured Data for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "name": "Scale Test Series NEET (UG) 2026-2027 Full-Length Mock Corpus",
+    "description": "Comprehensive 60 Full-Length NEET UG Examination series containing 12,000 questions categorized into Ignite, Conquer, and Dominate tiers with step-by-step solutions.",
+    "provider": {
+      "@type": "Organization",
+      "name": "Scale Test Series",
+      "sameAs": "https://scaletestseries.web.app/",
+      "creator": {
+        "@type": "Organization",
+        "name": "scaleshunyaa"
+      }
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "999",
+      "priceCurrency": "INR",
+      "availability": "https://schema.org/InStock",
+      "category": "Educational Test Series"
+    }
+  }
+  </script>
+
+  <!-- KaTeX for high-precision mathematical & chemical typography -->
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="logo.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+  
+  <!-- Marked for markdown parsing -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  
+  <!-- Pre-bundled offline/local data store (solves CORS and local file loading) -->
+  <script src="neet_data.js"></script>
+  
+  <!-- Firebase Compat SDK for Authentication -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-page: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-subtle: #f0fdf4;
+      --bg-hover: #e2e8f0;
+      
+      --primary: #059669;       /* Medical Emerald */
+      --primary-dark: #047857;
+      --primary-light: #ecfdf5;
+      
+      --ignite: #10b981;        /* Emerald for Ignite */
+      --ignite-light: #dcfce7;
+      --conquer: #f59e0b;       /* Amber for Conquer */
+      --conquer-light: #fef3c7;
+      --dominate: #f43f5e;      /* Rose for Dominate */
+      --dominate-light: #ffe4e6;
+      
+      --text-main: #0f172a;
+      --text-muted: #334155;
+      --text-subtle: #64748b;
+      --border-color: #cbd5e1;
+      
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Top Sticky Global Navigation */
+    .site-nav {
+      position: sticky;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid #e2e8f0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+    .nav-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .brand-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: inherit;
+    }
+        .brand-logo-img {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      object-fit: cover;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+      flex-shrink: 0;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    .brand-logo-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
+      color: white;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 900;
+      font-size: 1.3rem;
+      box-shadow: 0 4px 10px rgba(5, 150, 105, 0.3);
+    }
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+    .brand-name {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+    .brand-by {
+      font-size: 0.70rem;
+      color: #059669;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      list-style: none;
+    }
+    .nav-menu a {
+      text-decoration: none;
+      color: #475569;
+      font-weight: 600;
+      font-size: 0.90rem;
+      transition: color 0.15s ease;
+      cursor: pointer;
+    }
+    .nav-menu a:hover {
+      color: #059669;
+    }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+    .btn-secondary {
+      padding: 0.5rem 0.95rem;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      color: #0f172a;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-secondary:hover {
+      background: #e2e8f0;
+    }
+    .btn-primary {
+      padding: 0.55rem 1.15rem;
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #047857 0%, #065f46 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(5, 150, 105, 0.35);
+    }
+    .btn-cta-lg {
+      padding: 0.85rem 1.75rem;
+      font-size: 1.05rem;
+      border-radius: 10px;
+    }
+
+    /* Landing Page View */
+    #landing-view {
+      display: block;
+      width: 100%;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      background: linear-gradient(180deg, #ecfdf5 0%, #ffffff 100%);
+      padding: 4.5rem 1.25rem 3.5rem 1.25rem;
+      text-align: center;
+      border-bottom: 1px solid #e2e8f0;
+      position: relative;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.35rem 0.95rem;
+      background: #ffffff;
+      border: 1px solid #a7f3d0;
+      color: #047857;
+      border-radius: 9999px;
+      font-weight: 700;
+      font-size: 0.82rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 2px 6px rgba(5, 150, 105, 0.1);
+    }
+    .hero-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 3.2rem;
+      font-weight: 900;
+      color: #0f172a;
+      line-height: 1.15;
+      max-width: 900px;
+      margin: 0 auto 1.25rem auto;
+      letter-spacing: -0.03em;
+    }
+    .hero-title span {
+      background: linear-gradient(135deg, #059669 0%, #0284c7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-subtitle {
+      font-size: 1.18rem;
+      color: #475569;
+      max-width: 760px;
+      margin: 0 auto 2rem auto;
+      line-height: 1.6;
+    }
+    .hero-ctas {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+    .hero-stats-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+      padding-top: 1.5rem;
+      border-top: 1px solid #e2e8f0;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .hero-stat-item {
+      text-align: center;
+    }
+    .hero-stat-num {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: #0f172a;
+    }
+    .hero-stat-label {
+      font-size: 0.80rem;
+      color: #64748b;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    /* Section Styles */
+    .section-wrap {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 4.5rem 1.25rem;
+    }
+    .section-header {
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto 3rem auto;
+    }
+    .section-badge {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #059669;
+      background: #dcfce7;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.35rem;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.85rem;
+    }
+    .section-desc {
+      font-size: 1.05rem;
+      color: #64748b;
+      line-height: 1.6;
+    }
+
+    /* 3 Tiers Architecture Cards */
+    .tiers-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.75rem;
+    }
+    .tier-progression-card {
+      background: #ffffff;
+      border-radius: var(--radius-xl);
+      border: 1px solid #e2e8f0;
+      padding: 2rem;
+      position: relative;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      flex-direction: column;
+      transition: all 0.25s ease;
+    }
+    .tier-progression-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-xl);
+    }
+    .tier-progression-card.card-ignite {
+      border-top: 6px solid var(--ignite);
+    }
+    .tier-progression-card.card-conquer {
+      border-top: 6px solid var(--conquer);
+    }
+    .tier-progression-card.card-dominate {
+      border-top: 6px solid var(--dominate);
+    }
+    .tier-step-num {
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+    }
+    .card-ignite .tier-step-num { color: #059669; }
+    .card-conquer .tier-step-num { color: #d97706; }
+    .card-dominate .tier-step-num { color: #e11d48; }
+
+    .tier-card-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 0.35rem;
+    }
+    .tier-range-pill {
+      display: inline-block;
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 0.15rem 0.55rem;
+      border-radius: 6px;
+      margin-bottom: 1.25rem;
+    }
+    .card-ignite .tier-range-pill { background: #dcfce7; color: #15803d; }
+    .card-conquer .tier-range-pill { background: #fef3c7; color: #b45309; }
+    .card-dominate .tier-range-pill { background: #ffe4e6; color: #be123c; }
+
+    .tier-card-features {
+      list-style: none;
+      margin: 1.25rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      font-size: 0.90rem;
+      color: #334155;
+      flex: 1;
+    }
+    .tier-card-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .tier-card-features svg {
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    /* Free Demos Grid */
+    .demos-box {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: var(--radius-xl);
+      padding: 2.5rem;
+    }
+    .demos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .demo-test-card {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+    }
+    .demo-test-card:hover {
+      border-color: #059669;
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+    .demo-badge-free {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.2rem 0.55rem;
+      border-radius: 9999px;
+      background: #dcfce7;
+      color: #15803d;
+      margin-bottom: 0.85rem;
+      width: fit-content;
+    }
+    .demo-test-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: #0f172a;
+      margin-bottom: 0.4rem;
+    }
+    .demo-test-meta {
+      font-size: 0.82rem;
+      color: #64748b;
+      margin-bottom: 1.25rem;
+      flex: 1;
+    }
+
+    /* Pricing Section */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      align-items: center;
+    }
+    .pricing-card {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: var(--radius-xl);
+      padding: 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+    }
+    .pricing-card.featured {
+      border: 2px solid #059669;
+      box-shadow: 0 12px 30px rgba(5, 150, 105, 0.15);
+      transform: scale(1.04);
+      background: #ffffff;
+    }
+    .pricing-ribbon {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.3rem 0.95rem;
+      border-radius: 9999px;
+      box-shadow: 0 2px 6px rgba(5, 150, 105, 0.3);
+      white-space: nowrap;
+    }
+    .pricing-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 0.5rem;
+    }
+    .pricing-desc {
+      font-size: 0.88rem;
+      color: #64748b;
+      margin-bottom: 1.5rem;
+    }
+    .pricing-cost {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 1.5rem;
+    }
+    .price-currency {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #0f172a;
+    }
+    .price-amount {
+      font-family: 'Outfit', sans-serif;
+      font-size: 3rem;
+      font-weight: 900;
+      color: #0f172a;
+      line-height: 1;
+    }
+    .price-original {
+      font-size: 1.15rem;
+      color: #94a3b8;
+      text-decoration: line-through;
+      margin-left: 6px;
+    }
+    .price-period {
+      font-size: 0.85rem;
+      color: #64748b;
+    }
+
+    /* Footer */
+    .site-footer {
+      background: #0f172a;
+      color: #94a3b8;
+      padding: 4.5rem 1.25rem 2.5rem 1.25rem;
+      border-top: 1px solid #1e293b;
+    }
+    .footer-container {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3.5rem;
+    }
+    .footer-brand-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+    }
+    .footer-brand-desc {
+      font-size: 0.90rem;
+      line-height: 1.6;
+      color: #94a3b8;
+      max-width: 380px;
+      margin-bottom: 1.25rem;
+    }
+    .footer-author-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(5, 150, 105, 0.15);
+      border: 1px solid rgba(5, 150, 105, 0.4);
+      padding: 0.4rem 0.85rem;
+      border-radius: 9999px;
+      color: #34d399;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+    .footer-col-title {
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 1.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      font-size: 0.90rem;
+    }
+    .footer-links a {
+      color: #94a3b8;
+      text-decoration: none;
+      transition: color 0.15s;
+      cursor: pointer;
+    }
+    .footer-links a:hover {
+      color: #ffffff;
+    }
+    .footer-bottom {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding-top: 2rem;
+      border-top: 1px solid #1e293b;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.85rem;
+    }
+
+    /* Test Examination View Layout */
+    #exam-workspace-view {
+      display: none;
+      height: 100vh;
+      height: 100dvh;
+      flex-direction: column;
+      overflow: hidden;
+      background: var(--bg-page);
+    }
+    .exam-header {
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border-color);
+      flex-shrink: 0;
+      z-index: 50;
+      box-shadow: var(--shadow-sm);
+      padding: 0.55rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .exam-header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .exam-header-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .exam-main-body {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+    }
+    .exam-sidebar {
+      width: 215px;
+      background: var(--bg-surface);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      overflow: hidden;
+      transition: transform 0.25s ease-in-out;
+      z-index: 100;
+    }
+    .tier-switcher {
+      display: flex;
+      background: #f1f5f9;
+      padding: 4px;
+      border-radius: 10px;
+      margin: 0.65rem 0.75rem 0.4rem 0.75rem;
+      gap: 4px;
+      border: 1px solid #cbd5e1;
+    }
+    .tier-tab-btn {
+      flex: 1 1 0;
+      min-width: 0;
+      padding: 0.38rem 0.15rem;
+      border-radius: 7px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      transition: all 0.15s ease;
+    }
+    .tier-tab-btn .tier-top-row {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: #475569;
+      white-space: nowrap;
+    }
+    .tier-tab-btn .tier-sub-row {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: #94a3b8;
+      white-space: nowrap;
+    }
+    .tier-tab-btn:hover .tier-top-row {
+      color: #0f172a;
+    }
+    .tier-tab-btn.active {
+      background: #ffffff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    }
+    .tier-tab-btn.active .tier-top-row {
+      color: #0f172a;
+    }
+    .tier-tab-btn.active .tier-sub-row {
+      color: #059669;
+    }
+    .tier-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+    .dot-green { background: #10b981; }
+    .dot-amber { background: #f59e0b; }
+    .dot-rose { background: #f43f5e; }
+
+    .mock-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0.55rem 0.85rem 0.85rem 0.85rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .mock-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.6rem 0.8rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+      background: var(--bg-surface);
+      cursor: pointer;
+      transition: all 0.15s ease-in-out;
+    }
+    .mock-card:hover {
+      background: #f8fafc;
+      border-color: #94a3b8;
+    }
+    .mock-card.active {
+      background: var(--primary-light);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 1px var(--primary);
+    }
+    .mock-card.active-mod {
+      background: #fefce8;
+      border-color: #eab308;
+      box-shadow: 0 0 0 1px #eab308;
+    }
+    .mock-card.active-diff {
+      background: #fff1f2;
+      border-color: #f43f5e;
+      box-shadow: 0 0 0 1px #f43f5e;
+    }
+    .mock-card.locked {
+      background: #f8fafc;
+      opacity: 0.88;
+    }
+    .mock-card-name {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .mock-card-meta {
+      font-size: 0.70rem;
+      color: var(--text-subtle);
+      margin-top: 0.1rem;
+    }
+    .mock-tag-mini {
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 0.08rem 0.35rem;
+      border-radius: 4px;
+      display: inline-block;
+    }
+    .tag-green-mini { background: #dcfce7; color: #166534; }
+    .tag-amber-mini { background: #fef3c7; color: #92400e; }
+    .tag-rose-mini { background: #ffe4e6; color: #be123c; }
+    .tag-lock-mini { background: #f1f5f9; color: #64748b; border: 1px solid #cbd5e1; }
+    .tag-free-mini { background: #ecfdf5; color: #047857; border: 1px solid #6ee7b7; font-weight: 800; }
+
+    /* Dual Workspace Inside Exam View */
+    .workspace-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      overflow: hidden;
+      background: var(--bg-page);
+    }
+    .tabs-header {
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border-color);
+      padding: 0.45rem 1.15rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-shrink: 0;
+    }
+    .tabs-group {
+      display: flex;
+      align-items: center;
+      background: #f1f5f9;
+      padding: 3px;
+      border-radius: var(--radius-sm);
+      gap: 3px;
+    }
+    .tab-btn {
+      padding: 0.38rem 0.85rem;
+      font-size: 0.80rem;
+      font-weight: 600;
+      border-radius: 4px;
+      border: none;
+      background: transparent;
+      color: var(--text-subtle);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease-in-out;
+    }
+    .tab-btn:hover { color: var(--text-main); }
+    .tab-btn.active {
+      background: var(--bg-surface);
+      color: var(--primary);
+      box-shadow: var(--shadow-sm);
+      font-weight: 700;
+    }
+
+    #dual-workspace {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+      padding: 0.65rem 0.85rem;
+      gap: 0.85rem;
+    }
+    .workspace-pane {
+      background: var(--bg-surface);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      flex: 1;
+      min-width: 0;
+    }
+    .pane-header {
+      padding: 0.5rem 0.95rem;
+      background: #f8fafc;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .pane-title {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* =========================================================
+       COMPACT SIDEBAR & MORE WORKSPACE SPACE FOR SPLIT SCREEN
+       ========================================================= */
+    .exam-sidebar {
+      width: 265px !important; /* Sweet spot: spacious for mock cards, yet leaves 80%+ for split view */
+      background: #ffffff;
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      overflow: hidden;
+      transition: width 0.2s ease, transform 0.25s ease-in-out;
+      z-index: 100;
+    }
+    .exam-sidebar.collapsed {
+      width: 0 !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      border-right: none !important;
+      overflow: hidden !important;
+    }
+    .tier-switcher {
+      display: flex;
+      background: #f1f5f9;
+      padding: 2px !important;
+      border-radius: 8px;
+      margin: 0.4rem 0.45rem 0.3rem 0.45rem !important;
+      gap: 2px !important;
+      border: 1px solid #cbd5e1;
+    }
+    .tier-tab-btn {
+      flex: 1 1 0;
+      min-width: 0;
+      padding: 0.26rem 0.1rem !important;
+      border-radius: 6px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1px;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+    .tier-tab-btn .tier-top-row {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 0.70rem !important;
+      font-weight: 800;
+      color: #475569;
+      white-space: nowrap;
+    }
+    .tier-tab-btn .tier-sub-row {
+      font-size: 0.58rem !important;
+      font-weight: 700;
+      color: #94a3b8;
+      white-space: nowrap;
+    }
+    .tier-tab-btn:hover .tier-top-row { color: #0f172a; }
+    .tier-tab-btn.active {
+      background: #ffffff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    .tier-tab-btn.active .tier-top-row { color: #059669; }
+    .tier-tab-btn.active .tier-sub-row { color: #059669; }
+
+    .mock-card {
+      padding: 0.42rem 0.55rem !important;
+      margin: 0.18rem 0.35rem !important;
+      border-radius: 7px !important;
+      border: 1px solid #e2e8f0;
+      background: #ffffff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.35rem;
+      transition: all 0.15s ease;
+      min-height: unset !important;
+    }
+    .mock-card:hover {
+      border-color: #a7f3d0;
+      background: #f0fdf4;
+    }
+    .mock-card-name {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.76rem !important;
+      font-weight: 700 !important;
+      color: #0f172a;
+    }
+    .mock-card-meta {
+      font-size: 0.62rem !important;
+      color: #64748b !important;
+      margin-top: 1px !important;
+    }
+    .mock-card-num {
+      font-size: 0.74rem !important;
+      font-weight: 800 !important;
+    }
+    .mock-tag-mini {
+      font-size: 0.56rem !important;
+      font-weight: 800 !important;
+      padding: 0.06rem 0.3rem !important;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .tag-free-mini { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+    .tag-lock-mini { background: #f1f5f9; color: #64748b; border: 1px solid #cbd5e1; }
+
+    /* =========================================================
+       LARGER, HIGHLY-READABLE ACADEMIC TYPOGRAPHY
+       ========================================================= */
+    .pane-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.25rem 1.65rem;
+      font-size: 1.02rem !important; /* Larger, crisp, effortless reading */
+      line-height: 1.68 !important;
+      color: #1e293b;
+    }
+    .pane-scroll p {
+      font-size: 1.02rem !important;
+      line-height: 1.68 !important;
+      margin-bottom: 0.85rem;
+    }
+    .pane-scroll h1 {
+      font-size: 1.25rem !important;
+      font-weight: 800;
+      color: #0f172a;
+      background: #f8fafc;
+      padding: 0.65rem 1rem;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
+    }
+    .pane-scroll h2 {
+      font-size: 1.10rem !important;
+      font-weight: 800;
+      color: #059669;
+      margin-top: 1.25rem;
+      margin-bottom: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .pane-scroll h3 {
+      font-size: 1.04rem !important;
+      font-weight: 700;
+      color: #1e293b;
+      margin-top: 1.1rem;
+      margin-bottom: 0.55rem;
+    }
+    .pane-scroll h4 {
+      font-size: 1.0rem !important;
+      font-weight: 800;
+      color: #0f172a;
+      background: #f8fafc;
+      padding: 0.5rem 0.85rem;
+      border-radius: 6px;
+      border-left: 4px solid #059669;
+      margin-top: 1.25rem;
+      margin-bottom: 0.65rem;
+    }
+    .pane-scroll hr {
+      border: 0;
+      height: 1px;
+      background: #e2e8f0;
+      margin: 1.35rem 0;
+    }
+
+    /* Option Cards - Enhanced Font Size & Padding */
+    .options-container {
+      margin: 0.75rem 0 1.25rem 0;
+      padding: 0;
+      width: 100%;
+    }
+    .options-container ul {
+      list-style-type: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      width: 100%;
+    }
+    .options-container li {
+      list-style-type: none !important;
+      margin: 0 !important;
+      padding: 0.65rem 1rem !important;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 0.98rem !important;
+      line-height: 1.55;
+      display: flex;
+      align-items: baseline;
+      gap: 0.65rem;
+      transition: all 0.15s ease-in-out;
+      cursor: pointer;
+      min-height: 42px;
+      word-break: break-word;
+    }
+    .options-container li:hover {
+      background: #f0fdf4;
+      border-color: #4ade80;
+      box-shadow: 0 2px 4px rgba(5, 150, 105, 0.08);
+      transform: translateX(2px);
+    }
+    .options-container li strong {
+      color: #047857;
+      font-weight: 800;
+      font-size: 1.0rem !important;
+      min-width: 28px;
+      flex-shrink: 0;
+      display: inline-block;
+    }
+    .options-container li span { flex: 1; }
+
+    /* Statement Cards (Statement I & II) */
+    .statement-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      background: #f8fafc;
+      border-left: 4px solid #059669;
+      border-top: 1px solid #e2e8f0;
+      border-right: 1px solid #e2e8f0;
+      border-bottom: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 0.75rem 1.1rem;
+      margin: 0.75rem 0;
+      font-size: 0.98rem !important;
+      line-height: 1.62;
+    }
+    .statement-badge {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      width: fit-content;
+    }
+    .statement-1 { background: #dcfce7; color: #166534; }
+    .statement-2 { background: #e0f2fe; color: #075985; }
+
+    /* Assertion & Reason Cards */
+    .assertion-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      background: #faf5ff;
+      border-left: 4px solid #7c3aed;
+      border-top: 1px solid #f3e8ff;
+      border-right: 1px solid #f3e8ff;
+      border-bottom: 1px solid #f3e8ff;
+      border-radius: 8px;
+      padding: 0.75rem 1.1rem;
+      margin: 0.75rem 0;
+      font-size: 0.98rem !important;
+      line-height: 1.62;
+    }
+    .assertion-badge {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      background: #f3e8ff;
+      color: #6b21a8;
+      width: fit-content;
+    }
+    .reason-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      background: #fffbeb;
+      border-left: 4px solid #d97706;
+      border-top: 1px solid #fef3c7;
+      border-right: 1px solid #fef3c7;
+      border-bottom: 1px solid #fef3c7;
+      border-radius: 8px;
+      padding: 0.75rem 1.1rem;
+      margin: 0.75rem 0;
+      font-size: 0.98rem !important;
+      line-height: 1.62;
+    }
+    .reason-badge {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      background: #fef3c7;
+      color: #92400e;
+      width: fit-content;
+    }
+
+    /* High-Fidelity Tables: Match Lists & Answer Key */
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin: 1rem 0 1.35rem 0;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+      font-size: 0.92rem !important;
+    }
+    th {
+      background: #f1f5f9;
+      color: #0f172a;
+      font-weight: 800;
+      font-size: 0.88rem !important;
+      padding: 0.7rem 0.95rem;
+      text-align: left;
+      border-bottom: 2px solid #cbd5e1;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+    td {
+      padding: 0.65rem 0.95rem;
+      font-size: 0.92rem !important;
+      line-height: 1.55;
+      color: #334155;
+      border-bottom: 1px solid #f1f5f9;
+      vertical-align: middle;
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+    tr:nth-child(even) td {
+      background: #f8fafc;
+    }
+    tr:hover td {
+      background: #f0fdf4;
+    }
+    td strong {
+      color: #047857;
+      font-weight: 800;
+    }
+
+    /* Solution Callout Cards */
+    .takeaway-box {
+      background: #fefce8;
+      border-left: 4px solid #eab308;
+      border-top: 1px solid #fef08a;
+      border-right: 1px solid #fef08a;
+      border-bottom: 1px solid #fef08a;
+      border-radius: 8px;
+      padding: 0.85rem 1.1rem;
+      margin: 0.85rem 0;
+      font-size: 0.95rem !important;
+      color: #713f12;
+      line-height: 1.55;
+    }
+    .takeaway-box strong {
+      color: #854d0e;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 0.3rem;
+      font-size: 0.94rem !important;
+    }
+    .distractor-box {
+      background: #faf5ff;
+      border-left: 4px solid #a855f7;
+      border-top: 1px solid #f3e8ff;
+      border-right: 1px solid #f3e8ff;
+      border-bottom: 1px solid #f3e8ff;
+      border-radius: 8px;
+      padding: 0.85rem 1.1rem;
+      margin: 0.85rem 0;
+      font-size: 0.95rem !important;
+      color: #581c87;
+      line-height: 1.55;
+    }
+    .distractor-box strong {
+      color: #6b21a8;
+      display: block;
+      margin-bottom: 0.3rem;
+      font-size: 0.94rem !important;
+    }
+
+    /* KaTeX Settings */
+    .katex-error {
+      color: inherit !important;
+      background: transparent !important;
+      border: none !important;
+    }
+    .katex {
+      font-size: 1.12em !important;
+    }
+    .katex-display {
+      margin: 0.85rem 0 !important;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+
+    /* =========================================================
+       MODALS SYSTEM (AUTH, PAYMENT & LEGAL DIALOGS)
+       ========================================================= */
+    .modal-overlay {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      background: rgba(15, 23, 42, 0.75) !important;
+      backdrop-filter: blur(6px) !important;
+      display: none !important;
+      align-items: center !important;
+      justify-content: center !important;
+      z-index: 99999 !important;
+      padding: 1rem !important;
+      overflow-y: auto !important;
+    }
+    .modal-overlay.active {
+      display: flex !important;
+    }
+    .modal-dialog {
+      background: #ffffff;
+      border-radius: 14px;
+      max-width: 520px;
+      width: 100%;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+      border: 1px solid #cbd5e1;
+      overflow: hidden;
+      animation: modalPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      margin: auto;
+    }
+    .modal-dialog.lg {
+      max-width: 760px;
+    }
+    @keyframes modalPop {
+      from { opacity: 0; transform: scale(0.96) translateY(8px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .modal-header {
+      padding: 1rem 1.25rem;
+      background: #f8fafc;
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .modal-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: #0f172a;
+      margin: 0;
+    }
+    .modal-close-btn {
+      background: transparent;
+      border: none;
+      font-size: 1.5rem;
+      line-height: 1;
+      color: #64748b;
+      cursor: pointer;
+      padding: 0.2rem 0.4rem;
+      border-radius: 6px;
+      transition: all 0.15s;
+    }
+    .modal-close-btn:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+    .modal-body {
+      padding: 1.25rem 1.35rem;
+      max-height: calc(85vh - 120px);
+      overflow-y: auto;
+      font-size: 0.92rem;
+      color: #334155;
+      line-height: 1.6;
+    }
+    
+    /* Form & SSO Modal Styles */
+    .form-group {
+      margin-bottom: 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      text-align: left;
+    }
+    .form-label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #334155;
+      margin-bottom: 0.25rem;
+      text-align: left;
+    }
+    .form-input {
+      width: 100% !important;
+      padding: 0.7rem 0.85rem !important;
+      border: 1.5px solid #cbd5e1 !important;
+      border-radius: 8px !important;
+      font-size: 0.92rem !important;
+      font-family: inherit !important;
+      color: #0f172a !important;
+      background: #ffffff !important;
+      transition: all 0.2s ease !important;
+      box-sizing: border-box !important;
+      display: block !important;
+    }
+    .form-input:focus {
+      outline: none !important;
+      border-color: #059669 !important;
+      box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15) !important;
+    }
+    .auth-divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 1.25rem 0;
+      color: #94a3b8;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+    .auth-divider::before, .auth-divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .auth-divider span {
+      padding: 0 0.75rem;
+    }
+
+    .modal-footer {
+      padding: 0.85rem 1.25rem;
+      background: #f8fafc;
+      border-top: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.75rem;
+    }
+
+    /* =========================================================
+       RESPONSIVE BREAKPOINTS (LAPTOPS, TABLETS & MOBILE PHONES)
+       ========================================================= */
+    @media (min-width: 1025px) {
+      #dual-workspace {
+        display: flex;
+        flex: 1;
+        overflow: hidden;
+        padding: 0.65rem 0.85rem;
+        gap: 0.85rem;
+      }
+      .workspace-pane {
+        flex: 1 1 50%;
+        min-width: 0;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .tiers-grid, .demos-grid, .pricing-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+        gap: 1.25rem !important;
+      }
+      .footer-container {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 2rem !important;
+      }
+    }
+
+    @media (max-width: 768px) {
+      /* Mobile Navigation Header */
+      .nav-container {
+        padding: 0.5rem 0.75rem !important;
+      }
+      .brand-logo-img {
+        width: 34px !important;
+        height: 34px !important;
+        border-radius: 8px !important;
+      }
+      .brand-name {
+        font-size: 1.05rem !important;
+      }
+      .brand-by {
+        font-size: 0.62rem !important;
+      }
+      .nav-menu {
+        display: none !important;
+      }
+      .nav-actions {
+        gap: 0.4rem !important;
+      }
+      .nav-actions .btn-secondary {
+        display: none !important;
+      }
+      .nav-actions .btn-primary {
+        padding: 0.4rem 0.75rem !important;
+        font-size: 0.78rem !important;
+      }
+
+      /* Mobile Landing Hero */
+      .hero-section {
+        padding: 2.25rem 1rem 1.75rem 1rem !important;
+      }
+      .hero-title {
+        font-size: 1.85rem !important;
+        line-height: 1.25 !important;
+        margin-bottom: 0.85rem !important;
+      }
+      .hero-subtitle {
+        font-size: 0.95rem !important;
+        line-height: 1.55 !important;
+        margin-bottom: 1.5rem !important;
+      }
+      .hero-ctas {
+        flex-direction: column !important;
+        width: 100% !important;
+        gap: 0.75rem !important;
+      }
+      .hero-ctas button {
+        width: 100% !important;
+        justify-content: center !important;
+      }
+      .hero-stats-row {
+        gap: 0.75rem !important;
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+      }
+      .hero-stat-num {
+        font-size: 1.35rem !important;
+      }
+      .hero-stat-label {
+        font-size: 0.70rem !important;
+      }
+
+      /* Single Column Grids on Mobile */
+      .tiers-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1.25rem !important;
+      }
+      .demos-box {
+        padding: 1.25rem 0.85rem !important;
+      }
+      .demos-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+      }
+      .pricing-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1.25rem !important;
+      }
+      .comparison-table-wrap {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+      }
+      .footer-container {
+        grid-template-columns: 1fr !important;
+        gap: 1.75rem !important;
+      }
+
+      /* =========================================================
+         MOBILE EXAM HEADER: ULTRA-COMPACT (70px TOTAL HEIGHT)
+         ========================================================= */
+      .exam-header {
+        padding: 0.35rem 0.55rem !important;
+        min-height: unset !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        background: #ffffff !important;
+        border-bottom: 1px solid #e2e8f0 !important;
+      }
+      .exam-header-left {
+        width: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 4px !important;
+      }
+      .exam-header-left button {
+        padding: 0.28rem 0.45rem !important;
+        font-size: 0.72rem !important;
+        height: 30px !important;
+      }
+      #currentMockLabel {
+        font-size: 0.82rem !important;
+        font-weight: 800 !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        max-width: 140px !important;
+      }
+      #examTierBadge {
+        font-size: 0.62rem !important;
+        padding: 0.1rem 0.35rem !important;
+        white-space: nowrap !important;
+      }
+      .exam-header-right {
+        display: none !important;
+      }
+
+      /* Tabs Bar: Compact & Full-Width */
+      .tabs-header {
+        padding: 0.25rem 0.5rem !important;
+        background: #f8fafc !important;
+        border-bottom: 1px solid #e2e8f0 !important;
+      }
+      .tabs-group {
+        width: 100% !important;
+        gap: 3px !important;
+      }
+      .tab-btn {
+        flex: 1 !important;
+        justify-content: center !important;
+        font-size: 0.74rem !important;
+        padding: 0.32rem 0.2rem !important;
+        height: 32px !important;
+      }
+      .tab-btn svg {
+        display: none !important; /* Hide icons on mobile tabs for clean text fit */
+      }
+      .tabs-meta-tag {
+        display: none !important; /* Completely hide the 4-line KaTeX typography tag on mobile */
+      }
+
+      /* Hide Redundant Pane Header on Mobile */
+      .pane-header {
+        display: none !important; /* Active tab already tells user what pane is active! */
+      }
+
+      /* Single Full-Width Mobile Workspace Pane */
+      #dual-workspace {
+        display: block !important;
+        padding: 0.25rem !important;
+        overflow-y: auto !important;
+      }
+      .workspace-pane {
+        width: 100% !important;
+        height: 100% !important;
+        border: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+      }
+      .pane-scroll {
+        padding: 0.65rem 0.85rem !important;
+        font-size: 0.98rem !important;
+        line-height: 1.62 !important;
+      }
+
+      /* Mobile Exam Engine: Absolutely NO Split Screen */
+      #tab-split {
+        display: none !important; /* Never allow split screen on mobile */
+      }
+      #desktopSidebarToggleBtn {
+        display: none !important;
+      }
+      .tabs-header {
+        padding: 0.35rem 0.65rem !important;
+      }
+      .tabs-group {
+        width: 100% !important;
+      }
+      .tab-btn {
+        flex: 1 !important;
+        justify-content: center !important;
+        font-size: 0.76rem !important;
+        padding: 0.45rem 0.3rem !important;
+      }
+      .exam-header {
+        padding: 0.45rem 0.75rem !important;
+        flex-wrap: wrap !important;
+        gap: 0.4rem !important;
+      }
+      .exam-header-left {
+        width: 100% !important;
+        justify-content: space-between !important;
+      }
+      .exam-header-right {
+        display: none !important;
+      }
+      #mobileDrawerBtn {
+        display: inline-flex !important;
+      }
+
+      /* Single Full-Width Mobile Pane */
+      #dual-workspace {
+        display: block !important;
+        padding: 0.4rem !important;
+        overflow-y: auto !important;
+      }
+      .workspace-pane {
+        width: 100% !important;
+        height: 100% !important;
+        border-radius: 8px !important;
+      }
+      .pane-scroll {
+        padding: 0.95rem 1.1rem !important;
+        font-size: 0.98rem !important;
+      }
+
+      /* Mobile Sidebar Overlay */
+      .exam-sidebar {
+        position: fixed !important;
+        top: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        width: 290px !important;
+        transform: translateX(-100%) !important;
+        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.25) !important;
+        z-index: 2500 !important;
+      }
+      .exam-sidebar.mobile-open {
+        transform: translateX(0) !important;
+      }
+      .sidebar-backdrop {
+        position: fixed !important;
+        top: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        background: rgba(15, 23, 42, 0.5) !important;
+        z-index: 2400 !important;
+        display: none;
+      }
+      .sidebar-backdrop.active {
+        display: block !important;
+      }
+    }
+  /* Comparison Table: Scale Test Series vs Coaching Mocks */
+    .comparison-section {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: var(--radius-xl);
+      padding: 2.5rem 2rem;
+      margin: 3.5rem 0;
+    }
+    .comparison-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      background: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #cbd5e1;
+      margin-top: 1.5rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .comparison-table th {
+      padding: 1rem 1.25rem;
+      font-size: 0.92rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .comparison-table th.col-feature { background: #f1f5f9; color: #334155; width: 28%; }
+    .comparison-table th.col-coaching { background: #fef2f2; color: #991b1b; width: 36%; }
+    .comparison-table th.col-scale { background: #ecfdf5; color: #065f46; width: 36%; border-top: 3px solid #059669; }
+    .comparison-table td {
+      padding: 0.85rem 1.25rem;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      border-bottom: 1px solid #f1f5f9;
+      vertical-align: middle;
+    }
+    .comparison-table tr:last-child td { border-bottom: none; }
+    .comparison-table td.col-feature { font-weight: 700; color: #0f172a; background: #f8fafc; }
+    .comparison-table td.col-coaching { color: #64748b; background: #fffafb; }
+    .comparison-table td.col-scale { font-weight: 600; color: #065f46; background: #f0fdf4; }
+    .badge-check { color: #059669; font-weight: 800; margin-right: 6px; }
+    .badge-cross { color: #dc2626; font-weight: 800; margin-right: 6px; }
+  </style>
+</head>
+<body>
+
+  
+
+  <!-- ==================== LANDING VIEW ==================== -->
+  <div id="landing-view">
+
+  <!-- Sticky Global Navigation -->
+  <nav class="site-nav">
+    <div class="nav-container">
+      <a class="brand-link" href="#" onclick="showLandingView(); return false;">
+        <img src="logo.png" alt="Scale Test Series Logo" class="brand-logo-img">
+        <div class="brand-text">
+          <span class="brand-name">Scale Test Series</span>
+          <span class="brand-by">Designed & developed by scaleshunyaa</span>
+        </div>
+      </a>
+
+      <ul class="nav-menu">
+        <li><a onclick="scrollToSection('tiers'); return false;">3 Tiers</a></li>
+        <li><a onclick="scrollToSection('demos'); return false;">Free Demos</a></li>
+        <li><a onclick="scrollToSection('pricing'); return false;">Pricing</a></li>
+        <li><a onclick="openLegalModal('terms'); return false;">Terms</a></li>
+        <li><a onclick="openLegalModal('refund'); return false;">Refund Policy</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="btn-secondary" onclick="launchDemoTest(1)">Free Demo</button>
+        <a href="https://rzp.io/rzp/txETH4p" class="btn-primary" id="navUnlockBtn" onclick="window.location.href='https://rzp.io/rzp/txETH4p'; return false;" style="text-decoration: none; display: inline-flex; align-items: center;">Unlock 60 Mocks &bull; ₹999</a>
+        <button class="btn-secondary" id="authBtn" onclick="openAuthModal()">Sign In</button>
+      </div>
+    </div>
+  </nav>
+    <!-- Hero Section -->
+    <header class="hero-section">
+      <div class="hero-badge" style="background: #ecfdf5; border: 1px solid #a7f3d0; color: #047857;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+        <span>Engineered by AIIMS Medicos & NEET AIR &lt; 50 Top Rankers</span>
+      </div>
+      <h1 class="hero-title">
+        Stop Practicing 2018 Formula Questions for the <span>2026-2027 NEET War.</span>
+      </h1>
+      <p class="hero-subtitle">
+        Coaching test series still recycle old single-line formula drills. The modern NTA paper is packed with <strong>Assertion-Reason qualifiers, deceptive Multi-Statements, and Match List matrices</strong>. 
+        Scale Test Series gives you <strong>60 Full-Length Mocks (12,000 Questions)</strong> calibrated across 3 Stepped Tiers with instant step-by-step NCERT deconstruction.
+      </p>
+
+      <div class="hero-ctas">
+        <a href="https://rzp.io/rzp/txETH4p" class="btn-primary btn-cta-lg" onclick="window.location.href=\'https://rzp.io/rzp/txETH4p\'; return false;" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          Unlock All 60 Mocks @ &#8377;999 (Lifetime)</a>
+        <button class="btn-secondary btn-cta-lg" onclick="launchDemoTest(1)">
+          Try Free Demo Mocks (01, 21, 41) &rarr;
+        </button>
+      </div>
+
+      <div class="hero-stats-row">
+        <div class="hero-stat-item">
+          <div class="hero-stat-num">AIR &lt; 50</div>
+          <div class="hero-stat-label">Curated by AIIMS Toppers</div>
+        </div>
+        <div class="hero-stat-item">
+          <div class="hero-stat-num">60 Mocks</div>
+          <div class="hero-stat-label">12,000 Modern NTA Qs</div>
+        </div>
+        <div class="hero-stat-item">
+          <div class="hero-stat-num">3 Tiers</div>
+          <div class="hero-stat-label">Ignite &bull; Conquer &bull; Dominate</div>
+        </div>
+        <div class="hero-stat-item">
+          <div class="hero-stat-num" style="color: #059669;">710+ Goal</div>
+          <div class="hero-stat-label">AIIMS &amp; Top GMC Benchmark</div>
+        </div>
+      </div>
+    </header>
+
+    
+    <!-- Why Coaching Fails You vs Scale Test Series -->
+    <section class="section-wrap" style="padding-top: 1rem; padding-bottom: 2rem;">
+      <div class="comparison-section">
+        <div class="section-header" style="margin-bottom: 1.5rem;">
+          <span class="section-badge" style="background: #fee2e2; color: #991b1b;">The Brutal Reality</span>
+          <h2 class="section-title">Why 95% of Coaching Institute Test Series Fail You</h2>
+          <p class="section-desc">
+            Most tuitions and coaching institutes charge &#8377;15,000+ for outdated question banks created by outsourced typists. Here is how Scale Test Series is fundamentally different.
+          </p>
+        </div>
+
+        <div class="comparison-table-wrap">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th class="col-feature">Key Parameter</th>
+                <th class="col-coaching">&#10008; Traditional Coaching Test Series</th>
+                <th class="col-scale">&#10004; Scale Test Series (2026-2027)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="col-feature">Question Architecture</td>
+                <td class="col-coaching"><span class="badge-cross">&#10008;</span> 80% direct formula-plugging; out of sync with 2024-2026 NTA pattern</td>
+                <td class="col-scale"><span class="badge-check">&#10004;</span> <strong>Exact 2026 NTA Blueprint</strong>: Statement I & II, Assertion-Reason, Match Lists</td>
+              </tr>
+              <tr>
+                <td class="col-feature">Authorship & Pedigree</td>
+                <td class="col-coaching"><span class="badge-cross">&#10008;</span> Outsourced aggregators & faculty using 10-year old modules</td>
+                <td class="col-scale"><span class="badge-check">&#10004;</span> <strong>Curated by Top 50 AIR Rankers & AIIMS New Delhi Medicos</strong></td>
+              </tr>
+              <tr>
+                <td class="col-feature">Cognitive Progression</td>
+                <td class="col-coaching"><span class="badge-cross">&#10008;</span> One flat, random difficulty: creates false confidence or panic</td>
+                <td class="col-scale"><span class="badge-check">&#10004;</span> <strong>3 Stepped Scientific Tiers</strong>: Ignite (Foundation) &rarr; Conquer (Speed) &rarr; Dominate (Rank Deciders)</td>
+              </tr>
+              <tr>
+                <td class="col-feature">Explanation Quality</td>
+                <td class="col-coaching"><span class="badge-cross">&#10008;</span> Brief 2-line formula steps with no reason why distractors are wrong</td>
+                <td class="col-scale"><span class="badge-check">&#10004;</span> <strong>NCERT Line Citation + Distractor Deconstruction</strong> for every single question</td>
+              </tr>
+              <tr>
+                <td class="col-feature">Test Taking Realism</td>
+                <td class="col-coaching"><span class="badge-cross">&#10008;</span> PDF downloads or slow web interfaces without instant comparison</td>
+                <td class="col-scale"><span class="badge-check">&#10004;</span> <strong>Real Dual Split-Screen Mode</strong>: Question paper on left, instant solutions on right</td>
+              </tr>
+              <tr>
+                <td class="col-feature">Pricing & Value</td>
+                <td class="col-coaching"><span class="badge-cross">&#10008;</span> &#8377;12,000 to &#8377;25,000 for just 15 to 20 mock papers</td>
+                <td class="col-scale"><span class="badge-check">&#10004;</span> <strong>&#8377;999 for all 60 Full-Length Mocks (12,000 Qs)</strong> &bull; Less than &#8377;12 per paper</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 Tiers Progression Section -->
+    <section class="section-wrap" id="tiers">
+      <div class="section-header">
+        <span class="section-badge">The Scientific Progression</span>
+        <h2 class="section-title">3 Tiers Built to Elevate Your NEET Score to 700+</h2>
+        <p class="section-desc">
+          Structured sequentially so students start with foundational NCERT line-by-line clarity, graduate to 2026 analytical multi-statements, and conquer high-difficulty conceptual edge cases.
+        </p>
+      </div>
+
+      <div class="tiers-grid">
+        <!-- Ignite Tier -->
+        <div class="tier-progression-card card-ignite">
+          <div class="tier-step-num">Step 1 &bull; Foundation</div>
+          <h3 class="tier-card-title">Ignite Tier</h3>
+          <span class="tier-range-pill">Mocks 01 to 20 &bull; 4,000 Questions</span>
+          <p style="font-size: 0.92rem; color: #64748b;">
+            Solidifies absolute mastery over NCERT textbooks. Every single question tests core line-by-line biological concepts, chemical reactions, and fundamental physics principles.
+          </p>
+          <ul class="tier-card-features">
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Complete Class 11 & 12 NCERT line coverage</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Direct formula substitutions & speed drills</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> <strong>Mock 01 is 100% FREE & Unlocked</strong></li>
+          </ul>
+          <button class="btn-secondary" style="width: 100%; justify-content: center;" onclick="launchDemoTest(1)">Launch Mock 01 (Free Demo)</button>
+        </div>
+
+        <!-- Conquer Tier -->
+        <div class="tier-progression-card card-conquer">
+          <div class="tier-step-num">Step 2 &bull; 2026 Analytical Rigor</div>
+          <h3 class="tier-card-title">Conquer Tier</h3>
+          <span class="tier-range-pill">Mocks 21 to 40 &bull; 4,000 Questions</span>
+          <p style="font-size: 0.92rem; color: #64748b;">
+            Engineered to match the exact 2026 NTA question breakdown: 29 Direct MCQs, 7 Statement I & II, 7 Match Lists, 4 Assertion & Reasons, and 3 Multi-Statements per subject.
+          </p>
+          <ul class="tier-card-features">
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Eliminates negative marking traps</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> High-density Match Lists & Statement pairs</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> <strong>Mock 21 is 100% FREE & Unlocked</strong></li>
+          </ul>
+          <button class="btn-secondary" style="width: 100%; justify-content: center;" onclick="launchDemoTest(21)">Launch Mock 21 (Free Demo)</button>
+        </div>
+
+        <!-- Dominate Tier -->
+        <div class="tier-progression-card card-dominate">
+          <div class="tier-step-num">Step 3 &bull; Advanced Predicted Rigor</div>
+          <h3 class="tier-card-title">Dominate Tier</h3>
+          <span class="tier-range-pill">Mocks 41 to 60 &bull; 4,000 Questions</span>
+          <p style="font-size: 0.92rem; color: #64748b;">
+            Predicted 2026-2027 toughness. Solves complex multi-step numerical calculations, variable boundary mechanics, and subtle NCERT exceptions without leaking into JEE Advanced calculus.
+          </p>
+          <ul class="tier-card-features">
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f43f5e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Deep multi-concept NCERT integration</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f43f5e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Distinguishes 680+ scorers from top AIIMS ranks</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f43f5e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> <strong>Mock 41 is 100% FREE & Unlocked</strong></li>
+          </ul>
+          <button class="btn-secondary" style="width: 100%; justify-content: center;" onclick="launchDemoTest(41)">Launch Mock 41 (Free Demo)</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Free Demos Showcase -->
+    <section class="section-wrap" id="demos" style="padding-top: 0;">
+      <div class="demos-box">
+        <div class="section-header" style="margin-bottom: 2rem;">
+          <span class="section-badge" style="background: #e0f2fe; color: #0369a1;">Zero Risk &bull; Instant Access</span>
+          <h2 class="section-title">Try One Free Full-Length Mock In Each Tier</h2>
+          <p class="section-desc">Experience our real examination interface, KaTeX math typesetting, and dual-split answer solutions without spending a single rupee.</p>
+        </div>
+
+        <div class="demos-grid">
+          <div class="demo-test-card">
+            <span class="demo-badge-free">Unlocked &bull; Free Demo</span>
+            <h4 class="demo-test-title">NEET Mock 01</h4>
+            <p class="demo-test-meta">Ignite Foundation &bull; 200 Questions (720 Marks) &bull; Physics, Chemistry, Botany, Zoology with step-by-step NCERT solutions.</p>
+            <button class="btn-primary" style="justify-content: center;" onclick="launchDemoTest(1)">Start Mock 01 Free &rarr;</button>
+          </div>
+          <div class="demo-test-card">
+            <span class="demo-badge-free">Unlocked &bull; Free Demo</span>
+            <h4 class="demo-test-title">NEET Mock 21</h4>
+            <p class="demo-test-meta">Conquer 2026 Rigor &bull; 200 Questions (720 Marks) &bull; High-density Statement I & II, Assertion-Reason, and Match Lists.</p>
+            <button class="btn-primary" style="justify-content: center;" onclick="launchDemoTest(21)">Start Mock 21 Free &rarr;</button>
+          </div>
+          <div class="demo-test-card">
+            <span class="demo-badge-free">Unlocked &bull; Free Demo</span>
+            <h4 class="demo-test-title">NEET Mock 41</h4>
+            <p class="demo-test-meta">Dominate Predicted Rigor &bull; 200 Questions (720 Marks) &bull; Deep multi-step conceptual boundary calculations & exceptions.</p>
+            <button class="btn-primary" style="justify-content: center;" onclick="launchDemoTest(41)">Start Mock 41 Free &rarr;</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="section-wrap" id="pricing">
+      <div class="section-header">
+        <span class="section-badge">Simple, Transparent Pricing</span>
+        <h2 class="section-title">Invest in Your Medical Seat Today</h2>
+        <p class="section-desc">Affordable, high-yield examination practice in Indian Rupees (INR). Pay once and get lifetime access through NEET 2026/2027.</p>
+      </div>
+
+      <div class="pricing-grid">
+        <!-- Free Starter -->
+        <div class="pricing-card">
+          <h3 class="pricing-title">Diagnostic Tier</h3>
+          <p class="pricing-desc">Evaluate your baseline readiness with free mock tests across all 3 tiers.</p>
+          <div class="pricing-cost">
+            <span class="price-currency">₹</span>
+            <span class="price-amount">0</span>
+            <span class="price-period">/ Forever Free</span>
+          </div>
+          <ul class="tier-card-features">
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Mock 01 (Ignite Foundation)</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Mock 21 (Conquer 2026 Rigor)</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Mock 41 (Dominate Advanced)</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> 600 Questions with Complete Solutions</li>
+          </ul>
+          <button class="btn-secondary" style="width: 100%; justify-content: center;" onclick="launchDemoTest(1)">Start Free Now</button>
+        </div>
+
+        <!-- Master All-Access Pass (Featured) -->
+        <div class="pricing-card featured">
+          <div class="pricing-ribbon">Most Popular &bull; 65% OFF</div>
+          <h3 class="pricing-title">All-Access Master Pass</h3>
+          <p class="pricing-desc">Complete 60 Full-Length Mocks with step-by-step solutions and answer keys.</p>
+          <div class="pricing-cost">
+            <span class="price-currency">₹</span>
+            <span class="price-amount">999</span>
+            <span class="price-original">₹2,499</span>
+            <span class="price-period">/ One-Time</span>
+          </div>
+          <ul class="tier-card-features">
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> <strong>All 60 Full-Length Mock Papers</strong></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> <strong>12,000 Questions (720 Marks simulation)</strong></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Unlocks Ignite (1-20), Conquer (21-40) & Dominate (41-60)</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Split-Screen Dual Workspace & KaTeX Math</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Instant digital access & valid till NEET 2026/27</li>
+          </ul>
+          <a href="https://rzp.io/rzp/txETH4p" class="btn-primary" onclick="window.location.href='https://rzp.io/rzp/txETH4p'; return false;" style="width: 100%; justify-content: center; padding: 0.85rem; text-decoration: none; display: inline-flex; align-items: center;">Unlock All 60 Mocks @ ₹999</a>
+        </div>
+
+        <!-- Institutional Batch -->
+        <div class="pricing-card">
+          <h3 class="pricing-title">Coaching / Batch Pass</h3>
+          <p class="pricing-desc">For tuition centers, coaching academies, and group study circles.</p>
+          <div class="pricing-cost">
+            <span class="price-currency">₹</span>
+            <span class="price-amount">4,999</span>
+            <span class="price-period">/ 10 Students</span>
+          </div>
+          <ul class="tier-card-features">
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> 10 Multi-User Student Licenses</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> All 60 Full-Length Mocks for every student</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Priority support & batch performance insights</li>
+          </ul>
+          <button class="btn-secondary" style="width: 100%; justify-content: center;" onclick="alert('Contact scaleshunyaa at support@scaleseries.com for Institutional Licensing.')">Contact Institutional</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="footer-container">
+        <div>
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 0.75rem;">
+            <img src="logo.png" alt="Scale Test Series Logo" style="width: 38px; height: 38px; border-radius: 8px; object-fit: cover; box-shadow: 0 2px 6px rgba(0,0,0,0.3);">
+            <div class="footer-brand-title" style="margin-bottom: 0;">Scale Test Series</div>
+          </div>
+          <p class="footer-brand-desc">
+            India's most rigorous, NCERT-pure NEET (UG) test series. 60 Full-Length papers engineered to transform aspirational medical students into top-rank qualifiers.
+          </p>
+          <div class="footer-author-pill">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+            <span>Designed and developed by scaleshunyaa</span>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Curriculum Tiers</h4>
+          <ul class="footer-links">
+            <li><a onclick="launchDemoTest(1)">Ignite Tier (Mocks 01-20)</a></li>
+            <li><a onclick="launchDemoTest(21)">Conquer Tier (Mocks 21-40)</a></li>
+            <li><a onclick="launchDemoTest(41)">Dominate Tier (Mocks 41-60)</a></li>
+            <li><a onclick="scrollToSection('demos')">Free Diagnostic Demos</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Platform & Plans</h4>
+          <ul class="footer-links">
+            <li><a onclick="scrollToSection('pricing')">All-Access Pass (₹999)</a></li>
+            <li><a onclick="openPaymentModal()">Payment Gateway (INR)</a></li>
+            <li><a onclick="openAuthModal()">Student Authentication</a></li>
+            <li><a onclick="showExamWorkspace()">Launch Examination Engine</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Legal & Business</h4>
+          <ul class="footer-links">
+            <li><a onclick="openLegalModal('terms')">Terms & Conditions</a></li>
+            <li><a onclick="openLegalModal('privacy')">Privacy Policy</a></li>
+            <li><a onclick="openLegalModal('refund')">Refund & Cancellation</a></li>
+            <li><a onclick="alert('Support: contact@scaleshunyaa.com | Scale Test Series EdTech')">Support & Contact</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 Scale Test Series. All rights reserved.</div>
+        <div style="color: #64748b;">Designed and developed by <strong style="color: #34d399;">scaleshunyaa</strong></div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ==================== EXAM ENGINE WORKSPACE VIEW ==================== -->
+  <div id="exam-workspace-view">
+    <!-- Top Examination Header -->
+    <header class="exam-header">
+      <div class="exam-header-left">
+        <button class="btn-secondary" id="mobileDrawerBtn" onclick="toggleSidebarDrawer()" style="padding: 0.35rem 0.65rem; font-size: 0.78rem; display: none; align-items: center; gap: 5px;">
+          <span>&#9776;</span> <strong>Mocks</strong>
+        </button>
+        <button class="btn-secondary" id="desktopSidebarToggleBtn" onclick="toggleSidebarCollapse()" style="padding: 0.35rem 0.65rem; font-size: 0.78rem; display: inline-flex; align-items: center; gap: 5px;" title="Collapse/Expand Mock List">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
+          <span id="sidebarToggleText">Sidebar</span>
+        </button>
+        <button class="btn-secondary" onclick="showLandingView()" style="padding: 0.35rem 0.65rem; font-size: 0.78rem;">
+          &larr; Home
+        </button>
+        <div style="font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 0.96rem;" id="currentMockLabel">
+          <span>NEET Mock - 01 [Ignite]</span>
+        </div>
+        <span id="examTierBadge" style="font-size: 0.70rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 9999px; background: #dcfce7; color: #166534;">
+          Ignite Tier
+        </span>
+      </div>
+
+      <div class="exam-header-right">
+        <div id="userStatusTag" style="font-size: 0.75rem; font-weight: 700; color: #059669; background: #ecfdf5; padding: 0.2rem 0.55rem; border-radius: 6px; border: 1px solid #a7f3d0;">
+          Free Demo
+        </div>
+        <button class="btn-primary" id="examUnlockBtn" onclick="openPaymentModal()" style="padding: 0.38rem 0.8rem; font-size: 0.78rem;">
+          Unlock All 60 Mocks &bull; &#8377;999
+        </button>
+      </div>
+    </header>
+    <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleSidebarDrawer()"></div>
+
+    <!-- Main Workspace Body -->
+    <div class="exam-main-body">
+      <!-- Sidebar with 3 Tiers & 60 Mocks -->
+      <aside class="exam-sidebar" id="appSidebar">
+        <!-- Tier Switcher Ribbon (Two-row segmented controls) -->
+        <div class="tier-switcher">
+          <button id="tier-btn-foundation" class="tier-tab-btn active" onclick="switchTier('foundation')">
+            <span class="tier-top-row"><span class="tier-dot dot-green"></span> Ignite</span>
+            <span class="tier-sub-row">01–20</span>
+          </button>
+          <button id="tier-btn-moderate" class="tier-tab-btn" onclick="switchTier('moderate')">
+            <span class="tier-top-row"><span class="tier-dot dot-amber"></span> Conquer</span>
+            <span class="tier-sub-row">21–40</span>
+          </button>
+          <button id="tier-btn-difficult" class="tier-tab-btn" onclick="switchTier('difficult')">
+            <span class="tier-top-row"><span class="tier-dot dot-rose"></span> Dominate</span>
+            <span class="tier-sub-row">41–60</span>
+          </button>
+        </div>
+
+        <!-- Mocks List -->
+        <div class="mock-list" id="mockListContainer">
+          <!-- Populated by JS -->
+        </div>
+      </aside>
+
+      <!-- Workspace Area -->
+      <main class="workspace-area">
+        <!-- View Mode Navigation Tabs -->
+        <div class="tabs-header">
+          <div class="tabs-group">
+            <button class="tab-btn active" id="tab-split" onclick="setViewMode('split')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="3" x2="12" y2="21"></line></svg>
+              Dual Split View
+            </button>
+            <button class="tab-btn" id="tab-test-only" onclick="setViewMode('test-only')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+              Question Paper
+            </button>
+            <button class="tab-btn" id="tab-sol-only" onclick="setViewMode('sol-only')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+              Detailed Solutions
+            </button>
+            <button class="tab-btn" id="tab-key" onclick="setViewMode('key')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Answer Key & Analysis
+            </button>
+          </div>
+          <div class="tabs-meta-tag" style="font-size: 0.75rem; color: #64748b; font-weight: 600;">
+            200 Questions &bull; 720 Marks &bull; KaTeX Formula Typography
+          </div>
+        </div>
+
+        <!-- Dual Scroll Workspace Panes -->
+        <div id="dual-workspace">
+          <!-- Left Pane -->
+          <div class="workspace-pane" id="pane-left">
+            <div class="pane-header">
+              <div class="pane-title" id="pane-left-title">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                Question Paper
+              </div>
+            </div>
+            <div class="pane-scroll" id="pane-left-content">
+              <!-- Rendered via Markdown Parser -->
+            </div>
+          </div>
+
+          <!-- Right Pane -->
+          <div class="workspace-pane" id="pane-right">
+            <div class="pane-header">
+              <div class="pane-title" id="pane-right-title">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                Detailed Step-by-Step Solutions
+              </div>
+            </div>
+            <div class="pane-scroll" id="pane-right-content">
+              <!-- Rendered via Markdown Parser -->
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- ==================== AUTHENTICATION MODAL ==================== -->
+    <!-- ==================== SESSION ENDED (SINGLE DEVICE ENFORCEMENT) MODAL ==================== -->
+  <div class="modal-overlay" id="sessionReplacedModal" style="z-index: 10000;">
+    <div class="modal-dialog" style="max-width: 440px; text-align: center; border-top: 4px solid #ef4444;">
+      <div style="width: 56px; height: 56px; margin: 0 auto 1rem; background: #fee2e2; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #dc2626;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+      </div>
+      <h3 style="font-size: 1.25rem; font-weight: 800; color: #0f172a; margin-bottom: 0.5rem;">Session Ended</h3>
+      <p style="font-size: 0.90rem; color: #475569; line-height: 1.5; margin-bottom: 1.5rem;">
+        Your account was signed in on another device. For security, this session has been logged out.
+      </p>
+      <button class="btn-primary" style="width: 100%; justify-content: center; padding: 0.8rem; font-size: 0.95rem; background: #0f172a;" onclick="handleSessionReplacedReauth()">
+        Sign In Again
+      </button>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="authModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title" id="authModalTitle">Student Sign In</h3>
+        <button class="modal-close-btn" onclick="closeAuthModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 0.88rem; color: #64748b; margin-bottom: 1.25rem;">
+          Sign in to save your mock test progress, unlock full access, and review detailed diagnostic reports.
+        </p>
+
+        <button class="btn-secondary" style="width: 100%; justify-content: center; padding: 0.7rem; margin-bottom: 0.75rem;" onclick="handleGoogleSignIn()">
+          <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+          Continue with Google
+        </button>
+
+        <div class="auth-divider"><span>OR WITH EMAIL</span></div>
+
+        <form onsubmit="handleEmailAuth(event)">
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" id="authEmail" class="form-input" placeholder="student@example.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <input type="password" id="authPassword" class="form-input" placeholder="••••••••" required>
+          </div>
+          <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 0.75rem;">
+            Sign In / Register
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== PAYMENT / CHECKOUT MODAL ==================== -->
+  <div class="modal-overlay" id="paymentModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Unlock Scale Test Series</h3>
+        <button class="modal-close-btn" onclick="closePaymentModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 12px; padding: 1.25rem; margin-bottom: 1.5rem;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.5rem;">
+            <strong style="font-size: 1.05rem; color: #0f172a;">All-Access Master Pass</strong>
+            <span style="font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 800; color: #059669;">₹999 INR</span>
+          </div>
+          <p style="font-size: 0.82rem; color: #64748b; margin-bottom: 0.75rem;">
+            Instant unlock for all 60 Full-Length Mocks (12,000 Questions) across Ignite, Conquer, and Dominate tiers with step-by-step solutions.
+          </p>
+          <div style="font-size: 0.75rem; color: #047857; font-weight: 700; display: flex; align-items: center; gap: 4px;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Includes GST &bull; 100% Secure Checkout &bull; Lifetime Access
+          </div>
+        </div>
+
+                <h4 style="font-size: 0.88rem; color: #334155; margin-bottom: 0.75rem; font-weight: 700;">Select Payment Method (INR):</h4>
+        
+        <div style="display: flex; flex-direction: column; gap: 0.65rem; margin-bottom: 1.25rem;">
+          <label style="display: flex; align-items: center; gap: 10px; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 8px; cursor: pointer; background: #ffffff;">
+            <input type="radio" name="payMethod" value="upi" checked>
+            <div>
+              <strong style="font-size: 0.90rem;">UPI (GPay / PhonePe / Paytm / BHIM)</strong>
+              <div style="font-size: 0.75rem; color: #64748b;">Instant activation via UPI QR or VPA</div>
+            </div>
+          </label>
+          <label style="display: flex; align-items: center; gap: 10px; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 8px; cursor: pointer; background: #ffffff;">
+            <input type="radio" name="payMethod" value="card">
+            <div>
+              <strong style="font-size: 0.90rem;">Credit / Debit Card / Net Banking</strong>
+              <div style="font-size: 0.75rem; color: #64748b;">All Indian banks supported (Visa, Mastercard, RuPay)</div>
+            </div>
+          </label>
+        </div>
+
+        <a href="https://rzp.io/rzp/txETH4p" class="btn-primary" onclick="window.location.href='https://rzp.io/rzp/txETH4p'; return false;" style="width: 100%; justify-content: center; padding: 0.85rem; font-size: 1rem; text-decoration: none; display: inline-flex; align-items: center;">Pay ₹999 &amp; Unlock All 60 Mocks &rarr;</a>
+
+        <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 0.85rem; padding: 0.45rem 0.75rem; background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 6px; font-size: 0.73rem; color: #475569;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          <span>Secured by <strong>Razorpay</strong> &bull; UPI (GPay/PhonePe), Cards &amp; NetBanking &bull; 256-Bit SSL</span>
+        </div>
+
+        <!-- Quick Gateway Link Setup for Admin/Developer -->
+        <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid #e2e8f0; font-size: 0.78rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <span style="font-weight: 700; color: #475569;">⚙️ Razorpay Link / Key Configuration:</span>
+            <button onclick="handlePaymentSuccess('DEMO_TEST_' + Date.now())" style="background: none; border: 1px solid #10b981; color: #047857; border-radius: 4px; padding: 0.15rem 0.45rem; font-size: 0.7rem; cursor: pointer; font-weight: 600;">
+              ⚡ Instant Test Unlock
+            </button>
+          </div>
+          <div style="display: flex; gap: 6px;">
+            <input type="text" id="rzpConfigInput" placeholder="Paste Razorpay Payment Link (https://rzp.io/l/...) or Key" style="flex: 1; padding: 0.4rem 0.6rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.75rem;" />
+            <button onclick="window.location.href='https://rzp.io/rzp/txETH4p'" style="background: #0f172a; color: #ffffff; border: none; border-radius: 6px; padding: 0.4rem 0.75rem; font-size: 0.75rem; font-weight: 600; cursor: pointer;">Save</button>
+          </div>
+          <p style="font-size: 0.70rem; color: #94a3b8; margin-top: 0.35rem; line-height: 1.3;">
+            Create a ₹999 Payment Link in your Razorpay dashboard (<a href="https://dashboard.razorpay.com/app/payment-links" target="_blank" style="color: #059669; text-decoration: underline;">dashboard.razorpay.com</a>) and paste it here, or send it in chat to make it permanent!
+          </p>
+        </div>
+
+        <p style="font-size: 0.75rem; color: #94a3b8; text-align: center; margin-top: 1rem;">
+          By completing this payment, you agree to our <a onclick="openLegalModal('terms')" style="text-decoration: underline; cursor: pointer;">Terms</a> & <a onclick="openLegalModal('refund')" style="text-decoration: underline; cursor: pointer;">Refund Policy</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== LEGAL & TERMS MODAL ==================== -->
+  <div class="modal-overlay" id="legalModal">
+    <div class="modal-dialog lg">
+      <div class="modal-header">
+        <h3 class="modal-title" id="legalModalTitle">Terms & Conditions</h3>
+        <button class="modal-close-btn" onclick="closeLegalModal()">&times;</button>
+      </div>
+      <div class="modal-body" id="legalModalContent">
+        <!-- Injected via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- ==================== APPLICATION SCRIPTS ==================== -->
+  <script>
+    // ====================================================================
+    // BACKEND API CLIENT & SINGLE-DEVICE SESSION INTEGRATION
+    // ====================================================================
+    const BACKEND_URL = window.BACKEND_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:4000' : 'https://scale-test-series-backend.onrender.com');
+    let activeSSE = null;
+
+    async function apiRequest(endpoint, options = {}) {
+      const url = `${BACKEND_URL}${endpoint}`;
+      const defaultHeaders = { 'Content-Type': 'application/json' };
+      const opts = {
+        ...options,
+        headers: { ...defaultHeaders, ...(options.headers || {}) },
+        credentials: 'include' // Sends HttpOnly session cookie
+      };
+
+      try {
+        const response = await fetch(url, opts);
+        const data = await response.json().catch(() => ({}));
+
+        if (response.status === 401 && data.error === 'SESSION_REPLACED') {
+          handleSessionReplacedEvent(data);
+          throw new Error('SESSION_REPLACED');
+        }
+
+        return { ok: response.ok, status: response.status, data };
+      } catch (err) {
+        if (err.message === 'SESSION_REPLACED') throw err;
+        // In offline/demo mode, fail gracefully
+        console.warn(`[API] ${endpoint} request error:`, err);
+        return { ok: false, status: 0, data: null, error: err };
+      }
+    }
+
+    function handleSessionReplacedEvent(data) {
+      if (activeSSE) {
+        activeSSE.close();
+        activeSSE = null;
+      }
+      currentUser = null;
+      localStorage.removeItem('scale_test_user');
+      const sessionModal = document.getElementById('sessionReplacedModal');
+      if (sessionModal) sessionModal.classList.add('active');
+    }
+
+    function handleSessionReplacedReauth() {
+      const sessionModal = document.getElementById('sessionReplacedModal');
+      if (sessionModal) sessionModal.classList.remove('active');
+      openAuthModal();
+    }
+
+    function initRealtimeSessionEvents() {
+      if (typeof EventSource !== 'undefined') {
+        try {
+          if (activeSSE) activeSSE.close();
+          activeSSE = new EventSource(`${BACKEND_URL}/api/auth/session-events`, { withCredentials: true });
+          activeSSE.onmessage = (e) => {
+            try {
+              const msg = JSON.parse(e.data);
+              if (msg.event === 'SESSION_REPLACED') {
+                handleSessionReplacedEvent(msg);
+              }
+            } catch {}
+          };
+          activeSSE.onerror = () => {
+            // Reconnect handled automatically by browser EventSource
+          };
+        } catch (e) {
+          console.warn('[SSE] EventSource init failed:', e);
+        }
+      }
+    }
+
+    async function checkServerSession() {
+      const res = await apiRequest('/api/auth/me');
+      if (res.ok && res.data.authenticated) {
+        currentUser = res.data.user;
+        if (res.data.entitlement && res.data.entitlement.hasAccess) {
+          isUserPaid = true;
+          localStorage.setItem('scale_test_series_paid', 'true');
+        }
+        updateAuthUI(currentUser);
+        initRealtimeSessionEvents();
+      }
+    }
+
+    // ==========================================
+    // RAZORPAY CONFIGURATION
+    // ------------------------------------------
+    // Option 1: Razorpay Payment Link / Page (e.g. "https://rzp.io/l/..." or "https://pages.razorpay.com/...")
+    window.RAZORPAY_PAYMENT_URL = "https://rzp.io/rzp/txETH4p";
+    // Option 2: Razorpay API Key ID (e.g. "rzp_live_..." or "rzp_test_...")
+    window.RAZORPAY_KEY_ID = localStorage.getItem('scale_razorpay_key') || "rzp_live_Tln6miI6q4JfC1";
+    // ==========================================
+
+    // Firebase Configuration for scaletestseries
+    const firebaseConfig = {
+      projectId: "scaletestseries",
+      appId: "1:996500881147:web:6bb72d3ab1bc97af9d3a5e",
+      storageBucket: "scaletestseries.firebasestorage.app",
+      apiKey: "AIzaSyC9w0lJHwIddjKy2HSEWJlFedP-RQIMswE",
+      authDomain: "scaletestseries.firebaseapp.com",
+      messagingSenderId: "996500881147",
+      measurementId: "G-M9FCSQBN3D"
+    };
+
+    let fbAuth = null;
+    try {
+      if (window.firebase) {
+        firebase.initializeApp(firebaseConfig);
+        fbAuth = firebase.auth();
+        fbAuth.onAuthStateChanged((user) => {
+          updateAuthUI(user);
+        });
+      }
+    } catch (e) {
+      console.warn("Firebase Auth init fallback:", e);
+    }
+
+    // App State
+    let currentMock = 1;
+    let currentTier = 'foundation'; // 'foundation' (1-20), 'moderate' (21-40), 'difficult' (41-60)
+    let currentViewMode = 'split';   // 'split', 'test-only', 'sol-only', 'key'
+    let isUserPaid = localStorage.getItem('scale_test_series_paid') === 'true';
+    const unlockedFreeMocks = [1, 21, 41]; // Free Diagnostic Mocks
+
+    function showToast(msg, type = 'success') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.innerHTML = msg;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.3s';
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+
+    function updateAuthUI(user) {
+      const authBtn = document.getElementById('authBtn');
+      const userStatusTag = document.getElementById('userStatusTag');
+      if (user) {
+        const name = user.displayName || user.email.split('@')[0];
+        if (authBtn) authBtn.innerText = `Account: ${name}`;
+        if (userStatusTag) {
+          userStatusTag.innerText = isUserPaid ? 'Verified Premium Access' : `Signed In: ${name} (Demo Mode)`;
+          userStatusTag.style.color = isUserPaid ? '#047857' : '#d97706';
+        }
+      } else {
+        if (authBtn) authBtn.innerText = 'Sign In';
+        if (userStatusTag) {
+          userStatusTag.innerText = isUserPaid ? 'All Mocks Unlocked' : 'Free Demo Mode';
+        }
+      }
+      if (isUserPaid) {
+        const unlockBtn = document.getElementById('navUnlockBtn');
+        const examUnlockBtn = document.getElementById('examUnlockBtn');
+        if (unlockBtn) unlockBtn.style.display = 'none';
+        if (examUnlockBtn) examUnlockBtn.style.display = 'none';
+      }
+    }
+
+    // Navigation & Views
+    function showLandingView() {
+      document.getElementById('landing-view').style.display = 'block';
+      document.getElementById('exam-workspace-view').style.display = 'none';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showExamWorkspace() {
+      document.getElementById('landing-view').style.display = 'none';
+      document.getElementById('exam-workspace-view').style.display = 'flex';
+      renderSidebar();
+      updateHeaderBadge();
+      loadActiveDocuments();
+    }
+
+    function scrollToSection(id) {
+      showLandingView();
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function toggleSidebarCollapse() {
+      const sidebar = document.getElementById('appSidebar');
+      const toggleText = document.getElementById('sidebarToggleText');
+      if (sidebar) {
+        sidebar.classList.toggle('collapsed');
+        if (toggleText) {
+          toggleText.textContent = sidebar.classList.contains('collapsed') ? 'Expand' : 'Sidebar';
+        }
+      }
+    }
+
+    function toggleSidebarCollapse() {
+      const sidebar = document.getElementById('appSidebar');
+      const toggleText = document.getElementById('sidebarToggleText');
+      if (sidebar) {
+        sidebar.classList.toggle('collapsed');
+        if (toggleText) {
+          toggleText.textContent = sidebar.classList.contains('collapsed') ? 'Expand' : 'Sidebar';
+        }
+      }
+    }
+
+    function launchDemoTest(m) {
+      currentMock = m;
+      if (m <= 20) currentTier = 'foundation';
+      else if (m <= 40) currentTier = 'moderate';
+      else currentTier = 'difficult';
+      
+      showExamWorkspace();
+      selectMock(m);
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+
+    // Modal Handlers
+    function openAuthModal() {
+      document.getElementById('authModal').classList.add('active');
+    }
+    function closeAuthModal() {
+      document.getElementById('authModal').classList.remove('active');
+    }
+
+        function saveCustomRazorpay() {
+      const inp = document.getElementById('rzpConfigInput');
+      if (inp && inp.value.trim()) {
+        const val = inp.value.trim();
+        if (val.startsWith('http')) {
+          window.RAZORPAY_PAYMENT_URL = val;
+          localStorage.setItem('scale_razorpay_url', val);
+          showToast('Razorpay Payment Link saved! Redirecting to checkout...', 'success');
+          setTimeout(() => { window.open(val, '_blank'); }, 500);
+        } else if (val.startsWith('rzp_')) {
+          window.RAZORPAY_KEY_ID = val;
+          localStorage.setItem('scale_razorpay_key', val);
+          showToast('Razorpay Key ID saved!', 'success');
+          processPayment();
+        } else {
+          showToast('Please enter a valid Razorpay Link (https://rzp.io/...) or Key ID (rzp_live_...)', 'error');
+        }
+      } else {
+        showToast('Please paste your Razorpay payment link or Key ID', 'error');
+      }
+    }
+
+    function closePaymentModal() {
+      document.getElementById('paymentModal').classList.remove('active');
+    }
+
+async function handleGoogleSignIn() {
+      const btn = event?.currentTarget;
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = `<span style="display:inline-flex;align-items:center;gap:8px;">Connecting to Google...</span>`;
+      }
+
+      try {
+        if (fbAuth) {
+          const provider = new firebase.auth.GoogleAuthProvider();
+          provider.addScope('profile');
+          provider.addScope('email');
+          const res = await fbAuth.signInWithPopup(provider);
+          const user = res.user;
+
+          // Sync with Supabase PostgreSQL via Backend API
+          try {
+            await apiRequest('/api/auth/google-sso', {
+              method: 'POST',
+              body: JSON.stringify({
+                email: user.email,
+                fullName: user.displayName || user.email.split('@')[0]
+              })
+            });
+          } catch (apiErr) {
+            console.warn('[SSO Backend Sync Notice]:', apiErr);
+          }
+
+          localStorage.setItem('scale_test_user', user.email);
+          showToast(`Welcome back, ${user.displayName || user.email}! 👋`, 'success');
+          closeAuthModal();
+          updateAuthUI(user);
+          await checkServerSession();
+        } else {
+          localStorage.setItem('scale_test_user', 'student@scaleseries.com');
+          showToast('Signed in successfully!');
+          closeAuthModal();
+          updateAuthUI({ email: 'student@scaleseries.com', displayName: 'Student' });
+        }
+      } catch (err) {
+        console.error('Google SSO Error:', err);
+        if (err.code === 'auth/popup-closed-by-user') {
+          showToast('Sign-in cancelled.', 'info');
+        } else if (err.code === 'auth/unauthorized-domain') {
+          showToast('Domain not yet authorized in Firebase Console. Please sign in with Email below.', 'error');
+        } else {
+          showToast(err.message || 'Google sign-in error. Please use email sign in.', 'error');
+        }
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg> Continue with Google`;
+        }
+      }
+    }
+
+    async function handleEmailAuth(e) {
+      e.preventDefault();
+      const email = document.getElementById('authEmail').value.trim();
+      const pass = document.getElementById('authPassword').value;
+
+      // Try Backend login first for Supabase & Single-Device session
+      const backendRes = await apiRequest('/api/auth/login', {
+        method: 'POST',
+        body: JSON.stringify({ email, password: pass })
+      });
+
+      if (backendRes.ok && backendRes.data.success) {
+        localStorage.setItem('scale_test_user', email);
+        showToast('Signed in successfully!');
+        closeAuthModal();
+        updateAuthUI({ email });
+        await checkServerSession();
+        return;
+      }
+
+      // If user doesn't exist, auto-register in Supabase backend
+      if (backendRes.status === 401 && backendRes.data?.error === 'INVALID_CREDENTIALS') {
+        const regRes = await apiRequest('/api/auth/register', {
+          method: 'POST',
+          body: JSON.stringify({ email, password: pass })
+        });
+        if (regRes.ok && regRes.data.success) {
+          localStorage.setItem('scale_test_user', email);
+          showToast('Account created and signed in successfully!');
+          closeAuthModal();
+          updateAuthUI({ email });
+          await checkServerSession();
+          return;
+        }
+      }
+
+      // Fallback to Firebase Auth
+      if (fbAuth) {
+        fbAuth.signInWithEmailAndPassword(email, pass)
+          .then(() => {
+            showToast('Signed in successfully!');
+            closeAuthModal();
+            updateAuthUI({ email });
+          })
+          .catch(() => {
+            fbAuth.createUserWithEmailAndPassword(email, pass)
+              .then(() => {
+                showToast('Account created and signed in!');
+                closeAuthModal();
+                updateAuthUI({ email });
+              })
+              .catch((err) => showToast(err.message, 'error'));
+          });
+      } else {
+        localStorage.setItem('scale_test_user', email);
+        showToast(`Signed in as ${email}`);
+        closeAuthModal();
+        updateAuthUI({ email });
+      }
+    }
+
+    
+
+        let pendingCheckoutAfterAuth = false;
+
+        function openPaymentModal() {
+      window.location.href = "https://rzp.io/rzp/txETH4p";
+    }
+
+    function processPayment() {
+      window.location.href = "https://rzp.io/rzp/txETH4p";
+    }
+
+    function handlePaymentSuccess(txId) {
+      isUserPaid = true;
+      localStorage.setItem('scale_test_series_paid', 'true');
+      localStorage.setItem('scale_payment_id', txId);
+      closePaymentModal();
+      showToast('Payment Successful! All 60 Mock Papers Unlocked 🎉', 'success');
+      
+      const unlockBtn = document.getElementById('examUnlockBtn');
+      if (unlockBtn) {
+        unlockBtn.innerText = "✓ Full Access Active";
+        unlockBtn.style.background = "#059669";
+        unlockBtn.disabled = true;
+      }
+      const navBtn = document.getElementById('navUnlockBtn');
+      if (navBtn) {
+        navBtn.innerText = "✓ Unlocked";
+        navBtn.disabled = true;
+      }
+      const statusTag = document.getElementById('userStatusTag');
+      if (statusTag) {
+        statusTag.innerHTML = "★ Master Pass Active";
+        statusTag.style.background = "#ecfdf5";
+        statusTag.style.color = "#047857";
+      }
+
+      renderSidebar();
+      loadActiveDocuments();
+    }
+
+    // Legal Modals
+    const legalTexts = {
+      terms: `
+        <h4>1. Platform Usage & Commercial License</h4>
+        <p>Scale Test Series is an examination preparation software developed and operated by scaleshunyaa. By purchasing or accessing mock papers, you receive a personal, non-transferable, single-user license to prepare for the NEET (UG) examination.</p>
+        <br>
+        <h4>2. Copyright & Intellectual Property</h4>
+        <p>All questions, curriculum structures, detailed explanations, and solutions are proprietary assets of Scale Test Series and scaleshunyaa. Any unauthorized reproduction, scraping, redistribution, or resale in digital or print form without written consent is strictly prohibited.</p>
+        <br>
+        <h4>3. Authenticity Disclaimer</h4>
+        <p>Our mock test papers are compiled strictly adhering to the National Testing Agency (NTA) guidelines and NCERT curriculum standards. However, Scale Test Series is an independent edtech platform and is not affiliated with or endorsed by the NTA or Ministry of Education.</p>
+      `,
+      privacy: `
+        <h4>1. Information We Collect</h4>
+        <p>We collect basic student profile information including your email address and authentication credentials via Firebase Authentication to personalize test progress and verify purchase transactions.</p>
+        <br>
+        <h4>2. Data Security & Storage</h4>
+        <p>We do not store credit card or UPI credentials on our servers. All financial transactions are processed securely through certified Indian payment gateway providers. We do not sell or rent personal information to third parties.</p>
+      `,
+      refund: `
+        <h4>1. Digital Product Refund Policy</h4>
+        <p>Because Scale Test Series offers immediate, digital access to all 60 Full-Length Mocks and 12,000 Questions immediately upon payment, and provides 3 completely free diagnostic mocks (Mocks 01, 21, and 41) for evaluation before purchase, all sales are considered final.</p>
+        <br>
+        <h4>2. Duplicate or Failed Transactions</h4>
+        <p>If your account was debited multiple times due to a gateway network interruption, any duplicate payment will be automatically refunded to your original payment method within 5 to 7 business days. Contact support@scaleshunyaa.com with your transaction receipt.</p>
+      `
+    };
+
+    function openLegalModal(type) {
+      const titles = {
+        terms: 'Terms & Conditions — Scale Test Series',
+        privacy: 'Privacy Policy — Scale Test Series',
+        refund: 'Refund & Cancellation Policy'
+      };
+      document.getElementById('legalModalTitle').innerText = titles[type] || 'Legal Notice';
+      document.getElementById('legalModalContent').innerHTML = legalTexts[type] || '';
+      document.getElementById('legalModal').classList.add('active');
+    }
+    function closeLegalModal() {
+      document.getElementById('legalModal').classList.remove('active');
+    }
+
+    // Mock Selection & Paywall Gating
+    
+    function toggleSidebarDrawer() {
+      const sidebar = document.getElementById('appSidebar');
+      const backdrop = document.getElementById('sidebarBackdrop');
+      sidebar.classList.toggle('mobile-open');
+      if (backdrop) backdrop.classList.toggle('active');
+    }
+
+    function switchTier(tier) {
+      currentTier = tier;
+      document.getElementById('tier-btn-foundation').classList.toggle('active', tier === 'foundation');
+      document.getElementById('tier-btn-moderate').classList.toggle('active', tier === 'moderate');
+      document.getElementById('tier-btn-difficult').classList.toggle('active', tier === 'difficult');
+      
+      if (tier === 'foundation' && (currentMock < 1 || currentMock > 20)) {
+        selectMock(1);
+      } else if (tier === 'moderate' && (currentMock < 21 || currentMock > 40)) {
+        selectMock(21);
+      } else if (tier === 'difficult' && (currentMock < 41 || currentMock > 60)) {
+        selectMock(41);
+      } else {
+        renderSidebar();
+      }
+    }
+
+    function renderSidebar() {
+      const container = document.getElementById('mockListContainer');
+      let html = '';
+      
+      let start = 1;
+      let end = 20;
+      if (currentTier === 'moderate') {
+        start = 21;
+        end = 40;
+      } else if (currentTier === 'difficult') {
+        start = 41;
+        end = 60;
+      }
+
+      for (let i = start; i <= end; i++) {
+        const pad = String(i).padStart(2, '0');
+        const isSelected = (i === currentMock);
+        const isFree = unlockedFreeMocks.includes(i);
+        const isLocked = !isUserPaid && !isFree;
+
+        let activeClass = '';
+        if (isSelected) {
+          if (i <= 20) activeClass = 'active';
+          else if (i <= 40) activeClass = 'active-mod';
+          else activeClass = 'active-diff';
+        }
+        if (isLocked) activeClass += ' locked';
+        
+        let tagHtml = '';
+        let numColor = '#059669';
+        let metaText = '';
+        
+        if (isFree) {
+          tagHtml = '<span class="mock-tag-mini tag-free-mini">FREE DEMO</span>';
+        } else if (isLocked) {
+          tagHtml = '<span class="mock-tag-mini tag-lock-mini">&#128274; LOCKED</span>';
+        } else {
+          if (i <= 20) tagHtml = '<span class="mock-tag-mini tag-green-mini">Ignite</span>';
+          else if (i <= 40) tagHtml = '<span class="mock-tag-mini tag-amber-mini">Conquer</span>';
+          else tagHtml = '<span class="mock-tag-mini tag-rose-mini">Dominate</span>';
+        }
+
+        if (i <= 20) {
+          numColor = '#059669';
+          metaText = '200 Qs &bull; NCERT Foundation';
+        } else if (i <= 40) {
+          numColor = '#d97706';
+          metaText = '200 Qs &bull; 2026 Analytical Rigor';
+        } else {
+          numColor = '#e11d48';
+          metaText = '200 Qs &bull; 2026-27 Advanced Rigor';
+        }
+
+        html += `
+          <div class="mock-card ${activeClass}" onclick="handleMockCardClick(${i})">
+            <div>
+              <div class="mock-card-name">
+                <span>NEET Mock - ${pad}</span>
+                ${tagHtml}
+              </div>
+              <div class="mock-card-meta">${metaText}</div>
+            </div>
+            <div style="font-weight: 800; color: ${numColor}; font-size: 0.85rem;">#${pad}</div>
+          </div>
+        `;
+      }
+      container.innerHTML = html;
+    }
+
+    function handleMockCardClick(m) {
+      const isFree = unlockedFreeMocks.includes(m);
+      if (!isUserPaid && !isFree) {
+        // Gated by paywall
+        openPaymentModal();
+        return;
+      }
+      selectMock(m);
+    }
+
+    function selectMock(m) {
+      currentMock = m;
+      let newTier = 'foundation';
+      if (m >= 41) newTier = 'difficult';
+      else if (m >= 21) newTier = 'moderate';
+      
+      if (currentTier !== newTier) {
+        currentTier = newTier;
+        document.getElementById('tier-btn-foundation').classList.toggle('active', newTier === 'foundation');
+        document.getElementById('tier-btn-moderate').classList.toggle('active', newTier === 'moderate');
+        document.getElementById('tier-btn-difficult').classList.toggle('active', newTier === 'difficult');
+      }
+
+      renderSidebar();
+      updateHeaderBadge();
+      
+      const pad = String(m).padStart(2, '0');
+      let tierName = 'Ignite';
+      if (m >= 41) tierName = 'Dominate';
+      else if (m >= 21) tierName = 'Conquer';
+      
+      document.getElementById('currentMockLabel').querySelector('span').innerText = `NEET Mock - ${pad} [${tierName}]`;
+      loadActiveDocuments();
+    }
+
+    function updateHeaderBadge() {
+      const badge = document.getElementById('examTierBadge');
+      if (!badge) return;
+      if (currentMock <= 20) {
+        badge.style.background = '#dcfce7';
+        badge.style.color = '#15803d';
+        badge.innerHTML = 'Ignite Tier &bull; NCERT Core (01-20)';
+      } else if (currentMock <= 40) {
+        badge.style.background = '#fef3c7';
+        badge.style.color = '#b45309';
+        badge.innerHTML = 'Conquer Tier &bull; 2026 Rigor (21-40)';
+      } else {
+        badge.style.background = '#ffe4e6';
+        badge.style.color = '#be123c';
+        badge.innerHTML = 'Dominate Tier &bull; Advanced Rigor (41-60)';
+      }
+    }
+
+    function setViewMode(mode) {
+      const isMobile = window.innerWidth <= 768;
+      // On mobile, never provide split screen; default to test-only if split requested
+      if (isMobile && mode === 'split') {
+        mode = 'test-only';
+      }
+      
+      currentViewMode = mode;
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      const activeBtn = document.getElementById(`tab-${mode}`);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      const dualWorkspace = document.getElementById('dual-workspace');
+      const paneLeft = document.getElementById('pane-left');
+      const paneRight = document.getElementById('pane-right');
+
+      if (!isMobile && mode === 'split') {
+        dualWorkspace.style.display = 'flex';
+        paneLeft.style.display = 'flex';
+        paneRight.style.display = 'flex';
+      } else if (mode === 'test-only') {
+        dualWorkspace.style.display = 'flex';
+        paneLeft.style.display = 'flex';
+        paneRight.style.display = 'none';
+      } else if (mode === 'sol-only' || mode === 'key') {
+        dualWorkspace.style.display = 'flex';
+        paneLeft.style.display = 'none';
+        paneRight.style.display = 'flex';
+      }
+      loadActiveDocuments();
+    }
+
+    // Document Loading & Math-Protected Markdown Parsing
+    function loadActiveDocuments() {
+      const pad = String(currentMock).padStart(2, '0');
+      const mockKey = `Mock_${pad}`;
+
+      if (window.NEET_DATA) {
+        const qpKey = `${mockKey}_Question_Paper.md`;
+        const solKey = `${mockKey}_Detailed_Solutions.md`;
+        const keyKey = `${mockKey}_Answer_Key_and_Analysis.md`;
+
+        const qpContent = window.NEET_DATA[qpKey] || '# Question paper loading...';
+        const solContent = window.NEET_DATA[solKey] || '# Solutions loading...';
+        const keyContent = window.NEET_DATA[keyKey] || '# Analysis loading...';
+
+        renderProtectedMarkdown(qpContent, document.getElementById('pane-left-content'));
+
+        if (currentViewMode === 'key') {
+          document.getElementById('pane-right-title').innerHTML = 'Answer Key & Analysis';
+          renderProtectedMarkdown(keyContent, document.getElementById('pane-right-content'));
+        } else {
+          document.getElementById('pane-right-title').innerHTML = 'Detailed Step-by-Step Solutions';
+          renderProtectedMarkdown(solContent, document.getElementById('pane-right-content'));
+        }
+      }
+    }
+
+    function renderProtectedMarkdown(rawMd, containerEl) {
+      if (!rawMd || !containerEl) return;
+
+      // Fix Python backslash escapes
+      rawMd = rawMd.replace(/\x07lpha/g, '\\alpha');
+      rawMd = rawMd.replace(/\x08eta/g, '\\beta');
+      rawMd = rawMd.replace(/\x0crac/g, '\\frac');
+      rawMd = rawMd.replace(/\t+ext\{/g, '\\text{');
+      rawMd = rawMd.replace(/\t+heta\b/g, '\\theta');
+      rawMd = rawMd.replace(/\t+o\b/g, '\\to');
+
+      // Defensive Math Sanitization (replaces flawed \Z with line-end or $)
+      rawMd = rawMd.replace(/\$\$([^\$\n]+?)\$([\.,;]?(?:\s*\n|\s*$|\s*"))/g, (m, math, end) => `$$${math}$$${end}`);
+
+      // Format Takeaways and Distractors into structured callout cards
+      rawMd = rawMd.replace(/\*\*Key NCERT Principle \/ High-Yield Takeaway:\*\*\s*([\s\S]*?)(?=(?:\n---|\n###|$))/gi, (m, takeaway) => {
+        return `<div class="takeaway-box"><strong>&#128161; Key NCERT Principle / High-Yield Takeaway</strong>${takeaway.trim()}</div>\n\n`;
+      });
+      rawMd = rawMd.replace(/#### Distractor & Option Deconstruction:\s*([\s\S]*?)(?=(?:<div class="takeaway-box"|\*\*Key NCERT|\n---|\n###|$))/gi, (m, distractor) => {
+        return `<div class="distractor-box"><strong>&#128269; Distractor & Option Deconstruction</strong>${distractor.trim()}</div>\n\n`;
+      });
+
+      const mathTokens = [];
+      // Shield Display Math $$...$$
+      let safeText = rawMd.replace(/\$\$([\s\S]*?)\$\$/g, (m) => {
+        mathTokens.push(m);
+        return `@@@MATH_BLOCK_${mathTokens.length - 1}@@@`;
+      });
+
+      // Shield Inline Math $...$
+      safeText = safeText.replace(/\$([^\$\n]+?)\$/g, (m) => {
+        mathTokens.push(m);
+        return `@@@MATH_INLINE_${mathTokens.length - 1}@@@`;
+      });
+
+      // Pre-convert <div class="options-container">
+      safeText = safeText.replace(/<div class="options-container">([\s\S]*?)<\/div>/gi, (match, inner) => {
+        const lines = inner.split('\n');
+        const items = [];
+        for (let l of lines) {
+          const trimmed = l.trim();
+          if (!trimmed) continue;
+          const optMatch = trimmed.match(/^-\s*\*\*\((\d+)\)\*\*\s*([\s\S]*)$/);
+          if (optMatch) {
+            let optContent = optMatch[2].trim();
+            const hasRawLatex = /\\(alpha|beta|gamma|Delta|delta|lambda|mu|pi|rho|sigma|omega|Omega|nu|theta|epsilon|sqrt|frac|times|to|rightarrow|pm|circ)\b/.test(optContent);
+            const hasCaret = /([a-zA-Z0-9\)\}][\^_][a-zA-Z0-9\(\{])/.test(optContent);
+            
+            if ((hasRawLatex || hasCaret) && !optContent.includes('@@@MATH_') && !optContent.includes('$')) {
+              const paren = optContent.match(/^(.*?)\s*(\([^\)]+\))$/);
+              if (paren && !/because|since|due to|Solid/.test(optContent)) {
+                optContent = `$${paren[1].trim()}$ ${paren[2]}`;
+              } else {
+                optContent = `$${optContent}$`;
+              }
+            }
+            items.push(`<li><strong>(${optMatch[1]})</strong><span>${optContent}</span></li>`);
+          } else if (trimmed.startsWith('-')) {
+            items.push(`<li>${trimmed.replace(/^-\s*/, '')}</li>`);
+          }
+        }
+        if (items.length > 0) {
+          return `<div class="options-container"><ul>${items.join('')}</ul></div>`;
+        }
+        return match;
+      });
+
+      // Format Statement Cards (Anchored to line start, NO \Z)
+      safeText = safeText.replace(/(?:^|\n)\s*(?:\*{0,2}Statement\s+I\s*:\*{0,2})\s*([\s\S]*?)(?=(?:\n\s*\*{0,2}Statement\s+II\s*:\*{0,2}))/gi, (m, st1) => {
+        return `\n\n<div class="statement-card"><span class="statement-badge statement-1">Statement I</span><div class="statement-body">${st1.trim()}</div></div>\n\n`;
+      });
+      safeText = safeText.replace(/(?:^|\n)\s*(?:\*{0,2}Statement\s+II\s*:\*{0,2})\s*([\s\S]*?)(?=(?:\n\s*In the light|\n\s*Choose the|\n\s*<div|\n\s*-\s*\*\*\(|$))/gi, (m, st2) => {
+        return `\n\n<div class="statement-card"><span class="statement-badge statement-2">Statement II</span><div class="statement-body">${st2.trim()}</div></div>\n\n`;
+      });
+
+      // Format Assertion & Reason Cards (Anchored to line start, strictly avoiding matching intro sentences or \Z in words like horizontal)
+      safeText = safeText.replace(/(?:^|\n)\s*(?:\*{0,2}Assertion\s*(?:\([AR]\))?\s*:\*{0,2})\s*([\s\S]*?)(?=(?:\n\s*\*{0,2}Reason\s*(?:\([AR]\))?\s*:\*{0,2}))/gi, (m, aText) => {
+        return `\n\n<div class="assertion-card"><span class="assertion-badge">Assertion (A)</span><div class="statement-body">${aText.trim()}</div></div>\n\n`;
+      });
+      safeText = safeText.replace(/(?:^|\n)\s*(?:\*{0,2}Reason\s*(?:\([AR]\))?\s*:\*{0,2})\s*([\s\S]*?)(?=(?:\n\s*In the light|\n\s*Choose the|\n\s*<div|\n\s*-\s*\*\*\(|$))/gi, (m, rText) => {
+        return `\n\n<div class="reason-card"><span class="reason-badge">Reason (R)</span><div class="statement-body">${rText.trim()}</div></div>\n\n`;
+      });
+
+      let html = marked.parse(safeText);
+
+      // Restore Math Tokens
+      html = html.replace(/@@@MATH_BLOCK_(\d+)@@@/g, (match, idx) => mathTokens[parseInt(idx, 10)]);
+      html = html.replace(/@@@MATH_INLINE_(\d+)@@@/g, (match, idx) => mathTokens[parseInt(idx, 10)]);
+
+      containerEl.innerHTML = html;
+
+      // Trigger KaTeX
+      if (window.renderMathInElement) {
+        renderMathInElement(containerEl, {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '$', right: '$', display: false },
+            { left: '\\(', right: '\\)', display: false },
+            { left: '\\[', right: '\\]', display: true }
+          ],
+          throwOnError: false
+        });
+      }
+      containerEl.scrollTop = 0;
+    }
+
+    // Init on DOM ready
+    window.addEventListener('DOMContentLoaded', () => {
+      // Check for Razorpay payment redirect / callback
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const rzpPayId = urlParams.get('razorpay_payment_id') || urlParams.get('payment_id');
+        const rzpStatus = urlParams.get('razorpay_payment_link_status') || urlParams.get('payment_status') || urlParams.get('payment_success');
+        if (rzpPayId || rzpStatus === 'paid' || rzpStatus === 'true') {
+          handlePaymentSuccess(rzpPayId || ('RZP_' + Date.now()));
+        }
+      } catch (e) {
+        console.error('Payment redirect check error', e);
+      }
+      renderSidebar();
+      updateHeaderBadge();
+      updateAuthUI(null);
+      if (window.innerWidth <= 768) {
+        setViewMode('test-only');
+      } else {
+        setViewMode('split');
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth <= 768 && currentViewMode === 'split') {
+        setViewMode('test-only');
+      }
+    });
+  </script>
+</body>
+</html>
