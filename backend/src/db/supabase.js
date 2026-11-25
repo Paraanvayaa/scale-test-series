@@ -786,9 +786,9 @@ const db = {
         conditions.push(`(u.email ILIKE $${params.length} OR u.full_name ILIKE $${params.length} OR u.id::text ILIKE $${params.length})`);
       }
       if (filterStatus === 'ACTIVE') {
-        conditions.push("u.is_suspended = false");
+        conditions.push("(u.is_suspended = false AND (u.account_status IS NULL OR u.account_status != 'SUSPENDED'))");
       } else if (filterStatus === 'SUSPENDED') {
-        conditions.push("u.is_suspended = true");
+        conditions.push("(u.is_suspended = true OR u.account_status = 'SUSPENDED')");
       }
       if (filterPaid === 'PAID') {
         conditions.push("e.id IS NOT NULL AND e.status = 'active'");
@@ -820,6 +820,7 @@ const db = {
           u.full_name, 
           u.phone, 
           u.is_suspended, 
+          u.account_status,
           u.suspension_reason, 
           u.created_at,
           coalesce(max(s.last_seen_at), u.created_at) as last_login,
@@ -1057,6 +1058,19 @@ const db = {
       return res.rows;
     }
     return localStore.getAuditLogs({ limit });
+  },
+
+  async recordAuditLog({ adminId, adminEmail, adminRole, action, targetUserId, targetRecordId, reason, metadata = {}, ipAddress = null }) {
+    if (dbPool) {
+      await dbPool.query(
+        `INSERT INTO public.scale_admin_audit_logs 
+         (admin_id, admin_email, admin_role, action, target_user_id, target_record_id, reason, metadata, ip_address)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+        [adminId, adminEmail, adminRole, action, targetUserId, targetRecordId || null, reason || null, JSON.stringify(metadata), ipAddress]
+      );
+      return true;
+    }
+    return true;
   },
 
   async getAdminNotifications({ limit = 30 }) {

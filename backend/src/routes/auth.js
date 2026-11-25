@@ -67,6 +67,14 @@ router.post('/login', async (req, res) => {
   try {
     const user = await db.authenticateUser({ email, password });
 
+    // Block suspended users from logging in
+    if (user.is_suspended) {
+      return res.status(403).json({
+        error: 'ACCOUNT_SUSPENDED',
+        message: 'Your account has been suspended. Please contact support for assistance.'
+      });
+    }
+
     // Generate new raw session token
     const rawToken = crypto.randomBytes(config.session.tokenBytes).toString('hex');
     const deviceInfo = req.headers['user-agent'] || 'Unknown Device';

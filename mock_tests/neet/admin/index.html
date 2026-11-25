@@ -477,15 +477,16 @@
           <div><strong>Status:</strong> <span id="mStatus">-</span></div>
           <div><strong>Registered:</strong> <span id="mRegistered">-</span></div>
           <div><strong>Entitlement:</strong> <span id="mEntitlement">-</span></div>
+          <div style="grid-column: span 2;"><strong>Active Device:</strong> <span id="mActiveDevice">-</span></div>
         </div>
 
         <h4 style="font-size: 0.88rem; font-weight: 700; color: #334155; margin-bottom: 0.65rem;">Administrative Controls:</h4>
         <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.5rem;">
           <button class="btn-sm btn-danger" id="mBtnSuspend" onclick="promptSuspendStudent()">⛔ Suspend Account</button>
           <button class="btn-sm btn-primary" id="mBtnReactivate" onclick="promptReactivateStudent()" style="display: none;">♻️ Reactivate Account</button>
-          <button class="btn-sm btn-secondary" onclick="promptGrantAccess()">🎁 Grant Free Access</button>
-          <button class="btn-sm btn-danger" onclick="promptRevokeAccess()">🚫 Revoke Examination Access</button>
-          <button class="btn-sm btn-secondary" onclick="forceRevokeStudentSession()">⚡ Revoke Device Session</button>
+          <button class="btn-sm btn-secondary" id="mBtnGrant" onclick="promptGrantAccess()">🎁 Grant Free Access</button>
+          <button class="btn-sm btn-danger" id="mBtnRevokeAccess" onclick="promptRevokeAccess()">🚫 Revoke Examination Access</button>
+          <button class="btn-sm btn-secondary" id="mBtnRevokeSession" onclick="forceRevokeStudentSession()">⚡ Revoke Device Session</button>
         </div>
 
         <h4 style="font-size: 0.88rem; font-weight: 700; color: #334155; margin-bottom: 0.65rem;">Internal Admin Notes:</h4>
@@ -533,19 +534,41 @@
         localStorage.setItem('scale_admin_api_base', clean);
         return clean;
       }
-      const saved = localStorage.getItem('scale_admin_api_base');
+      
+      const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      let saved = localStorage.getItem('scale_admin_api_base');
+      
+      // Auto-correct: If accessing from production (e.g. scaletestseries.web.app), discard stale localhost URLs
+      if (!isLocalhost && saved && saved.includes('localhost')) {
+        localStorage.removeItem('scale_admin_api_base');
+        saved = null;
+      }
+
       if (saved) return saved;
 
       if (window.location.port === '4000') {
         return '/api/v1/admin';
       }
-      if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+      if (isLocalhost) {
         return 'http://localhost:4000/api/v1/admin';
       }
       return 'https://scale-test-series-backend.onrender.com/api/v1/admin';
     }
 
     let API_BASE = getInitialApiBase();
+
+    function resetToCloudBackend() {
+      API_BASE = 'https://scale-test-series-backend.onrender.com/api/v1/admin';
+      localStorage.setItem('scale_admin_api_base', API_BASE);
+      const input = document.getElementById('apiEndpointInput');
+      if (input) input.value = API_BASE;
+      testBackendHealth();
+      const errBox = document.getElementById('loginErrorMsg');
+      if (errBox) {
+        errBox.innerHTML = '<span style="color: #059669; font-weight: 600;">Switched to Render Cloud Backend. Please sign in now.</span>';
+        errBox.style.display = 'block';
+      }
+    }
 
     function toggleBackendConfig() {
       const panel = document.getElementById('backendConfigPanel');
@@ -674,12 +697,30 @@
       errBox.style.display = 'none';
 
       try {
-        const res = await fetch(`${API_BASE}/auth/login`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-          body: JSON.stringify({ email, password })
-        });
+        let res;
+        try {
+          res = await fetch(`${API_BASE}/auth/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({ email, password })
+          });
+        } catch (fetchErr) {
+          if (!API_BASE.includes('onrender.com')) {
+            console.warn('Initial backend connection failed, retrying with Render Cloud Backend...');
+            API_BASE = 'https://scale-test-series-backend.onrender.com/api/v1/admin';
+            localStorage.setItem('scale_admin_api_base', API_BASE);
+            res = await fetch(`${API_BASE}/auth/login`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              credentials: 'include',
+              body: JSON.stringify({ email, password })
+            });
+          } else {
+            throw fetchErr;
+          }
+        }
+
         const data = await res.json();
 
         if (res.ok && data.success) {
@@ -693,7 +734,7 @@
           errBox.style.display = 'block';
         }
       } catch (err) {
-        errBox.innerHTML = `Server connection error to <code>${API_BASE}</code>.<br><small style="color: #64748b;">If testing locally, use <a href="http://localhost:4000/admin/" style="color: #059669; font-weight: 600; text-decoration: underline;">http://localhost:4000/admin</a> or enter your backend URL below.</small>`;
+        errBox.innerHTML = `Server connection error to <code>${API_BASE}</code>.<br><button type="button" class="btn-sm btn-primary" onclick="resetToCloudBackend()" style="margin-top: 8px; font-size: 0.76rem; padding: 0.35rem 0.75rem;">Switch to Cloud Backend (Render)</button>`;
         errBox.style.display = 'block';
         const panel = document.getElementById('backendConfigPanel');
         if (panel) panel.style.display = 'block';
@@ -832,18 +873,29 @@
           document.getElementById('modalStudentName').innerText = u.full_name || u.email;
           document.getElementById('mEmail').innerText = u.email;
           document.getElementById('mRegistered').innerText = formatDate(u.created_at);
-          document.getElementById('mStatus').innerHTML = u.is_suspended 
+          
+          const isSuspended = u.is_suspended || u.account_status === 'SUSPENDED';
+          document.getElementById('mStatus').innerHTML = isSuspended 
             ? `<span class="badge badge-danger">SUSPENDED (${escapeHtml(u.suspension_reason || 'N/A')})</span>` 
             : '<span class="badge badge-success">ACTIVE</span>';
 
-          const hasAccess = p.entitlements.some(e => e.status === 'active');
+          const hasAccess = (p.entitlements || []).some(e => e.status === 'active');
           document.getElementById('mEntitlement').innerHTML = hasAccess
             ? '<span class="badge badge-success">ACTIVE LIFETIME ACCESS</span>'
             : '<span class="badge badge-info">FREE DEMO ONLY</span>';
 
+          // Active device session display
+          const activeSessions = (p.sessions || []).filter(s => s.is_active);
+          const activeDevEl = document.getElementById('mActiveDevice');
+          if (activeDevEl) {
+            activeDevEl.innerHTML = activeSessions.length > 0
+              ? `<span class="badge badge-success">● Active (${escapeHtml(activeSessions[0].device_info || 'Connected Device')})</span>`
+              : '<span class="badge" style="background: #64748b; color: #ffffff;">No Active Session</span>';
+          }
+
           // Toggle suspend/reactivate buttons
-          document.getElementById('mBtnSuspend').style.display = u.is_suspended ? 'none' : 'inline-flex';
-          document.getElementById('mBtnReactivate').style.display = u.is_suspended ? 'inline-flex' : 'none';
+          document.getElementById('mBtnSuspend').style.display = isSuspended ? 'none' : 'inline-flex';
+          document.getElementById('mBtnReactivate').style.display = isSuspended ? 'inline-flex' : 'none';
 
           // Render Notes
           const notesBox = document.getElementById('mNotesList');
@@ -884,6 +936,9 @@
       const reason = document.getElementById('suspendReasonInput').value.trim();
       if (!reason) return alert('Please enter a suspension reason.');
 
+      const confirmBtn = document.querySelector('#suspendActionModal .btn-danger');
+      if (confirmBtn) { confirmBtn.disabled = true; confirmBtn.innerText = 'Suspending...'; }
+
       try {
         const res = await adminFetch(`/students/${selectedStudentId}/suspend`, {
           method: 'POST',
@@ -892,82 +947,118 @@
         if (res.ok) {
           alert('Account suspended successfully. Active sessions revoked.');
           closeSuspendActionModal();
-          openStudentModal(selectedStudentId);
+          await openStudentModal(selectedStudentId);
           loadStudents();
+          loadSessions();
+        } else {
+          alert(res.data?.message || 'Failed to suspend account.');
         }
       } catch (err) {
-        alert('Failed to suspend account.');
+        alert(err.message || 'Failed to suspend account.');
+      } finally {
+        if (confirmBtn) { confirmBtn.disabled = false; confirmBtn.innerText = 'Confirm Suspension'; }
       }
     }
 
     // Reactivate Student
     async function promptReactivateStudent() {
       if (!confirm('Reactivate this student account?')) return;
+      const btn = document.getElementById('mBtnReactivate');
+      if (btn) { btn.disabled = true; btn.innerText = 'Reactivating...'; }
       try {
         const res = await adminFetch(`/students/${selectedStudentId}/reactivate`, {
           method: 'POST',
           body: JSON.stringify({ reason: 'Reactivated by Super Admin' })
         });
         if (res.ok) {
-          alert('Account reactivated.');
-          openStudentModal(selectedStudentId);
+          alert('Account reactivated successfully.');
+          await openStudentModal(selectedStudentId);
           loadStudents();
+        } else {
+          alert(res.data?.message || 'Failed to reactivate account.');
         }
-      } catch {
-        alert('Failed to reactivate account.');
+      } catch (err) {
+        alert(err.message || 'Failed to reactivate account.');
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerText = '♻️ Reactivate Account'; }
       }
     }
 
     // Grant Complimentary Access
     async function promptGrantAccess() {
       const reason = prompt('Enter reason for granting complimentary access (e.g. Scholarship / Promotion):');
-      if (!reason) return;
+      if (!reason || !reason.trim()) return;
+
+      const btn = document.getElementById('mBtnGrant');
+      if (btn) { btn.disabled = true; btn.innerText = 'Granting...'; }
 
       try {
         const res = await adminFetch(`/students/${selectedStudentId}/grant-access`, {
           method: 'POST',
-          body: JSON.stringify({ reason })
+          body: JSON.stringify({ reason: reason.trim() })
         });
         if (res.ok) {
           alert('Complimentary access granted successfully.');
-          openStudentModal(selectedStudentId);
+          await openStudentModal(selectedStudentId);
           loadStudents();
+        } else {
+          alert(res.data?.message || 'Failed to grant access.');
         }
-      } catch {
-        alert('Failed to grant access.');
+      } catch (err) {
+        alert(err.message || 'Failed to grant access.');
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerText = '🎁 Grant Free Access'; }
       }
     }
 
     // Revoke Examination Access
     async function promptRevokeAccess() {
       const reason = prompt('Enter reason for revoking examination access:');
-      if (!reason) return;
+      if (!reason || !reason.trim()) return;
+
+      const btn = document.getElementById('mBtnRevokeAccess');
+      if (btn) { btn.disabled = true; btn.innerText = 'Revoking...'; }
 
       try {
         const res = await adminFetch(`/students/${selectedStudentId}/revoke-access`, {
           method: 'POST',
-          body: JSON.stringify({ reason })
+          body: JSON.stringify({ reason: reason.trim() })
         });
         if (res.ok) {
-          alert('Examination access revoked.');
-          openStudentModal(selectedStudentId);
+          alert('Examination access revoked successfully.');
+          await openStudentModal(selectedStudentId);
           loadStudents();
+        } else {
+          alert(res.data?.message || 'Failed to revoke access.');
         }
-      } catch {
-        alert('Failed to revoke access.');
+      } catch (err) {
+        alert(err.message || 'Failed to revoke access.');
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerText = '🚫 Revoke Examination Access'; }
       }
     }
 
     // Revoke Session
     async function forceRevokeStudentSession() {
       if (!confirm('Revoke all active sessions for this student immediately?')) return;
+
+      const btn = document.getElementById('mBtnRevokeSession');
+      if (btn) { btn.disabled = true; btn.innerText = 'Revoking...'; }
+
       try {
         const res = await adminFetch(`/students/${selectedStudentId}/revoke-session`, { method: 'POST' });
         if (res.ok) {
-          alert(res.data.message || 'Session revoked.');
+          alert(res.data.message || 'Active session(s) revoked successfully.');
+          await openStudentModal(selectedStudentId);
+          loadStudents();
+          loadSessions();
+        } else {
+          alert(res.data?.message || 'Failed to revoke session.');
         }
-      } catch {
-        alert('Failed to revoke session.');
+      } catch (err) {
+        alert(err.message || 'Failed to revoke session.');
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerText = '⚡ Revoke Device Session'; }
       }
     }
 
@@ -1039,7 +1130,7 @@
             <tr>
               <td>
                 <strong>${escapeHtml(s.student_email)}</strong>
-                ${s.is_active ? '<span class="badge badge-success" style="margin-left: 8px; font-size: 0.68rem; padding: 0.15rem 0.45rem;">1 Active Device</span>' : ''}
+                ${s.is_active ? `<span class="badge badge-success" style="margin-left: 8px; font-size: 0.68rem; padding: 0.15rem 0.45rem;">${s.user_active_devices_count || 1} Active Device${(s.user_active_devices_count > 1) ? 's' : ''}</span>` : ''}
               </td>
               <td style="max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${escapeHtml(s.device_info || 'Unknown')}</td>
               <td>${escapeHtml(s.ip_address || '127.0.0.1')}</td>

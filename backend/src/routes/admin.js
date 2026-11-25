@@ -258,6 +258,16 @@ router.post('/students/:studentId/revoke-access', requireAdmin, async (req, res)
 router.post('/students/:studentId/revoke-session', requireAdmin, async (req, res) => {
   try {
     const count = await db.revokeAllUserSessions(req.params.studentId, 'ADMIN_FORCE_LOGOUT');
+    await db.recordAuditLog({
+      adminId: req.admin.id,
+      adminEmail: req.admin.email,
+      adminRole: req.admin.role,
+      action: 'DEVICE_SESSION_REVOKED',
+      targetUserId: req.params.studentId,
+      reason: 'Revoked by administrator',
+      metadata: { revokedCount: count },
+      ipAddress: req.ip || req.connection?.remoteAddress || null
+    });
     return res.json({
       success: true,
       message: `Revoked ${count} active session(s) for student.`

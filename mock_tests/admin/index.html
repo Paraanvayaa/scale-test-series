@@ -477,15 +477,16 @@
           <div><strong>Status:</strong> <span id="mStatus">-</span></div>
           <div><strong>Registered:</strong> <span id="mRegistered">-</span></div>
           <div><strong>Entitlement:</strong> <span id="mEntitlement">-</span></div>
+          <div style="grid-column: span 2;"><strong>Active Device:</strong> <span id="mActiveDevice">-</span></div>
         </div>
 
         <h4 style="font-size: 0.88rem; font-weight: 700; color: #334155; margin-bottom: 0.65rem;">Administrative Controls:</h4>
         <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.5rem;">
           <button class="btn-sm btn-danger" id="mBtnSuspend" onclick="promptSuspendStudent()">⛔ Suspend Account</button>
           <button class="btn-sm btn-primary" id="mBtnReactivate" onclick="promptReactivateStudent()" style="display: none;">♻️ Reactivate Account</button>
-          <button class="btn-sm btn-secondary" onclick="promptGrantAccess()">🎁 Grant Free Access</button>
-          <button class="btn-sm btn-danger" onclick="promptRevokeAccess()">🚫 Revoke Examination Access</button>
-          <button class="btn-sm btn-secondary" onclick="forceRevokeStudentSession()">⚡ Revoke Device Session</button>
+          <button class="btn-sm btn-secondary" id="mBtnGrant" onclick="promptGrantAccess()">🎁 Grant Free Access</button>
+          <button class="btn-sm btn-danger" id="mBtnRevokeAccess" onclick="promptRevokeAccess()">🚫 Revoke Examination Access</button>
+          <button class="btn-sm btn-secondary" id="mBtnRevokeSession" onclick="forceRevokeStudentSession()">⚡ Revoke Device Session</button>
         </div>
 
         <h4 style="font-size: 0.88rem; font-weight: 700; color: #334155; margin-bottom: 0.65rem;">Internal Admin Notes:</h4>
@@ -872,18 +873,29 @@
           document.getElementById('modalStudentName').innerText = u.full_name || u.email;
           document.getElementById('mEmail').innerText = u.email;
           document.getElementById('mRegistered').innerText = formatDate(u.created_at);
-          document.getElementById('mStatus').innerHTML = u.is_suspended 
+          
+          const isSuspended = u.is_suspended || u.account_status === 'SUSPENDED';
+          document.getElementById('mStatus').innerHTML = isSuspended 
             ? `<span class="badge badge-danger">SUSPENDED (${escapeHtml(u.suspension_reason || 'N/A')})</span>` 
             : '<span class="badge badge-success">ACTIVE</span>';
 
-          const hasAccess = p.entitlements.some(e => e.status === 'active');
+          const hasAccess = (p.entitlements || []).some(e => e.status === 'active');
           document.getElementById('mEntitlement').innerHTML = hasAccess
             ? '<span class="badge badge-success">ACTIVE LIFETIME ACCESS</span>'
             : '<span class="badge badge-info">FREE DEMO ONLY</span>';
 
+          // Active device session display
+          const activeSessions = (p.sessions || []).filter(s => s.is_active);
+          const activeDevEl = document.getElementById('mActiveDevice');
+          if (activeDevEl) {
+            activeDevEl.innerHTML = activeSessions.length > 0
+              ? `<span class="badge badge-success">● Active (${escapeHtml(activeSessions[0].device_info || 'Connected Device')})</span>`
+              : '<span class="badge" style="background: #64748b; color: #ffffff;">No Active Session</span>';
+          }
+
           // Toggle suspend/reactivate buttons
-          document.getElementById('mBtnSuspend').style.display = u.is_suspended ? 'none' : 'inline-flex';
-          document.getElementById('mBtnReactivate').style.display = u.is_suspended ? 'inline-flex' : 'none';
+          document.getElementById('mBtnSuspend').style.display = isSuspended ? 'none' : 'inline-flex';
+          document.getElementById('mBtnReactivate').style.display = isSuspended ? 'inline-flex' : 'none';
 
           // Render Notes
           const notesBox = document.getElementById('mNotesList');
@@ -924,6 +936,9 @@
       const reason = document.getElementById('suspendReasonInput').value.trim();
       if (!reason) return alert('Please enter a suspension reason.');
 
+      const confirmBtn = document.querySelector('#suspendActionModal .btn-danger');
+      if (confirmBtn) { confirmBtn.disabled = true; confirmBtn.innerText = 'Suspending...'; }
+
       try {
         const res = await adminFetch(`/students/${selectedStudentId}/suspend`, {
           method: 'POST',
@@ -932,82 +947,118 @@
         if (res.ok) {
           alert('Account suspended successfully. Active sessions revoked.');
           closeSuspendActionModal();
-          openStudentModal(selectedStudentId);
+          await openStudentModal(selectedStudentId);
           loadStudents();
+          loadSessions();
+        } else {
+          alert(res.data?.message || 'Failed to suspend account.');
         }
       } catch (err) {
-        alert('Failed to suspend account.');
+        alert(err.message || 'Failed to suspend account.');
+      } finally {
+        if (confirmBtn) { confirmBtn.disabled = false; confirmBtn.innerText = 'Confirm Suspension'; }
       }
     }
 
     // Reactivate Student
     async function promptReactivateStudent() {
       if (!confirm('Reactivate this student account?')) return;
+      const btn = document.getElementById('mBtnReactivate');
+      if (btn) { btn.disabled = true; btn.innerText = 'Reactivating...'; }
       try {
         const res = await adminFetch(`/students/${selectedStudentId}/reactivate`, {
           method: 'POST',
           body: JSON.stringify({ reason: 'Reactivated by Super Admin' })
         });
         if (res.ok) {
-          alert('Account reactivated.');
-          openStudentModal(selectedStudentId);
+          alert('Account reactivated successfully.');
+          await openStudentModal(selectedStudentId);
           loadStudents();
+        } else {
+          alert(res.data?.message || 'Failed to reactivate account.');
         }
-      } catch {
-        alert('Failed to reactivate account.');
+      } catch (err) {
+        alert(err.message || 'Failed to reactivate account.');
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerText = '♻️ Reactivate Account'; }
       }
     }
 
     // Grant Complimentary Access
     async function promptGrantAccess() {
       const reason = prompt('Enter reason for granting complimentary access (e.g. Scholarship / Promotion):');
-      if (!reason) return;
+      if (!reason || !reason.trim()) return;
+
+      const btn = document.getElementById('mBtnGrant');
+      if (btn) { btn.disabled = true; btn.innerText = 'Granting...'; }
 
       try {
         const res = await adminFetch(`/students/${selectedStudentId}/grant-access`, {
           method: 'POST',
-          body: JSON.stringify({ reason })
+          body: JSON.stringify({ reason: reason.trim() })
         });
         if (res.ok) {
           alert('Complimentary access granted successfully.');
-          openStudentModal(selectedStudentId);
+          await openStudentModal(selectedStudentId);
           loadStudents();
+        } else {
+          alert(res.data?.message || 'Failed to grant access.');
         }
-      } catch {
-        alert('Failed to grant access.');
+      } catch (err) {
+        alert(err.message || 'Failed to grant access.');
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerText = '🎁 Grant Free Access'; }
       }
     }
 
     // Revoke Examination Access
     async function promptRevokeAccess() {
       const reason = prompt('Enter reason for revoking examination access:');
-      if (!reason) return;
+      if (!reason || !reason.trim()) return;
+
+      const btn = document.getElementById('mBtnRevokeAccess');
+      if (btn) { btn.disabled = true; btn.innerText = 'Revoking...'; }
 
       try {
         const res = await adminFetch(`/students/${selectedStudentId}/revoke-access`, {
           method: 'POST',
-          body: JSON.stringify({ reason })
+          body: JSON.stringify({ reason: reason.trim() })
         });
         if (res.ok) {
-          alert('Examination access revoked.');
-          openStudentModal(selectedStudentId);
+          alert('Examination access revoked successfully.');
+          await openStudentModal(selectedStudentId);
           loadStudents();
+        } else {
+          alert(res.data?.message || 'Failed to revoke access.');
         }
-      } catch {
-        alert('Failed to revoke access.');
+      } catch (err) {
+        alert(err.message || 'Failed to revoke access.');
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerText = '🚫 Revoke Examination Access'; }
       }
     }
 
     // Revoke Session
     async function forceRevokeStudentSession() {
       if (!confirm('Revoke all active sessions for this student immediately?')) return;
+
+      const btn = document.getElementById('mBtnRevokeSession');
+      if (btn) { btn.disabled = true; btn.innerText = 'Revoking...'; }
+
       try {
         const res = await adminFetch(`/students/${selectedStudentId}/revoke-session`, { method: 'POST' });
         if (res.ok) {
-          alert(res.data.message || 'Session revoked.');
+          alert(res.data.message || 'Active session(s) revoked successfully.');
+          await openStudentModal(selectedStudentId);
+          loadStudents();
+          loadSessions();
+        } else {
+          alert(res.data?.message || 'Failed to revoke session.');
         }
-      } catch {
-        alert('Failed to revoke session.');
+      } catch (err) {
+        alert(err.message || 'Failed to revoke session.');
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerText = '⚡ Revoke Device Session'; }
       }
     }
 

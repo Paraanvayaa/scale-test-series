@@ -2555,6 +2555,9 @@
         if (res.data.entitlement && res.data.entitlement.hasAccess) {
           isUserPaid = true;
           localStorage.setItem('scale_test_series_paid', 'true');
+        } else {
+          isUserPaid = false;
+          localStorage.removeItem('scale_test_series_paid');
         }
         updateAuthUI(currentUser);
         initRealtimeSessionEvents();
@@ -2727,12 +2730,16 @@
         }
       }
 
+      const unlockBtn = document.getElementById('navUnlockBtn');
+      const examUnlockBtn = document.getElementById('examUnlockBtn');
       if (isUserPaid) {
-        const unlockBtn = document.getElementById('navUnlockBtn');
-        const examUnlockBtn = document.getElementById('examUnlockBtn');
         if (unlockBtn) unlockBtn.style.display = 'none';
         if (examUnlockBtn) examUnlockBtn.style.display = 'none';
+      } else {
+        if (unlockBtn) unlockBtn.style.display = '';
+        if (examUnlockBtn) examUnlockBtn.style.display = '';
       }
+      if (typeof renderSidebar === 'function') renderSidebar();
     }
 
     // Navigation & Views

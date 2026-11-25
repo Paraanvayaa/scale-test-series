@@ -41,6 +41,24 @@ async function requireAuth(req, res, next) {
     req.user = { id: session.user_id };
     req.session = session;
     req.rawToken = rawToken;
+
+    // Block suspended users even with valid sessions
+    try {
+      const user = await db.getUserById(session.user_id);
+      if (user && user.is_suspended) {
+        // Revoke the session and block access
+        await db.revokeSessionByToken(rawToken, 'ACCOUNT_SUSPENDED');
+        res.clearCookie(config.session.cookieName);
+        return res.status(403).json({
+          error: 'ACCOUNT_SUSPENDED',
+          message: 'Your account has been suspended. Please contact support for assistance.'
+        });
+      }
+    } catch (suspendCheckErr) {
+      console.error('[Auth Suspend Check Error]:', suspendCheckErr);
+      // Don't block request on suspend-check failure — allow through
+    }
+
     next();
   } catch (error) {
     console.error('[Auth Middleware Error]:', error);
