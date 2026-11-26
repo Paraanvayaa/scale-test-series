@@ -55,3 +55,4 @@ with open('backend/src/db/supabase.js', 'w', encoding='utf-8') as f:
     f.write(code)
 
 print("Properly replaced getContentAccessLogs via Python")
+

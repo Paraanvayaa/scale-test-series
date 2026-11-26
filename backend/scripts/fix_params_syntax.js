@@ -37,3 +37,4 @@ if (code.includes(oldBlock)) {
 } else {
   console.error('Could not find oldBlock in supabase.js');
 }
+

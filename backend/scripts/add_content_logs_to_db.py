@@ -73,3 +73,4 @@ if target in code:
     print("Successfully added logContentAccess and getContentAccessLogs to db object")
 else:
     print("Error: target not found")
+
