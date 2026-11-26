@@ -84,8 +84,8 @@ async function optionalAuth(req, res, next) {
 
   try {
     const session = await db.getActiveSessionByToken(rawToken);
-    if (session && session.is_valid) {
-      req.user = { id: session.user_id };
+    if (session) {
+      req.user = { id: session.user_id, is_valid: session.is_valid, reason: session.reason };
       req.session = session;
     } else {
       req.user = null;

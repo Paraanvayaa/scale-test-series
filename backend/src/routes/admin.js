@@ -3,6 +3,7 @@ const crypto = require('crypto');
 const config = require('../config');
 const { db } = require('../db/supabase');
 const { requireAdmin, requireSuperAdmin } = require('../middleware/adminAuth');
+const realtime = require('../realtime');
 
 const router = express.Router();
 
@@ -166,6 +167,12 @@ router.post('/students/:studentId/suspend', requireAdmin, async (req, res) => {
       expiresAt
     });
 
+    try {
+      realtime.notifyUserSuspended(req.params.studentId, reason);
+    } catch (e) {
+      console.warn('[Realtime Notify Error]:', e.message);
+    }
+
     return res.json({
       success: true,
       message: 'Student account suspended successfully. All active sessions have been revoked.'
@@ -217,6 +224,12 @@ router.post('/students/:studentId/grant-access', requireAdmin, async (req, res) 
       expiresAt
     });
 
+    try {
+      realtime.notifyUserEntitlement(req.params.studentId, true, 'ADMIN_GRANT');
+    } catch (e) {
+      console.warn('[Realtime Notify Error]:', e.message);
+    }
+
     return res.json({
       success: true,
       message: 'Complimentary examination access granted successfully.'
@@ -244,6 +257,12 @@ router.post('/students/:studentId/revoke-access', requireAdmin, async (req, res)
       reason
     });
 
+    try {
+      realtime.notifyUserEntitlement(req.params.studentId, false, 'ADMIN_REVOKE');
+    } catch (e) {
+      console.warn('[Realtime Notify Error]:', e.message);
+    }
+
     return res.json({
       success: true,
       message: 'Examination access revoked successfully. Financial transaction records preserved.'
@@ -258,6 +277,9 @@ router.post('/students/:studentId/revoke-access', requireAdmin, async (req, res)
 router.post('/students/:studentId/revoke-session', requireAdmin, async (req, res) => {
   try {
     const count = await db.revokeAllUserSessions(req.params.studentId, 'ADMIN_FORCE_LOGOUT');
+    try {
+      realtime.notifyUserSuspended(req.params.studentId, 'ADMIN_FORCE_LOGOUT');
+    } catch (e) {}
     await db.recordAuditLog({
       adminId: req.admin.id,
       adminEmail: req.admin.email,
@@ -406,6 +428,23 @@ router.get('/reports/export', requireAdmin, async (req, res) => {
   } catch (error) {
     console.error('[Export Report Error]:', error);
     return res.status(500).json({ error: 'SERVER_ERROR', message: 'Failed to generate export report.' });
+  }
+});
+
+// 13. Content Access Logs (Anti-piracy audit)
+router.get('/content-access-logs', requireAdmin, async (req, res) => {
+  try {
+    const { limit = 50, offset = 0, mockId, userId } = req.query;
+    const result = await db.getContentAccessLogs({
+      limit: parseInt(limit, 10),
+      offset: parseInt(offset, 10),
+      mockId: mockId ? parseInt(mockId, 10) : null,
+      userId
+    });
+    return res.json({ success: true, ...result });
+  } catch (error) {
+    console.error('[Get Content Access Logs Error]:', error);
+    return res.status(500).json({ error: 'SERVER_ERROR', message: 'Failed to fetch content access logs.' });
   }
 });
 

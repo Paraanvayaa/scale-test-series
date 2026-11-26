@@ -300,7 +300,7 @@ router.get('/session-events', requireAuth, (req, res) => {
   res.setHeader('Connection', 'keep-alive');
   res.flushHeaders?.();
 
-  realtime.registerConnection(req.session.id, res);
+  realtime.registerConnection(req.session.id, req.user.id, res);
 });
 
 module.exports = router;
