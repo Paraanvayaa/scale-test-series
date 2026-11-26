@@ -175,11 +175,11 @@
       <form id="adminLoginForm" onsubmit="handleAdminLogin(event)">
         <div style="margin-bottom: 1.1rem;">
           <label style="display: block; font-size: 0.80rem; font-weight: 600; color: #334155; margin-bottom: 0.35rem;">Administrator Email</label>
-          <input type="email" id="loginEmail" class="input-sm" style="width: 100%; padding: 0.65rem;" placeholder="admin@scaletestseries.com" required>
+          <input type="email" id="loginEmail" class="input-sm" style="width: 100%; padding: 0.65rem;" placeholder="Enter administrator email" required>
         </div>
         <div style="margin-bottom: 1.4rem;">
           <label style="display: block; font-size: 0.80rem; font-weight: 600; color: #334155; margin-bottom: 0.35rem;">Password</label>
-          <input type="password" id="loginPassword" class="input-sm" style="width: 100%; padding: 0.65rem;" placeholder="••••••••••••" required>
+          <input type="password" id="loginPassword" class="input-sm" style="width: 100%; padding: 0.65rem;" placeholder="Enter password" required>
         </div>
         <button type="submit" id="loginSubmitBtn" class="btn-sm btn-primary" style="width: 100%; justify-content: center; padding: 0.75rem; font-size: 0.95rem;">
           Sign In as Administrator &rarr;
@@ -235,7 +235,7 @@
     </ul>
 
     <div style="padding: 1rem; border-top: 1px solid #1e293b;">
-      <div style="font-size: 0.75rem; color: #94a3b8; margin-bottom: 0.5rem;" id="adminUserDisplay">admin@scaletestseries.com</div>
+      <div style="font-size: 0.75rem; color: #94a3b8; margin-bottom: 0.5rem;" id="adminUserDisplay">Administrator</div>
       <button class="btn-sm btn-danger" style="width: 100%; justify-content: center;" onclick="handleAdminLogout()">Logout</button>
     </div>
   </aside>
@@ -670,7 +670,7 @@
         if (res.ok && res.data.authenticated) {
           currentAdmin = res.data.admin;
           document.getElementById('loginContainer').style.display = 'none';
-          document.getElementById('adminUserDisplay').innerText = currentAdmin.email;
+          document.getElementById('adminUserDisplay').innerText = currentAdmin.fullName || currentAdmin.role || 'Administrator';
           document.getElementById('adminRoleBadge').innerText = currentAdmin.role;
           loadDashboardOverview();
         } else {
@@ -726,7 +726,7 @@
         if (res.ok && data.success) {
           currentAdmin = data.admin;
           document.getElementById('loginContainer').style.display = 'none';
-          document.getElementById('adminUserDisplay').innerText = currentAdmin.email;
+          document.getElementById('adminUserDisplay').innerText = currentAdmin.fullName || currentAdmin.role || 'Administrator';
           document.getElementById('adminRoleBadge').innerText = currentAdmin.role;
           loadDashboardOverview();
         } else {
