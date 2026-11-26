@@ -20,13 +20,27 @@ function setSessionCookie(res, rawToken) {
 
 // 1. Register User (Supabase Auth identity + Single Device Session)
 router.post('/register', async (req, res) => {
-  const { email, password, fullName, targetExamination } = req.body;
+  const { email, password, fullName, targetExamination, targetStudent } = req.body;
   if (!email || !password) {
     return res.status(400).json({ error: 'INVALID_INPUT', message: 'Email and password are required.' });
   }
 
+  // Phase 1 requirement: Only 'NEET Aspirant' is permitted as Target Student
+  const selectedTarget = targetStudent || targetExamination || 'NEET Aspirant';
+  if (selectedTarget !== 'NEET Aspirant') {
+    return res.status(400).json({
+      error: 'INVALID_TARGET_STUDENT',
+      message: 'Target Student must be "NEET Aspirant".'
+    });
+  }
+
   try {
-    const user = await db.registerUser({ email, password, fullName: fullName || 'NEET Aspirant', targetExamination });
+    const user = await db.registerUser({
+      email,
+      password,
+      fullName: fullName || 'NEET Aspirant',
+      targetExamination: 'NEET Aspirant'
+    });
 
     // Generate cryptographically secure opaque token (64 hex characters)
     const rawToken = crypto.randomBytes(config.session.tokenBytes).toString('hex');
@@ -106,7 +120,10 @@ router.post('/login', async (req, res) => {
     });
   } catch (error) {
     if (error.code === 'INVALID_CREDENTIALS') {
-      return res.status(401).json({ error: 'INVALID_CREDENTIALS', message: 'Invalid email or password.' });
+      return res.status(401).json({
+        error: 'INVALID_CREDENTIALS',
+        message: 'Incorrect email or password. Please check your credentials and try again.'
+      });
     }
     console.error('[Login Error]:', error);
     return res.status(500).json({ error: 'SERVER_ERROR', message: 'Authentication failed.' });
