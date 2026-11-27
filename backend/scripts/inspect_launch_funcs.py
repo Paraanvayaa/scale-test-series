@@ -9,3 +9,4 @@ for func_name in ['function launchDemoTest', 'function showExamWorkspace', 'func
         print(f"=== {func_name} ===")
         print(text[pos:pos+600])
         print('-'*50)
+

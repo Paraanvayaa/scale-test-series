@@ -1373,6 +1373,56 @@
     }
 
     /* High-Fidelity Tables: Match Lists & Answer Key */
+    .table-scroll-hint {
+      display: none;
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: #059669;
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      padding: 0.28rem 0.65rem;
+      border-radius: 6px;
+      margin: 0.85rem 0 0.4rem 0;
+      align-items: center;
+      gap: 6px;
+      width: fit-content;
+    }
+    .table-responsive {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin: 0.5rem 0 1.5rem 0;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      background: #ffffff;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+      position: relative;
+      box-sizing: border-box;
+    }
+    .table-responsive::-webkit-scrollbar {
+      height: 6px;
+    }
+    .table-responsive::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 4px;
+    }
+    .table-responsive::-webkit-scrollbar-thumb {
+      background: #059669;
+      border-radius: 4px;
+    }
+    .table-responsive table {
+      width: 100%;
+      min-width: 640px; /* Guarantees all 5 columns (Q.No, Subject, Option, Question Type, Topic) are fully readable */
+      border-collapse: separate;
+      border-spacing: 0;
+      margin: 0;
+      background: #ffffff;
+      border: none;
+      box-shadow: none;
+      border-radius: 0;
+      font-size: 0.90rem !important;
+    }
     table {
       width: 100%;
       border-collapse: separate;
@@ -1644,6 +1694,27 @@
     }
 
     @media (max-width: 768px) {
+      .table-scroll-hint {
+        display: inline-flex !important;
+      }
+      .table-responsive {
+        margin: 0.65rem 0 1.25rem 0 !important;
+        border-radius: 8px !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+      }
+      .table-responsive table {
+        min-width: 620px !important;
+      }
+      .table-responsive th {
+        padding: 0.55rem 0.75rem !important;
+        font-size: 0.78rem !important;
+        white-space: nowrap !important;
+      }
+      .table-responsive td {
+        padding: 0.55rem 0.75rem !important;
+        font-size: 0.85rem !important;
+      }
       .contact-container {
         grid-template-columns: 1fr !important;
         gap: 1.5rem !important;
@@ -5034,6 +5105,10 @@
       // Restore Math Tokens
       html = html.replace(/@@@MATH_BLOCK_(\d+)@@@/g, (match, idx) => mathTokens[parseInt(idx, 10)]);
       html = html.replace(/@@@MATH_INLINE_(\d+)@@@/g, (match, idx) => mathTokens[parseInt(idx, 10)]);
+
+      // Wrap all tables in a touch-friendly, horizontal scrolling responsive wrapper with mobile hint
+      html = html.replace(/<table(\s*[^>]*)>/gi, '<div class="table-scroll-hint">&#8644; Scroll horizontally to view full matrix &amp; topics</div><div class="table-responsive"><table$1>');
+      html = html.replace(/<\/table>/gi, '</table></div>');
 
       containerEl.innerHTML = html;
 

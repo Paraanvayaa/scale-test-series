@@ -4,3 +4,4 @@ with open('mock_tests/index.html', 'r', encoding='utf-8', errors='ignore') as f:
 import re
 pos = text.find('function setViewMode')
 print(text[pos:pos+2000])
+

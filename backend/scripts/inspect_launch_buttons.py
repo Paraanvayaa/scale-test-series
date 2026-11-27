@@ -5,3 +5,4 @@ import re
 matches = [line.strip() for line in text.splitlines() if 'showExamWorkspace' in line or 'selectMock' in line or 'Launch' in line or 'Demo Mocks' in line]
 for m in matches:
     print(m[:120])
+

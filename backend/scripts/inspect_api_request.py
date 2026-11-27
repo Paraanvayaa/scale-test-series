@@ -6,3 +6,4 @@ if pos == -1:
     pos = text.find('apiRequest')
 
 print(text[pos-100:pos+800])
+

@@ -5,3 +5,4 @@ import re
 matches = [line.strip() for line in text.splitlines() if 'DEMO_MOCKS' in line or 'prewarmDemoMocks' in line]
 for m in matches:
     print(m)
+

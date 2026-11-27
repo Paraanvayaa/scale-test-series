@@ -6,3 +6,4 @@ with open('mock_tests/index.html', 'r', encoding='utf-8', errors='ignore') as f:
 
 pos = text.find('function prewarmDemoMocks')
 print(text[pos:pos+1500])
+
