@@ -9,3 +9,4 @@ if pos_end == -1:
 
 print("Snippet at end of exam-workspace-view:")
 print(text[pos_end-600:pos_end+100])
+

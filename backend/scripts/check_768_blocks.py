@@ -7,3 +7,4 @@ print("Found @media (max-width: 768px) at indices:", matches)
 for i, pos in enumerate(matches):
     print(f"--- Block #{i+1} at index {pos} ---")
     print(html[pos:pos+300])
+

@@ -35,3 +35,4 @@ pos_ft = text.find('class="site-footer"')
 if pos_ft != -1:
     print("\n--- HTML snippet around site-footer ---")
     print(text[pos_ft:pos_ft+400])
+
