@@ -2321,8 +2321,7 @@
         border: none !important;
         box-shadow: none !important;
         background: transparent !important;
-        display: block !important;
-      }
+        }
       .pane-scroll {
         height: auto !important;
         min-height: auto !important;
@@ -3931,14 +3930,20 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function showExamWorkspace() {
+    function showExamWorkspace(targetMock) {
       document.body.classList.add('exam-mode');
       document.getElementById('landing-view').style.display = 'none';
       document.getElementById('exam-workspace-view').style.display = 'flex';
-      renderSidebar();
-      prewarmDemoMocks();
-      updateHeaderBadge();
-      loadActiveDocuments();
+      
+      if (typeof targetMock === 'number') {
+        selectMock(targetMock);
+      } else {
+        renderSidebar();
+        prewarmDemoMocks();
+        updateHeaderBadge();
+        loadActiveDocuments();
+      }
+      window.scrollTo({ top: 0, behavior: 'instant' });
     }
 
     function scrollToSection(id) {
@@ -3975,9 +3980,7 @@
       else if (m <= 40) currentTier = 'moderate';
       else currentTier = 'difficult';
       
-      showExamWorkspace();
-      selectMock(m);
-      window.scrollTo({ top: 0, behavior: 'instant' });
+      showExamWorkspace(m);
     }
 
     // Modal Handlers
@@ -4637,6 +4640,7 @@
 
       renderSidebar();
       prewarmDemoMocks();
+      prewarmRenderedHtml();
       updateHeaderBadge();
       
       const pad = String(m).padStart(2, '0');
@@ -4677,7 +4681,7 @@
     }
 
     function setViewMode(mode) {
-      const isMobile = window.innerWidth <= 900;
+      const isMobile = window.innerWidth <= 768;
       // On mobile, never provide split screen; default to test-only if split requested
       if (isMobile && mode === 'split') {
         mode = 'test-only';
@@ -4693,17 +4697,22 @@
       const paneRight = document.getElementById('pane-right');
 
       if (!isMobile && mode === 'split') {
-        dualWorkspace.style.display = 'flex';
-        paneLeft.style.display = 'flex';
-        paneRight.style.display = 'flex';
+        dualWorkspace.style.setProperty('display', 'flex', 'important');
+        paneLeft.style.setProperty('display', 'flex', 'important');
+        paneRight.style.setProperty('display', 'flex', 'important');
       } else if (mode === 'test-only') {
-        dualWorkspace.style.display = isMobile ? 'block' : 'flex';
-        paneLeft.style.display = isMobile ? 'block' : 'flex';
-        paneRight.style.display = 'none';
+        dualWorkspace.style.setProperty('display', isMobile ? 'block' : 'flex', 'important');
+        paneLeft.style.setProperty('display', isMobile ? 'block' : 'flex', 'important');
+        paneRight.style.setProperty('display', 'none', 'important');
       } else if (mode === 'sol-only' || mode === 'key') {
-        dualWorkspace.style.display = isMobile ? 'block' : 'flex';
-        paneLeft.style.display = 'none';
-        paneRight.style.display = isMobile ? 'block' : 'flex';
+        dualWorkspace.style.setProperty('display', isMobile ? 'block' : 'flex', 'important');
+        paneLeft.style.setProperty('display', 'none', 'important');
+        paneRight.style.setProperty('display', isMobile ? 'block' : 'flex', 'important');
+      }
+
+      // On mobile, instantly scroll to top of workspace so student sees the newly selected tab
+      if (isMobile) {
+        window.scrollTo({ top: 0, behavior: 'instant' });
       }
 
       // Load & render the selected document view
@@ -4853,6 +4862,36 @@
           };
         }
       });
+    }
+
+    // Pre-render demo mocks HTML in background for 0ms instantaneous switching
+    function prewarmRenderedHtml() {
+      if (!window.DEMO_MOCKS) return;
+      setTimeout(() => {
+        [1, 21, 41].forEach(m => {
+          const pad = String(m).padStart(2, '0');
+          const mockKey = `Mock_${pad}`;
+          const qpKey = `${mockKey}_qp`;
+          const solKey = `${mockKey}_sol`;
+          const keyKey = `${mockKey}_key`;
+          const rawQp = window.DEMO_MOCKS[`${mockKey}_Question_Paper.md`];
+          const rawSol = window.DEMO_MOCKS[`${mockKey}_Detailed_Solutions.md`];
+          const rawKey = window.DEMO_MOCKS[`${mockKey}_Answer_Key_and_Analysis.md`];
+
+          if (rawQp && !mockRenderedHtmlCache[qpKey]) {
+            const dummy = document.createElement('div');
+            renderProtectedMarkdown(rawQp, dummy, (html) => { mockRenderedHtmlCache[qpKey] = html; });
+          }
+          if (rawSol && !mockRenderedHtmlCache[solKey]) {
+            const dummy = document.createElement('div');
+            renderProtectedMarkdown(rawSol, dummy, (html) => { mockRenderedHtmlCache[solKey] = html; });
+          }
+          if (rawKey && !mockRenderedHtmlCache[keyKey]) {
+            const dummy = document.createElement('div');
+            renderProtectedMarkdown(rawKey, dummy, (html) => { mockRenderedHtmlCache[keyKey] = html; });
+          }
+        });
+      }, 60);
     }
 
     function renderAuthGate() {
@@ -5070,6 +5109,7 @@
       }
       renderSidebar();
       prewarmDemoMocks();
+      prewarmRenderedHtml();
       updateHeaderBadge();
       updatePurchaseUI(isUserPaid);
       initContentProtection();

@@ -57,3 +57,4 @@ for p in files_to_update:
 c = [open(f, 'rb').read() for f in files_to_update]
 assert c[0] == c[1] == c[2], "Mismatch!"
 print("Golden Rule verified! Length:", len(c[0]))
+
