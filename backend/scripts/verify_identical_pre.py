@@ -28,3 +28,4 @@ for f in files:
     assert content == script_content, f"Pre-check failed: {f} mismatch!"
 
 print("Pre-check PASSED: all 3 files identical!")
+

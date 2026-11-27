@@ -273,3 +273,4 @@ if c1 == c2 and c2 == c3:
 else:
     print("FAIL: HTML files mismatch!")
     exit(1)
+

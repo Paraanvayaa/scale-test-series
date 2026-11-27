@@ -61,3 +61,4 @@ with open(files[2], 'rb') as f: c3 = f.read()
 
 assert c1 == c2 == c3, "Mismatch!"
 print("SUCCESS: onComplete hook added and all 3 files identical!")
+

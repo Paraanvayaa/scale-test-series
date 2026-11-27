@@ -333,3 +333,4 @@ if c1 == c2 == c3:
 else:
     print("ERROR: Mismatch between index.html files!")
     exit(1)
+

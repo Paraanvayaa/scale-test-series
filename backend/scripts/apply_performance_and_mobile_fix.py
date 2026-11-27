@@ -975,3 +975,4 @@ with open(files[2], 'rb') as f: c3 = f.read()
 
 assert c1 == c2 == c3, "Golden Rule check failed!"
 print("PASS: Golden Rule verified! All 3 files are 100% identical byte-for-byte.")
+
