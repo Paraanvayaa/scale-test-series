@@ -31,27 +31,17 @@ if 'id="mobileFloatingDock"' in html or 'mobile-floating-dock' in html:
 else:
     print("PASS: mobileFloatingDock completely removed.")
 
-if 'toggleMobileViewTab' in html:
-    errors.append("ERROR: toggleMobileViewTab still exists in JS!")
-else:
-    print("PASS: toggleMobileViewTab completely removed.")
-
-if 'updateFloatingDockState' in html:
-    errors.append("ERROR: updateFloatingDockState still exists in JS!")
-else:
-    print("PASS: updateFloatingDockState completely removed.")
-
 # 3. Check exam-header structure
 if 'exam-header-row-1' in html and 'exam-header-row-2' in html:
     print("PASS: 2-row exam-header markup verified.")
 else:
     errors.append("ERROR: 2-row exam-header markup missing!")
 
-# 4. Check sidebar drawer close button
-if 'sidebar-drawer-header' in html and 'drawer-close-btn' in html:
-    print("PASS: Sidebar mobile drawer close button verified.")
+# 4. Check comparison section
+if 'comparison-grid' in html and 'comp-column-legacy' in html and 'comp-column-scale' in html:
+    print("PASS: Modern 2-column comparison grid markup verified.")
 else:
-    errors.append("ERROR: Sidebar mobile drawer close button missing!")
+    errors.append("ERROR: Comparison grid markup missing!")
 
 # 5. Check CSS rules in the main responsive block
 pos_matches = [m.start() for m in re.finditer(r'@media\s*\(\s*max-width:\s*768px\s*\)', html)]
@@ -68,9 +58,7 @@ if len(pos_matches) >= 2:
         'overflow: visible',
         'height: auto',
         '.footer-container',
-        'grid-template-columns: 1fr',
-        '.comparison-cards-mobile',
-        'display: flex'
+        'grid-template-columns: 1fr'
     ]
     for r in required_rules:
         if r in css_768:

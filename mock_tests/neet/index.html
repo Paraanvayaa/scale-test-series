@@ -1868,179 +1868,190 @@
         grid-template-columns: 1fr !important;
         gap: 1.25rem !important;
       }
-      .comparison-table-wrap {
-        overflow-x: auto !important;
-        -webkit-overflow-scrolling: touch;
-      }
+      
       .footer-container {
         grid-template-columns: 1fr !important;
         gap: 1.75rem !important;
       }
     }
 
+        
+
         /* =========================================================
-       COMPARISON SECTION STYLES (DESKTOP & BASE)
+       THE BRUTAL REALITY: MODERN 2-COLUMN COMPARISON GRID
        ========================================================= */
     .comparison-section {
       background: #ffffff;
       border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 3.5rem 2rem;
+      margin: 3.5rem auto;
+      max-width: 1180px;
+      box-shadow: 0 4px 25px -4px rgba(15, 23, 42, 0.06);
+      box-sizing: border-box;
+    }
+    .comparison-badge {
+      background: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.85rem;
+      border-radius: 9999px;
+      display: inline-block;
+      margin-bottom: 0.75rem;
+    }
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 2.5rem;
+      align-items: stretch;
+    }
+    .comp-column {
       border-radius: 16px;
-      padding: 3rem 2rem;
-      margin: 3.5rem 0;
-      box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-sizing: border-box;
     }
-    .comparison-table-wrap {
-      overflow-x: auto;
-      margin-top: 2rem;
-      border-radius: 12px;
-      border: 1px solid #e2e8f0;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    .comp-column-legacy {
+      background: #fafaf9;
+      border: 1px solid #e7e5e4;
     }
-    .comparison-table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: left;
-      font-size: 0.92rem;
+    .comp-column-scale {
+      background: #ffffff;
+      border: 2px solid #059669;
+      box-shadow: 0 10px 30px -5px rgba(5, 150, 105, 0.15);
+      position: relative;
     }
-    .comparison-table th {
-      padding: 1rem 1.25rem;
-      font-weight: 700;
-      border-bottom: 2px solid #e2e8f0;
+    .comp-col-badge-top {
+      position: absolute;
+      top: -13px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #059669;
+      color: #ffffff;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      padding: 0.25rem 0.9rem;
+      border-radius: 9999px;
+      white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(5, 150, 105, 0.35);
     }
-    .comparison-table td {
-      padding: 1.1rem 1.25rem;
-      border-bottom: 1px solid #f1f5f9;
-      vertical-align: middle;
-      line-height: 1.5;
+    .comp-col-header {
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 1.25rem;
     }
-    .comparison-table tr:last-child td {
-      border-bottom: none;
+    .comp-col-tag {
+      font-size: 0.80rem;
+      font-weight: 800;
+      margin-bottom: 0.35rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
-    .comparison-table .col-feature {
-      width: 25%;
-      font-weight: 700;
-      color: #0f172a;
-      background: #f8fafc;
-    }
-    .comparison-table .col-coaching {
-      width: 37.5%;
-      color: #475569;
-      background: #fffafa;
-    }
-    .comparison-table .col-scale {
-      width: 37.5%;
-      color: #0f172a;
-      background: #f0fdf4;
-      font-weight: 500;
-    }
-    .comparison-table th.col-feature {
-      background: #f1f5f9;
-      color: #334155;
-    }
-    .comparison-table th.col-coaching {
-      background: #fef2f2;
+    .legacy-tag {
       color: #dc2626;
-      border-bottom-color: #fecaca;
     }
-    .comparison-table th.col-scale {
-      background: #ecfdf5;
+    .scale-tag {
       color: #059669;
-      border-bottom-color: #a7f3d0;
     }
-    .badge-cross {
-      display: inline-flex;
+    .comp-col-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin: 0 0 0.35rem 0;
+      line-height: 1.25;
+    }
+    .comp-col-desc {
+      font-size: 0.88rem;
+      color: #64748b;
+      margin: 0;
+      line-height: 1.4;
+    }
+    .comp-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1.5rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+      flex: 1;
+    }
+    .comp-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.90rem;
+      line-height: 1.45;
+    }
+    .comp-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
       align-items: center;
       justify-content: center;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
+      font-size: 0.72rem;
+      font-weight: 800;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .legacy-icon {
       background: #fee2e2;
       color: #dc2626;
-      font-size: 0.75rem;
-      font-weight: bold;
-      margin-right: 6px;
     }
-    .badge-check {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
+    .scale-icon {
       background: #dcfce7;
-      color: #16a34a;
-      font-size: 0.75rem;
-      font-weight: bold;
-      margin-right: 6px;
-    }
-
-    /* Mobile comparison cards: STRICTLY HIDDEN ON DESKTOP */
-    .comparison-cards-mobile {
-      display: none !important;
-      flex-direction: column;
-      gap: 1.25rem;
-      margin-top: 1.5rem;
-    }
-    .comp-card {
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-    }
-    .comp-card-header {
-      background: #0f172a;
-      color: #ffffff;
-      padding: 0.75rem 1rem;
-      font-weight: 800;
-      font-size: 0.92rem;
-      letter-spacing: 0.01em;
-    }
-    .comp-card-body {
-      padding: 0.85rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-    .comp-option {
-      padding: 0.75rem 0.85rem;
-      border-radius: 8px;
-      font-size: 0.86rem;
-      line-height: 1.5;
-    }
-    .comp-option-coaching {
-      background: #fff5f5;
-      border: 1px solid #fed7d7;
-      color: #742a2a;
-    }
-    .comp-option-scale {
-      background: #f0fdf4;
-      border: 1px solid #bbf7d0;
-      color: #14532d;
-    }
-    .comp-label {
-      font-weight: 700;
-      font-size: 0.82rem;
-      margin-bottom: 0.35rem;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-    .comp-option-coaching .comp-label {
-      color: #dc2626;
-    }
-    .comp-option-scale .comp-label {
       color: #15803d;
     }
-
-    @media (min-width: 769px) {
-      .comparison-table-wrap {
-        display: block !important;
-      }
-      .comparison-cards-mobile {
-        display: none !important;
-      }
+    .comp-content strong {
+      display: block;
+      color: #0f172a;
+      font-size: 0.92rem;
+      margin-bottom: 0.2rem;
+      font-weight: 700;
     }
+    .comp-content p {
+      margin: 0;
+      color: #475569;
+      font-size: 0.86rem;
+      line-height: 1.45;
+    }
+    .comp-column-scale .comp-content strong {
+      color: #047857;
+    }
+    .comp-cta-wrap {
+      margin-top: auto;
+      padding-top: 1rem;
+    }
+    .comp-unlock-btn {
+      width: 100%;
+      height: 44px;
+      border-radius: 9px;
+      font-size: 0.92rem;
+      font-weight: 800;
+      background: #059669;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);
+      border: none;
+      cursor: pointer;
+      transition: background 0.15s ease, transform 0.15s ease;
+    }
+    .comp-unlock-btn:hover {
+      background: #047857;
+      transform: translateY(-1px);
+    }
+
+    
 
     /* =========================================================
        EXAM HEADER STYLES (DESKTOP & BASE)
@@ -2214,20 +2225,36 @@
        RESPONSIVE ENGINE: COMPREHENSIVE MOBILE RULES (<= 768px)
        ========================================================= */
     @media (max-width: 768px) {
-      /* 1. Comparison Section: Stacked Cards */
+      /* The Brutal Reality: Mobile 2-Column Comparison Stack */
       .comparison-section {
-        padding: 1.5rem 0.85rem !important;
-        margin: 2rem 0 !important;
+        padding: 2rem 1rem !important;
+        margin: 2rem 0.5rem !important;
+        border-radius: 14px !important;
       }
-      .comparison-table-wrap {
-        display: none !important;
+      .comparison-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1.75rem !important;
+        margin-top: 2rem !important;
       }
-      .comparison-cards-mobile {
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 1.25rem !important;
-        margin-top: 1.5rem !important;
+      .comp-column {
+        padding: 1.25rem 1rem !important;
       }
+      .comp-col-title {
+        font-size: 1.2rem !important;
+      }
+      .comp-list {
+        gap: 0.9rem !important;
+      }
+      .comp-item {
+        font-size: 0.85rem !important;
+      }
+      .comp-content strong {
+        font-size: 0.88rem !important;
+      }
+      .comp-content p {
+        font-size: 0.82rem !important;
+      }
+      
 
       /* 2. Natural Document-Level Full-Page Scrolling */
       html, body {
@@ -2642,140 +2669,129 @@
     
     <!-- Why Coaching Fails You vs Scale Test Series -->
     <section class="section-wrap" style="padding-top: 1rem; padding-bottom: 2rem;">
-      <div class="comparison-section">
-        <div class="section-header" style="margin-bottom: 1.5rem;">
-          <span class="section-badge" style="background: #fee2e2; color: #991b1b;">The Brutal Reality</span>
+      <section class="comparison-section" id="comparison">
+        <div class="section-header" style="text-align: center; margin-bottom: 1.5rem;">
+          <span class="comparison-badge">The Brutal Reality</span>
           <h2 class="section-title">Why 95% of Coaching Institute Test Series Fail You</h2>
-          <p class="section-desc">
+          <p class="section-desc" style="max-width: 680px; margin: 0 auto;">
             Most tuitions and coaching institutes charge &#8377;15,000+ for outdated question banks created by outsourced typists. Here is how Scale Test Series is fundamentally different.
           </p>
         </div>
 
-        <div class="comparison-table-wrap">
-          <table class="comparison-table">
-            <thead>
-              <tr>
-                <th class="col-feature">Key Parameter</th>
-                <th class="col-coaching">&#10008; Traditional Coaching Test Series</th>
-                <th class="col-scale">&#10004; Scale Test Series (2026-2027)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="col-feature">Question Architecture</td>
-                <td class="col-coaching"><span class="badge-cross">&#10008;</span> 80% direct formula-plugging; out of sync with 2024-2026 NTA pattern</td>
-                <td class="col-scale"><span class="badge-check">&#10004;</span> <strong>Exact 2026 NTA Blueprint</strong>: Statement I & II, Assertion-Reason, Match Lists</td>
-              </tr>
-              <tr>
-                <td class="col-feature">Authorship & Pedigree</td>
-                <td class="col-coaching"><span class="badge-cross">&#10008;</span> Outsourced aggregators & faculty using 10-year old modules</td>
-                <td class="col-scale"><span class="badge-check">&#10004;</span> <strong>Curated by Top 50 AIR Rankers & AIIMS New Delhi Medicos</strong></td>
-              </tr>
-              <tr>
-                <td class="col-feature">Cognitive Progression</td>
-                <td class="col-coaching"><span class="badge-cross">&#10008;</span> One flat, random difficulty: creates false confidence or panic</td>
-                <td class="col-scale"><span class="badge-check">&#10004;</span> <strong>3 Stepped Scientific Tiers</strong>: Ignite (Foundation) &rarr; Conquer (Speed) &rarr; Dominate (Rank Deciders)</td>
-              </tr>
-              <tr>
-                <td class="col-feature">Explanation Quality</td>
-                <td class="col-coaching"><span class="badge-cross">&#10008;</span> Brief 2-line formula steps with no reason why distractors are wrong</td>
-                <td class="col-scale"><span class="badge-check">&#10004;</span> <strong>NCERT Line Citation + Distractor Deconstruction</strong> for every single question</td>
-              </tr>
-              <tr>
-                <td class="col-feature">Test Taking Realism</td>
-                <td class="col-coaching"><span class="badge-cross">&#10008;</span> PDF downloads or slow web interfaces without instant comparison</td>
-                <td class="col-scale"><span class="badge-check">&#10004;</span> <strong>Real Dual Split-Screen Mode</strong>: Question paper on left, instant solutions on right</td>
-              </tr>
-              <tr>
-                <td class="col-feature">Pricing & Value</td>
-                <td class="col-coaching"><span class="badge-cross">&#10008;</span> &#8377;12,000 to &#8377;25,000 for just 15 to 20 mock papers</td>
-                <td class="col-scale"><span class="badge-check">&#10004;</span> <strong>&#8377;999 for all 60 Full-Length Mocks (12,000 Qs)</strong> &bull; Less than &#8377;12 per paper</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <!-- Mobile Responsive Comparison Cards (<= 768px) -->
-        <div class="comparison-cards-mobile">
-          <div class="comp-card">
-            <div class="comp-card-header">Question Architecture</div>
-            <div class="comp-card-body">
-              <div class="comp-option comp-option-coaching">
-                <div class="comp-label"><span class="badge-cross">&#10008;</span> Traditional Coaching</div>
-                <div>80% direct formula-plugging; out of sync with 2024-2026 NTA pattern</div>
-              </div>
-              <div class="comp-option comp-option-scale">
-                <div class="comp-label"><span class="badge-check">&#10004;</span> Scale Test Series (2026-2027)</div>
-                <div><strong>Exact 2026 NTA Blueprint</strong>: Statement I &amp; II, Assertion-Reason, Match Lists</div>
-              </div>
+        <div class="comparison-grid">
+          <!-- Card 1: Traditional Coaching -->
+          <div class="comp-column comp-column-legacy">
+            <div class="comp-col-header">
+              <div class="comp-col-tag legacy-tag">&#10008; Traditional Coaching</div>
+              <h3 class="comp-col-title">The Outdated Model</h3>
+              <p class="comp-col-desc">Recycled question banks sold at premium coaching prices</p>
             </div>
+            <ul class="comp-list">
+              <li class="comp-item legacy-item">
+                <div class="comp-icon legacy-icon">&#10008;</div>
+                <div class="comp-content">
+                  <strong>Outdated Question Style</strong>
+                  <p>80% direct formula-plugging drills out of sync with modern NTA patterns.</p>
+                </div>
+              </li>
+              <li class="comp-item legacy-item">
+                <div class="comp-icon legacy-icon">&#10008;</div>
+                <div class="comp-content">
+                  <strong>Outsourced Content</strong>
+                  <p>Aggregated by typists &amp; junior faculty using 10-year-old classroom sheets.</p>
+                </div>
+              </li>
+              <li class="comp-item legacy-item">
+                <div class="comp-icon legacy-icon">&#10008;</div>
+                <div class="comp-content">
+                  <strong>Flat Difficulty Curve</strong>
+                  <p>Randomly mixed questions creating false confidence or exam-day panic.</p>
+                </div>
+              </li>
+              <li class="comp-item legacy-item">
+                <div class="comp-icon legacy-icon">&#10008;</div>
+                <div class="comp-content">
+                  <strong>Bare Minimum Solutions</strong>
+                  <p>Brief 2-line answer keys with zero explanation of why wrong options fail.</p>
+                </div>
+              </li>
+              <li class="comp-item legacy-item">
+                <div class="comp-icon legacy-icon">&#10008;</div>
+                <div class="comp-content">
+                  <strong>Clunky PDFs &amp; Portals</strong>
+                  <p>Static PDF downloads or slow web portals with zero analysis tools.</p>
+                </div>
+              </li>
+              <li class="comp-item legacy-item">
+                <div class="comp-icon legacy-icon">&#10008;</div>
+                <div class="comp-content">
+                  <strong>&#8377;15,000 &ndash; &#8377;25,000 Price</strong>
+                  <p>Exorbitant fees for a meager 15 to 20 uncalibrated mock tests.</p>
+                </div>
+              </li>
+            </ul>
           </div>
-          <div class="comp-card">
-            <div class="comp-card-header">Authorship &amp; Pedigree</div>
-            <div class="comp-card-body">
-              <div class="comp-option comp-option-coaching">
-                <div class="comp-label"><span class="badge-cross">&#10008;</span> Traditional Coaching</div>
-                <div>Outsourced aggregators &amp; faculty using 10-year old modules</div>
-              </div>
-              <div class="comp-option comp-option-scale">
-                <div class="comp-label"><span class="badge-check">&#10004;</span> Scale Test Series (2026-2027)</div>
-                <div><strong>Curated by Top 50 AIR Rankers &amp; AIIMS New Delhi Medicos</strong></div>
-              </div>
+
+          <!-- Card 2: Scale Test Series (Featured & Highlighted) -->
+          <div class="comp-column comp-column-scale">
+            <div class="comp-col-badge-top">Curated by AIIMS Medicos &bull; AIR &lt; 50</div>
+            <div class="comp-col-header">
+              <div class="comp-col-tag scale-tag">&#10004; Scale Test Series (2026&ndash;2027)</div>
+              <h3 class="comp-col-title">The Modern Standard</h3>
+              <p class="comp-col-desc">Engineered specifically for the evolving NEET-UG battle</p>
             </div>
-          </div>
-          <div class="comp-card">
-            <div class="comp-card-header">Cognitive Progression</div>
-            <div class="comp-card-body">
-              <div class="comp-option comp-option-coaching">
-                <div class="comp-label"><span class="badge-cross">&#10008;</span> Traditional Coaching</div>
-                <div>One flat, random difficulty: creates false confidence or panic</div>
-              </div>
-              <div class="comp-option comp-option-scale">
-                <div class="comp-label"><span class="badge-check">&#10004;</span> Scale Test Series (2026-2027)</div>
-                <div><strong>3 Stepped Scientific Tiers</strong>: Ignite (Foundation) &rarr; Conquer (Speed) &rarr; Dominate (Rank Deciders)</div>
-              </div>
-            </div>
-          </div>
-          <div class="comp-card">
-            <div class="comp-card-header">Explanation Quality</div>
-            <div class="comp-card-body">
-              <div class="comp-option comp-option-coaching">
-                <div class="comp-label"><span class="badge-cross">&#10008;</span> Traditional Coaching</div>
-                <div>Brief 2-line formula steps with no reason why distractors are wrong</div>
-              </div>
-              <div class="comp-option comp-option-scale">
-                <div class="comp-label"><span class="badge-check">&#10004;</span> Scale Test Series (2026-2027)</div>
-                <div><strong>NCERT Line Citation + Distractor Deconstruction</strong> for every single question</div>
-              </div>
-            </div>
-          </div>
-          <div class="comp-card">
-            <div class="comp-card-header">Test Taking Realism</div>
-            <div class="comp-card-body">
-              <div class="comp-option comp-option-coaching">
-                <div class="comp-label"><span class="badge-cross">&#10008;</span> Traditional Coaching</div>
-                <div>PDF downloads or slow web interfaces without instant comparison</div>
-              </div>
-              <div class="comp-option comp-option-scale">
-                <div class="comp-label"><span class="badge-check">&#10004;</span> Scale Test Series (2026-2027)</div>
-                <div><strong>Real Dual Split-Screen Mode</strong>: Question paper on left, instant solutions on right</div>
-              </div>
-            </div>
-          </div>
-          <div class="comp-card">
-            <div class="comp-card-header">Pricing &amp; Value</div>
-            <div class="comp-card-body">
-              <div class="comp-option comp-option-coaching">
-                <div class="comp-label"><span class="badge-cross">&#10008;</span> Traditional Coaching</div>
-                <div>&#8377;12,000 to &#8377;25,000 for just 15 to 20 mock papers</div>
-              </div>
-              <div class="comp-option comp-option-scale">
-                <div class="comp-label"><span class="badge-check">&#10004;</span> Scale Test Series (2026-2027)</div>
-                <div><strong>&#8377;999 for all 60 Full-Length Mocks (12,000 Qs)</strong> &bull; Less than &#8377;12 per paper</div>
-              </div>
+            <ul class="comp-list">
+              <li class="comp-item scale-item">
+                <div class="comp-icon scale-icon">&#10004;</div>
+                <div class="comp-content">
+                  <strong>Exact 2026 NTA Blueprint</strong>
+                  <p>Heavy emphasis on Statement I &amp; II, Assertion-Reason, and Match List matrices.</p>
+                </div>
+              </li>
+              <li class="comp-item scale-item">
+                <div class="comp-icon scale-icon">&#10004;</div>
+                <div class="comp-content">
+                  <strong>Topper &amp; Medico Curated</strong>
+                  <p>Handcrafted by Top 50 AIR Rankers and AIIMS New Delhi medical students.</p>
+                </div>
+              </li>
+              <li class="comp-item scale-item">
+                <div class="comp-icon scale-icon">&#10004;</div>
+                <div class="comp-content">
+                  <strong>3 Stepped Scientific Tiers</strong>
+                  <p>Ignite (Foundation) &rarr; Conquer (Speed) &rarr; Dominate (Rank Deciders).</p>
+                </div>
+              </li>
+              <li class="comp-item scale-item">
+                <div class="comp-icon scale-icon">&#10004;</div>
+                <div class="comp-content">
+                  <strong>NCERT Line Citations &amp; Distractor Analysis</strong>
+                  <p>Instant step-by-step NCERT deconstruction explaining why distractors are wrong.</p>
+                </div>
+              </li>
+              <li class="comp-item scale-item">
+                <div class="comp-icon scale-icon">&#10004;</div>
+                <div class="comp-content">
+                  <strong>Real Dual Split-Screen Engine</strong>
+                  <p>View question paper and step-by-step solutions side-by-side with zero lag.</p>
+                </div>
+              </li>
+              <li class="comp-item scale-item">
+                <div class="comp-icon scale-icon">&#10004;</div>
+                <div class="comp-content">
+                  <strong>All 60 Mocks for &#8377;999</strong>
+                  <p>12,000 questions across 60 mocks &bull; Less than &#8377;17 per full examination.</p>
+                </div>
+              </li>
+            </ul>
+            <div class="comp-cta-wrap">
+              <button type="button" class="btn-primary comp-unlock-btn" onclick="openPaymentModal()">
+                Unlock All 60 Mocks &bull; &#8377;999 &rarr;
+              </button>
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </section>
 
     <!-- 3 Tiers Progression Section -->

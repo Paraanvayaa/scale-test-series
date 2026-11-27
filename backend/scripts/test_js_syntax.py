@@ -23,3 +23,4 @@ for i, s in enumerate(scripts):
         os.remove(f'temp_script_{i}.js')
 
 print("ALL JS SYNTAX VALIDATION PASSED!")
+
